@@ -1,0 +1,3 @@
+{% macro m_date(nicedate,isodate) %}
+    <time datetime="{{isodate}}" class="m_date">{{nicedate}}</time>
+{% endmacro %}

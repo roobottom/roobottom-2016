@@ -1,0 +1,10 @@
+{% macro m_gallery(images) %}
+    <figure>
+        {% for i in images %}
+            <img src="{{ i.image }}"/>
+            {% if i.caption %}
+            <figcaption>{{ i.caption }}</figcaption>
+            {% endif %}
+        {% endfor %}
+    </figure>
+{% endmacro %}

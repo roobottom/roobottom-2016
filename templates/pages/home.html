@@ -1,0 +1,11 @@
+{% extends 'layouts/default.html' %}
+{% block body %}
+<h1>{{ title }}</h1>
+{% for post in diary_posts %}
+    <h2>{{ post.id }} {{ post.title }}</h2>
+    <time>{{ post.date | date }}</time>
+    <div class="m_post__body">
+        {{ post.html_body | safe }}
+    </div>
+{% endfor %}
+{% endblock %}

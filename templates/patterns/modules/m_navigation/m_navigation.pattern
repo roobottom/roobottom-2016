@@ -1,0 +1,9 @@
+{% macro m_navigation(items) %}
+<nav class="m_navigation">
+    <ul class="m_navigation__items">
+        {% for item in items %}
+        <li class="m_navigation__item"><a href="{{item.url}}" class="m_navigation__link{%if item.current %} m_navigation__link--is-current {% endif %}">{{item.name}}</a></li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endmacro %}

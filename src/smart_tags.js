@@ -1,18 +1,29 @@
-var _ = require('lodash');
+var _ = require('lodash'),
+    nunjucks = require('nunjucks');
+
+var env = nunjucks
+    .configure( './templates/', {
+        autoescape: false,
+        cache: false
+    })
 
 var tags = [
-    /<p>\s*\(gallery([^\)]+)?\)\s*<\/p>/g
+    'gallery'
 ];
 
-function smart_tags(string,cb) {
+function find_tags(post) {
     for(var i in tags) {
-
-        var match;
-        while(match = tags[i].exec(string)) {
-
-            console.log(get_options(match[1]));
-
+        var regexp = new RegExp('<p>\\s*\\(' + tags[i] + '([^\\)]+)?\\)\\s*<\\/p>','igm');
+        //var match;
+        while(match = regexp.exec(post.html_body)) {
+            //call the custom function for this tag.
+            var compiled_tag = global['smart_tag_' + tags[i]](post,match[0],get_options(match[1]));
+            //replace this occurance of the tag with the compiled_tag
+            post.html_body = post.html_body.replace(match[0],compiled_tag);
         }
+
+        return post.html_body;
+
     }
 };
 
@@ -21,21 +32,28 @@ function get_options(match) {
     var items = _.trim(match).split(',');
     for(var i in items) {
         terms.push(items[i].split(':'));
-        //terms = _.fromPairs(term);
     }
     return _.fromPairs(terms);
-
-    terms += '{"'+items[0]+'":"'+items[1]+'"}';
 }
 
-function toObject(arr) {
-  var rv = {};
-  for (var i = 0; i < arr.length; ++i)
-    rv[i] = arr[i];
-  return rv;
+
+
+//smart tag definitions, what to do with a smart tag once it's been matched?
+//Always defined as `smart_tag_[tag-name]`
+smart_tag_gallery = function (post,string,opts) {
+
+    var images_for_gallery = {"images":[]};
+
+    //loop through the available images for this post
+    //and see if any are to be used by this gallery
+    for(var i in post.attributes.images) {
+        if(post.attributes.images[i].set === opts.set) {
+            images_for_gallery["images"].push(post.attributes.images[i]);
+        }
+    }
+    gallery_rendered = nunjucks.render('patterns/modules/m_gallery/m_gallery.smartTag',images_for_gallery);
+    return gallery_rendered;
+
 }
 
-smart_tags(
-    '<p>Hell this is a test</p><p>(gallery set:whatevs,class:poo)</p><p>(gallery set:two,class:wee)</p>',
-    null
-    );
+module.exports.find_tags = find_tags;

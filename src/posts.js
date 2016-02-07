@@ -5,6 +5,17 @@ var fs  = require('fs'),
     marked = require('marked'),
     smart_tags = require('./smart_tags.js');
 
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: true,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: true
+});
+
 
 function get_all_posts(folder,cb) {
     fs.readdir(folder,function(err,files) {
@@ -17,16 +28,15 @@ function get_all_posts(folder,cb) {
         var posts = [];
         var file = files.shift();
 
-        get_file_contents(folder+file, function delta(data) {
+        get_file_contents(folder+file, function caller(data) {
             if(files.length > 0) {
                 process_post(data,file,function(post) {
                     posts.push(post);
                     file = files.shift();
-                    get_file_contents(folder+file,delta); 
+                    get_file_contents(folder+file,caller); 
                 }); 
             } else {
-                //cb(posts);
-                console.log(posts);
+                cb(posts);
             };
         });
 
@@ -34,10 +44,10 @@ function get_all_posts(folder,cb) {
     });
 };
 
-function get_post(file,cb) {
+function get_post(file) {
     get_file_contents(file,function(data) {
         process_post(data,file,function(post) {
-            console.log(post);
+            return post;
         });
     });
 }
@@ -51,12 +61,12 @@ function get_file_contents(file,cb) {
 
 function process_post(data,file,cb) {
     var post = frontmatter(data);
-    post.id = path.basename(file,'.md');
+    post.attributes.id = path.basename(file,'.md');
     post.html_body = marked(post.body);
     post.html_body = smart_tags.find_tags(post);
     cb(post);
 }
 
 
-
-get_all_posts('./posts/diary/');
+module.exports.get_all_posts = get_all_posts;
+module.exports.get_post = get_post;

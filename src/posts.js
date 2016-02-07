@@ -50,4 +50,4 @@ function process_post(data,file,cb) {
 
 
 
-get_folder_contents('./posts/notes/');
+get_folder_contents('./posts/diary/');

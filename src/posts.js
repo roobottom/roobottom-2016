@@ -72,7 +72,8 @@ function get_files_in_folder(folder,cb) {
 
 function get_post(file) {
     get_file_contents(file,function(data) {
-        process_post(data,file,function(post) {
+        var folder = path.dirname(file);
+        process_post(data,file,folder,function(post) {
             return post;
         });
     });

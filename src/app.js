@@ -19,7 +19,7 @@ nunjucks.configure( './templates/', {
 
 //homepage
 app.get('/', function (req, res) {
-    posts.get_all_posts('./posts/diary/', function(posts) {
+    posts.get_all_posts(['./posts/diary/','./posts/gallery/','./posts/notes/'], function(posts) {
         res.render('pages/home.html', {
             title: 'Homepage',
             posts: posts,

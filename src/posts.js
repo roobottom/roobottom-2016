@@ -16,36 +16,57 @@ marked.setOptions({
     smartypants: true
 });
 
+function get_all_posts (folders,cb) {
+    if(!posts) var posts = [];
 
-function get_all_posts(folder,cb) {
+    //call folders
+    var folder = folders.pop();
+    get_files_in_folder(folder, function folder_caller(files) {
+
+        //call files:
+        var file = files.pop();
+        get_file_contents(folder+file, function file_caller(data) {
+
+            process_post(data,file,folder,function(post) {
+                posts.push(post);
+                
+                //check if we want to call files again:
+                if(files.length > 0) {
+                    file = files.pop();
+                    get_file_contents(folder+file,file_caller);
+                } else {
+                    //check if we want to call folders again:
+                    if(folders.length > 0) {
+                        folder = folders.pop();
+                        get_files_in_folder(folder,folder_caller);
+                    } else {
+                        posts.sort(function(a,b) {
+                            a = a.attributes.date;
+                            b = b.attributes.date;
+                            return (a < b ? 1:-1);
+                        });
+                        cb(posts);
+                    };
+                };
+
+            });
+
+
+        });
+        
+
+    }); 
+};
+
+function get_files_in_folder(folder,cb) {
     fs.readdir(folder,function(err,files) {
         if(err) throw err;
-        
+            
         var files = _.remove(files,function(n) {
             return n.match(/^\d*\.md$/);
         });
 
-        var posts = [];
-        var file = files.shift();
-
-        get_file_contents(folder+file, function caller(data) {
-            if(files.length > 0) {
-                process_post(data,file,function(post) {
-                    posts.push(post);
-                    file = files.shift();
-                    get_file_contents(folder+file,caller); 
-                }); 
-            } else {
-                posts.sort(function(a,b) {
-                    a = a.attributes.date;
-                    b = b.attributes.date;
-                    return (a < b ? 1:-1);
-                });
-                cb(posts);
-            };
-        });
-
-
+        cb(files);
     });
 };
 
@@ -64,9 +85,10 @@ function get_file_contents(file,cb) {
     });
 };
 
-function process_post(data,file,cb) {
+function process_post(data,file,folder,cb) {
     var post = frontmatter(data);
     post.attributes.id = path.basename(file,'.md');
+    post.attributes.type = folder;
     post.html_body = marked(post.body);
     post.html_body = smart_tags.find_tags(post);
     cb(post);

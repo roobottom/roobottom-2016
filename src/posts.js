@@ -87,8 +87,9 @@ function get_file_contents(file,cb) {
 
 function process_post(data,file,folder,cb) {
     var post = frontmatter(data);
+    var type = folder.split(path.sep);
     post.attributes.id = path.basename(file,'.md');
-    post.attributes.type = folder;
+    post.attributes.type = type[2];
     post.html_body = marked(post.body);
     post.html_body = smart_tags.find_tags(post);
     cb(post);

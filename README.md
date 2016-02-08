@@ -3,4 +3,4 @@ An express.js version of my personal site
 
 ## Install & Run
 
-Run `npm install` then `node src/app`, et voila.
+Run `npm install` then `gulp`, et voila.

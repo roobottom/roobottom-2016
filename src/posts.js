@@ -36,6 +36,11 @@ function get_all_posts(folder,cb) {
                     get_file_contents(folder+file,caller); 
                 }); 
             } else {
+                posts.sort(function(a,b) {
+                    a = a.attributes.date;
+                    b = b.attributes.date;
+                    return (a < b ? 1:-1);
+                });
                 cb(posts);
             };
         });

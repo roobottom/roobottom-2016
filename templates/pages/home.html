@@ -2,9 +2,9 @@
 {% block body %}
 <h1>{{ title }}</h1>
 <p>hi</p>
-{% for post in diary_posts %}
+{% for post in posts %}
     <h2>{{ post.attributes.id }} {{ post.attributes.title }}</h2>
-    <time>{{ post.date }}</time>
+    <time>{{ post.attributes.date | date }}</time>
     <div class="m_post__body">
         {{ post.html_body | safe }}
     </div>

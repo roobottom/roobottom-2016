@@ -3,6 +3,7 @@ var gulp = require('gulp'),
 
 var concat = require('gulp-concat'),
     less = require('gulp-less'),
+    nodemon = require('gulp-nodemon'),
     LessPluginCleanCSS = require('less-plugin-clean-css'),
     cleancss = new LessPluginCleanCSS({ advanced: true }),
     LessPluginAutoPrefix = require('less-plugin-autoprefix'),
@@ -26,16 +27,16 @@ gulp.task('less', function () {
     .pipe(gulp.dest('./assets/css/'))
 });
 
-gulp.task('watch', function() {
-
-  var watch_options = {
-        interval: 1000, // default 100
-        debounceDelay: 500, // default 500
-        mode: 'poll'
-  }
-
-  gulp.watch('./templates/patterns/**/*.pattern',watch_options,['patterns'])
-  gulp.watch('./templates/patterns/**/*.less',watch_options,['less'])
+//start nodemon, this will take over the 'watch' processes
+gulp.task('start', function () {
+  nodemon({
+    script: 'src/app.js'
+  , ext: 'js html md less'
+  , ignore: ["templates/patterns/patterns.html"]
+  , env: { 'NODE_ENV': 'development' }
+  , watch: ["src", "templates"]
+  , tasks: ['patterns','less']
+  })
 })
 
-gulp.task('default', ['patterns','less','watch'])
+gulp.task('default', ['patterns','less','start']);

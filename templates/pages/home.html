@@ -4,8 +4,8 @@
 {% for post in posts %}
     <h2>{{ post.attributes.id }} {{ post.attributes.title }} ({{ post.attributes.type}})</h2>
     <time>{{ post.attributes.date | date }}</time>
-    <!--<div class="m_post__body">
+    <div class="m_post__body">
         {{ post.html_body | safe }}
-    </div> -->
+    </div> 
 {% endfor %}
 {% endblock %}

@@ -1,0 +1,34 @@
+{% macro g_grid(columns) %}
+
+{% endmacro %}
+{% macro c_siteHeader(content) %}
+    <header class="c_siteHeader">
+        <div class="c_siteHeader__content">
+            {% for item in content %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </header>
+{% endmacro %}
+{% macro m_date(nicedate,isodate) %}
+    <time datetime="{{isodate}}" class="m_date">{{nicedate}}</time>
+{% endmacro %}
+{% macro m_gallery(images) %}
+    <figure>
+        {% for i in images %}
+            <img src="{{ i.image }}"/>
+            {% if i.caption %}
+            <figcaption>{{ i.caption }}</figcaption>
+            {% endif %}
+        {% endfor %}
+    </figure>
+{% endmacro %}
+{% macro m_navigation(items) %}
+<nav class="m_navigation">
+    <ul class="m_navigation__items">
+        {% for item in items %}
+        <li class="m_navigation__item"><a href="{{item.url}}" class="m_navigation__link{%if item.current %} m_navigation__link--is-current {% endif %}">{{item.name}}</a></li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endmacro %}

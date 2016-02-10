@@ -3,14 +3,17 @@ var express = require('express'),
     nunjucksDate = require('nunjucks-date'),
     app = express(),
     posts = require('./posts.js'),
-    settings = require('./settings.json');
+    settings = require('./settings.json'),
+    _ = require('lodash');
+
+var __basename = _.trimEnd(__dirname,'src');
 
 app.listen(3002, function () {
   console.log('Roobottom.com running at localhost:3002');
 });
 
 nunjucksDate.setDefaultFormat('MMMM Do YYYY');
-nunjucks.configure( './templates/', {
+nunjucks.configure( __basename + 'templates/', {
     autoescape: false,
     cache: false,
     express: app,
@@ -28,7 +31,7 @@ app.get('/', function (req, res) {
     });
 });
 
-app.use(express.static('./assets/'));
+app.use(express.static(__basename + 'assets'));
 
 app.use(function(req, res){
     res.sendStatus(404);

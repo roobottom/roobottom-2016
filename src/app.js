@@ -28,7 +28,7 @@ app.get('/', function (req, res) {
     });
 });
 
-app.use(express.static('./assets'));
+app.use(express.static('./assets/'));
 
 app.use(function(req, res){
     res.sendStatus(404);

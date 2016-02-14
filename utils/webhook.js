@@ -1,7 +1,8 @@
 var githubhook = require('githubhook');
 var github = githubhook({
   host: '127.0.0.1',
-  port: '3033'
+  port: '3033',
+  path: '/'
 });
 
 github.listen();

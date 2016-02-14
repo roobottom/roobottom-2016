@@ -1,10 +1,12 @@
 var express = require('express'),
     nunjucks = require('nunjucks'),
     nunjucksDate = require('nunjucks-date'),
+    _ = require('lodash'),
     app = express(),
+
     posts = require('./posts.js'),
-    settings = require('./settings.json'),
-    _ = require('lodash');
+    tags = require('./tags.js'),
+    settings = require('./settings.json');
 
 var __basename = _.trimEnd(__dirname,'src');
 
@@ -23,12 +25,15 @@ nunjucks.configure( __basename + 'templates/', {
 //homepage
 app.get('/', function (req, res) {
     posts.get_all_posts(['./posts/diary/','./posts/gallery/','./posts/notes/'], function(posts) {
-        res.render('pages/home.html', {
-            title: 'Homepage',
-            posts: posts,
-            site: settings
-        });
-    });
+        tags.get_tags(posts,function(tags) {
+          res.render('pages/home.html', {
+              title: 'Homepage',
+              posts: posts,
+              site: settings,
+              tags: tags
+          });
+        });//end tags   
+    });//end posts
 });
 
 app.use(express.static(__basename + 'assets'));

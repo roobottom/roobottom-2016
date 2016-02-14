@@ -9,13 +9,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "botkit": "0.0.5",
     "express": "^4.13.4",
     "front-matter": "^2.0.5",
+    "githubhook": "^1.4.0",
     "lodash": "^4.2.1",
     "marked": "^0.3.5",
     "merge": "^1.2.0",
     "nunjucks": "^2.3.0",
-    "nunjucks-date": "^1.2.0"
+    "nunjucks-date": "^1.2.0",
+    "unfluff": "^0.11.0"
   },
   "devDependencies": {
     "gulp": "^3.9.0",

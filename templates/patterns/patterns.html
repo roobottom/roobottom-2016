@@ -10,8 +10,27 @@
         </div>
     </header>
 {% endmacro %}
+{% macro c_siteBody(content) %}
+    <main class="c_siteBody">
+        <div class="c_siteBody__content">
+            {% for item in content %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </main>
+{% endmacro %}
+
 {% macro m_date(nicedate,isodate) %}
     <time datetime="{{isodate}}" class="m_date">{{nicedate}}</time>
+{% endmacro %}
+{% macro m_navigation(items) %}
+<nav class="m_navigation">
+    <ul class="m_navigation__items">
+        {% for item in items %}
+        <li class="m_navigation__item"><a href="{{item.url}}" class="m_navigation__link{%if item.current %} m_navigation__link--is-current {% endif %}">{{item.name}}</a></li>
+        {% endfor %}
+    </ul>
+</nav>
 {% endmacro %}
 {% macro m_gallery(images) %}
     <figure>
@@ -23,12 +42,54 @@
         {% endfor %}
     </figure>
 {% endmacro %}
-{% macro m_navigation(items) %}
-<nav class="m_navigation">
-    <ul class="m_navigation__items">
-        {% for item in items %}
-        <li class="m_navigation__item"><a href="{{item.url}}" class="m_navigation__link{%if item.current %} m_navigation__link--is-current {% endif %}">{{item.name}}</a></li>
-        {% endfor %}
-    </ul>
-</nav>
+{% macro m_postDiary(post) %}
+  <article class="m_postDiary">
+    <h2>{{post.attributes.title}}</h2>
+    <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
+    <div class="m_postDiary__body">
+      {{post.html_body | safe}}
+    </div>
+  </article>
+{% endmacro %}
+
+{% macro m_postGallery(post) %}
+  <article class="m_postGallery">
+    <h2>{{ post.attributes.title }}</h2>
+    <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
+    <div class="m_postGallery__gallery">
+      {{ m_gallery(post.attributes.images) }}
+    </div>
+    <div class="m_postGallery__body">
+      {{post.html_body}}
+    </div>
+  </article>
+{% endmacro %}
+
+{% macro m_postNote(post) %}
+  <article class="m_postNote">
+    <h2>{{ post.attributes.title }}</h2>
+    <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
+    {% if post.attributes.images %}
+      <div class="m_postNote__gallery">
+        {{ m_gallery(post.attributes.images) }}
+      </div>
+    {% endif %}
+    <div class="m_postNote__body">
+      {{post.html_body}}
+    </div>
+  </article>
+{% endmacro %}
+
+{% macro m_posts (posts) %}
+  {% for post in posts %}
+    {% if post.attributes.type == 'diary' %}
+      {{ m_postDiary (post) }}
+    {% endif %}
+    {% if post.attributes.type == 'gallery' %}
+      {{ m_postGallery (post) }}
+    {% endif %}
+    {% if post.attributes.type == 'notes' %}
+      {{ m_postNote(post) }}
+    {% endif %}
+  {% endfor %}
 {% endmacro %}

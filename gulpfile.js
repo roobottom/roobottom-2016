@@ -31,7 +31,7 @@ gulp.task('less', function () {
 gulp.task('start', function () {
   nodemon({
     script: 'src/app.js'
-  , ext: 'js html md less'
+  , ext: 'js html md less pattern'
   , ignore: ["templates/patterns/patterns.html"]
   , env: { 'NODE_ENV': 'development' }
   , watch: ["src", "templates"]

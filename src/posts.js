@@ -16,8 +16,9 @@ marked.setOptions({
     smartypants: true
 });
 
-function get_all_posts (folders,cb) {
+function get_all_posts (folders,limit,cb) {
     if(!posts) var posts = [];
+    if(!limit) var limit = 0;
 
     //call folders
     var folder = folders.pop();
@@ -29,7 +30,7 @@ function get_all_posts (folders,cb) {
 
             process_post(data,file,folder,function(post) {
                 posts.push(post);
-                
+
                 //check if we want to call files again:
                 if(files.length > 0) {
                     file = files.pop();
@@ -45,7 +46,12 @@ function get_all_posts (folders,cb) {
                             b = b.attributes.date;
                             return (a < b ? 1:-1);
                         });
-                        cb(posts);
+                        if(limit===0) {
+                          cb(posts);
+                        } else {
+                          cb(posts.splice(0,limit));
+                        }
+
                     };
                 };
 
@@ -53,15 +59,15 @@ function get_all_posts (folders,cb) {
 
 
         });
-        
 
-    }); 
+
+    });
 };
 
 function get_files_in_folder(folder,cb) {
     fs.readdir(folder,function(err,files) {
         if(err) throw err;
-            
+
         var files = _.remove(files,function(n) {
             return n.match(/^\d*\.md$/);
         });

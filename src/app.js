@@ -24,15 +24,13 @@ nunjucks.configure( __basename + 'templates/', {
 
 //homepage
 app.get('/', function (req, res) {
-    posts.get_all_posts(['./posts/diary/','./posts/gallery/','./posts/notes/'], function(posts) {
-        tags.get_tags(posts,function(tags) {
+    posts.get_all_posts(['./posts/diary/','./posts/gallery/','./posts/notes/'],20, function(posts) {
           res.render('pages/home.html', {
               title: 'Homepage',
               posts: posts,
               site: settings,
               tags: tags
           });
-        });//end tags   
     });//end posts
 });
 

@@ -1,11 +1,12 @@
 {% extends 'layouts/default.html' %}
 {% block body %}
 <h1>{{ title }}</h1>
-{% for post in posts %}
-    <h2>{{ post.attributes.id }} {{ post.attributes.title }} ({{ post.attributes.type}})</h2>
-    <time>{{ post.attributes.date | date }}</time>
-    <div class="m_post__body">
-        {{ post.html_body | safe }}
-    </div> 
-{% endfor %}
+
+  <!-- somehow loop through posts here, and pass to the [content] -->
+
+  {{
+    pattern.c_siteBody([
+      pattern.m_posts(posts)
+    ])
+  }}
 {% endblock %}

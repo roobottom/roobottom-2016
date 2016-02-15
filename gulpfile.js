@@ -19,11 +19,11 @@ gulp.task('patterns' ,function() {
 //compile the site's css
 gulp.task('less', function () {
   return gulp.src('./templates/patterns/**/*.less')
+    .pipe(concat('roobottom-com.less'))
     .pipe(less({
       paths: [ path.join(__dirname, './templates/patterns/_shared') ],
       plugins: [autoprefix, cleancss]
     }))
-    .pipe(concat('roobottom-com.css'))
     .pipe(gulp.dest('./assets/css/'))
 });
 

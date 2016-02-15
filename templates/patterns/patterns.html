@@ -23,15 +23,6 @@
 {% macro m_date(nicedate,isodate) %}
     <time datetime="{{isodate}}" class="m_date">{{nicedate}}</time>
 {% endmacro %}
-{% macro m_navigation(items) %}
-<nav class="m_navigation">
-    <ul class="m_navigation__items">
-        {% for item in items %}
-        <li class="m_navigation__item"><a href="{{item.url}}" class="m_navigation__link{%if item.current %} m_navigation__link--is-current {% endif %}">{{item.name}}</a></li>
-        {% endfor %}
-    </ul>
-</nav>
-{% endmacro %}
 {% macro m_gallery(images) %}
     <figure>
         {% for i in images %}
@@ -41,6 +32,15 @@
             {% endif %}
         {% endfor %}
     </figure>
+{% endmacro %}
+{% macro m_navigation(items) %}
+<nav class="m_navigation">
+    <ul class="m_navigation__items">
+        {% for item in items %}
+        <li class="m_navigation__item"><a href="{{item.url}}" class="m_navigation__link{%if item.current %} m_navigation__link--is-current {% endif %}">{{item.name}}</a></li>
+        {% endfor %}
+    </ul>
+</nav>
 {% endmacro %}
 {% macro m_postDiary(post) %}
   <article class="m_postDiary">

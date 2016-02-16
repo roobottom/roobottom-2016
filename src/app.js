@@ -26,12 +26,21 @@ nunjucks.configure( __basename + 'templates/', {
 app.get('/', function (req, res) {
     posts.get_all_posts(['./posts/diary/','./posts/gallery/','./posts/notes/'],20, function(posts) {
           res.render('pages/home.html', {
-              title: 'Homepage',
-              posts: posts,
-              site: settings,
-              tags: tags
+            title: 'Homepage',
+            posts: posts,
+            site: settings
           });
     });//end posts
+});
+
+app.get('/diary', function(req,res) {
+    posts.get_all_posts(['./posts/diary/'],null, function(posts) {
+      res.render('pages/diary.html', {
+        title: 'Diary',
+        posts: posts,
+        site: settings
+      });
+    });
 });
 
 app.use(express.static(__basename + 'assets'));

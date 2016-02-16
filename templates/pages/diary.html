@@ -1,11 +1,9 @@
 {% extends 'layouts/default.html' %}
 {% block body %}
-<h1>{{ title }}</h1>
-{% for post in posts %}
-    <h2>{{ post.id }} <a href="/diary/{{ post.id }}">{{ post.title }}</a></h2>
-    {{ pattern.m_date(nicedate=post.date|date,isodate=post.date) }}
-    <div class="m_post__body">
-        {{ post.html_body }}
-    </div>
-{% endfor %}
+{{
+  pattern.c_siteBody([
+    pattern.m_pageTitle(title),
+    pattern.m_posts(posts)
+  ])
+}}
 {% endblock %}

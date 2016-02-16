@@ -3,7 +3,9 @@ var fs  = require('fs'),
     _ = require('lodash'),
     frontmatter = require('front-matter'),
     marked = require('marked'),
-    smart_tags = require('./smart_tags.js');
+    smart_tags = require('./smart_tags.js'),
+    trimHtml = require('trim-html'),
+    string = require('string');
 
 marked.setOptions({
     renderer: new marked.Renderer(),
@@ -46,12 +48,8 @@ function get_all_posts (folders,limit,cb) {
                             b = b.attributes.date;
                             return (a < b ? 1:-1);
                         });
-                        if(limit===0) {
-                          cb(posts);
-                        } else {
-                          cb(posts.splice(0,limit));
-                        }
-
+                        var p = (limit ===0 ? posts : posts.splice(0,limit));
+                        cb(p);
                     };
                 };
 
@@ -99,8 +97,23 @@ function process_post(data,file,folder,cb) {
     post.attributes.type = type[2];
     post.html_body = marked(post.body);
     post.html_body = smart_tags.find_tags(post);
+    post.html_snippet = generate_snippet(post.html_body,2000);
     cb(post);
-}
+};
+
+function generate_snippet(body,len) { //sync
+  //this function should generate a sensible
+  //short snipped for the body
+  //it should strip out all images and smart_tags,
+  //but retain text formatting
+
+  var snippet = trimHtml(body, {
+    limit: len
+  });
+
+  return string(snippet.html).stripTags('img','div','figure','figcaption');
+
+};
 
 
 module.exports.get_all_posts = get_all_posts;

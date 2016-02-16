@@ -3,7 +3,7 @@
     <h2>{{post.attributes.title}}</h2>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
     <div class="m_postDiary__body">
-      {{post.html_body | safe}}
+      {{post.html_snippet | safe}}
     </div>
   </article>
 {% endmacro %}

@@ -1,12 +1,13 @@
 {% extends 'layouts/default.html' %}
 {% block body %}
-<h1>{{ title }}</h1>
-
-  <!-- somehow loop through posts here, and pass to the [content] -->
 
   {{
     pattern.c_siteBody([
-      pattern.m_posts(posts)
+      pattern.m_pageTitle(title),
+      pattern.grid([
+        pattern.m_posts(posts),
+        'GRIDS TEST'
+      ],'2-1')
     ])
   }}
 {% endblock %}

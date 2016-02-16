@@ -1,0 +1,53 @@
+@grid-gap-horizonal: 3%;
+
+//2col
+@grid-2col-base: 100% - @grid-gap-horizonal;
+@grid-2col-equal: @grid-2col-base / 2;
+
+//width bases for wide and narrow
+@grid-2col-wide-base: .75;
+@grid-2col-narrow-base: 1 - @grid-2col-wide-base;
+
+//set widths of wide and narrow columns
+@grid-2col-narrow: @grid-2col-base * (@grid-2col-narrow-base);
+@grid-2col-wide: @grid-2col-base * (@grid-2col-wide-base);
+
+.grid {
+  .clearfix();
+}
+
+.grid__column {
+  width: 100%;
+  clear: left;
+  box-sizing: border-box;
+}
+
+@media (min-width: (unit(@layout_medium/@base,rem))) {
+
+    .grid--1-1 .grid__column,
+    .grid--2-1 .grid__column,
+    .grid--1-2 .grid__column {
+      width: @grid-2col-equal;
+      float: left;
+      &:nth-of-type(2n-1) {
+          margin-right: @grid-gap-horizonal;
+      }
+    }
+
+    .grid--1-1 .grid__column:nth-of-type(2n),
+    .grid--1-2 .grid__column:nth-of-type(2n),
+    .grid--2-1 .grid__column:nth-of-type(2n) {
+      clear: none;
+    }
+
+    .grid--1-2 .grid__column,
+    .grid--2-1 .grid__column {
+      width: @grid-2col-narrow;
+    }
+
+    .grid--1-2 .grid__column:nth-of-type(2),
+    .grid--2-1 .grid__column:nth-of-type(1) {
+      width: @grid-2col-wide;
+    }
+
+}

@@ -1,3 +1,0 @@
-{% macro g_grid(columns) %}
-
-{% endmacro %}

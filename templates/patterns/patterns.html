@@ -1,15 +1,13 @@
-{% macro g_grid(columns) %}
+{% macro grid(columns,type) %}
+  <div class="grid grid--{{type}}">
+  {% for column in columns %}
+    <div class="grid__column">
+      {{ column }}
+    </div>
+  {% endfor %}
+  </div>
+{% endmacro %}
 
-{% endmacro %}
-{% macro c_siteHeader(content) %}
-    <header class="c_siteHeader">
-        <div class="c_siteHeader__content">
-            {% for item in content %}
-                {{ item }}
-            {% endfor %}
-        </div>
-    </header>
-{% endmacro %}
 {% macro c_siteBody(content) %}
     <main class="c_siteBody">
         <div class="c_siteBody__content">
@@ -20,8 +18,14 @@
     </main>
 {% endmacro %}
 
-{% macro m_date(nicedate,isodate) %}
-    <time datetime="{{isodate}}" class="m_date">{{nicedate}}</time>
+{% macro c_siteHeader(content) %}
+    <header class="c_siteHeader">
+        <div class="c_siteHeader__content">
+            {% for item in content %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </header>
 {% endmacro %}
 {% macro m_gallery(images) %}
     <figure>
@@ -42,6 +46,10 @@
     </ul>
 </nav>
 {% endmacro %}
+{% macro m_pageTitle(title) %}
+<h1 class="m_pageTitle">{{title}}</h1>
+{% endmacro %}
+
 {% macro m_postDiary(post) %}
   <article class="m_postDiary">
     <h2>{{post.attributes.title}}</h2>

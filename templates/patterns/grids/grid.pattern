@@ -1,0 +1,9 @@
+{% macro grid(columns,type) %}
+  <div class="grid grid--{{type}}">
+  {% for column in columns %}
+    <div class="grid__column">
+      {{ column }}
+    </div>
+  {% endfor %}
+  </div>
+{% endmacro %}

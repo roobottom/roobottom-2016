@@ -95,7 +95,7 @@
 {% endmacro %}
 
 {% macro m_posts (posts,heading="h2",link=true) %}
-  {% for post in posts %}
+  {% for post in posts|limitTo(10) %}
     {% if post.attributes.type == 'diary' %}
       {{ m_postDiary (post,heading,link) }}
     {% endif %}

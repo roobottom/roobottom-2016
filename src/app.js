@@ -20,14 +20,15 @@ nunjucks.configure( __basename + 'templates/', {
     cache: false,
     express: app,
 })
-.addFilter('date', require('nunjucks-date'));
+.addFilter('date', require('nunjucks-date'))
+.addFilter('limitTo', require('./filters/limitTo.filter.js'));
 
 //statics
 app.use(express.static('assets'));
 
 //homepage
 app.get('/', function (req, res) {
-    posts.get_all_posts(['./posts/diary/','./posts/gallery/','./posts/notes/'],20, function(posts) {
+    posts.get_all_posts(['./posts/diary/','./posts/gallery/','./posts/notes/'], function(posts) {
           res.render('pages/home.html', {
             title: 'Homepage',
             posts: posts,
@@ -38,7 +39,7 @@ app.get('/', function (req, res) {
 
 //diary homepage
 app.get('/diary', function(req,res) {
-    posts.get_all_posts(['./posts/diary/'],null, function(posts) {
+    posts.get_all_posts(['./posts/diary/'], function(posts) {
       res.render('pages/diary.html', {
         title: 'Diary',
         posts: posts,

@@ -18,7 +18,15 @@ marked.setOptions({
     smartypants: true
 });
 
-function get_all_posts (folders,limit,cb) {
+function get_all_posts (folders,cb) {
+  process_all_posts(folders,function(posts) {
+    cb(posts);
+  });
+}
+
+//make this function the global "write new posts to a file"
+//and write a new function for getting of the data back from the file.
+function process_all_posts (folders,cb) {
     if(!posts) var posts = [];
     if(!limit) var limit = 0;
 
@@ -49,18 +57,13 @@ function get_all_posts (folders,limit,cb) {
                             return (a < b ? 1:-1);
                         });
                         write_file('./posts/posts.json',JSON.stringify(posts),function() {
-                          var p = (limit ===0 ? posts : posts.splice(0,limit));
-                          cb(p);
+                          //var p = (limit === 0 ? posts : posts.splice(0,limit));
+                          cb(posts);
                         });
                     };
                 };
-
             });
-
-
         });
-
-
     });
 };
 
@@ -121,8 +124,11 @@ function generate_snippet(body,len) { //sync
 
 function write_file(file,data,cb) {
   fs.writeFile(file,data,'utf-8',function(err) {
-    console.log(err);
-    cb();
+    if(!err) {
+      cb();
+    } else {
+      console.log(err);
+    }
   });
 }
 

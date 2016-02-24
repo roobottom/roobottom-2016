@@ -21,7 +21,7 @@ marked.setOptions({
     smartypants: true
 });
 
-function get_all_posts (folders,cb) {
+function get_all_posts (cb) {
   cb(all_posts);
 }
 
@@ -136,3 +136,4 @@ function write_file(file,data,cb) {
 
 module.exports.get_all_posts = get_all_posts;
 module.exports.get_post = get_post;
+module.exports.process_all_posts = process_all_posts;

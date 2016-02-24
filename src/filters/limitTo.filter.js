@@ -12,10 +12,12 @@ function limitTo(input, limit){
 	}
 	if(Array.isArray(input)){
 		limit = Math.min(limit, input.length);
+    console.log(limit);
+    var returnArray;
 		if(limit >= 0){
-			return input.splice(0, limit);
+			return input.slice(0, limit);
 		} else {
-			return input.splice(input.length + limit, input.length);
+			return input.slice(input.length + limit, input.length);
 		}
 	}
 	return input;

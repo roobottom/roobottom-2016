@@ -1,0 +1,9 @@
+{% extends 'layouts/default.html' %}
+{% block body %}
+<h1>{{title}}</h1>
+<ol>
+{% for post in posts %}
+  <li>{{post.attributes.title}}, OK</li>
+{% endfor %}
+</ol>
+{% endblock %}

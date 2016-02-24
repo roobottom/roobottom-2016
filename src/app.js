@@ -28,7 +28,7 @@ app.use(express.static('assets'));
 
 //homepage
 app.get('/', function (req, res) {
-    posts.get_all_posts(['./posts/diary/','./posts/gallery/','./posts/notes/'], function(posts) {
+    posts.get_all_posts(function(posts) {
           res.render('pages/home.html', {
             title: 'Homepage',
             posts: posts,
@@ -37,9 +37,21 @@ app.get('/', function (req, res) {
     });//end posts
 });
 
+//update json cache files.
+app.get('/u',function (req,res) {
+  posts.process_all_posts(['./posts/diary/','./posts/gallery/','./posts/notes/'],function(posts) {
+    res.render('pages/u.html', {
+      title: 'Refresh caches',
+      posts: posts,
+      site: settings
+    });
+  });
+});
+
+
 //diary homepage
 app.get('/diary', function(req,res) {
-    posts.get_all_posts(['./posts/diary/'], function(posts) {
+    posts.get_all_posts(function(posts) {
       res.render('pages/diary.html', {
         title: 'Diary',
         posts: posts,

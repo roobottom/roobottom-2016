@@ -94,8 +94,8 @@
   </article>
 {% endmacro %}
 
-{% macro m_posts (posts,heading="h2",link=true) %}
-  {% for post in posts|limitTo(10) %}
+{% macro m_posts (posts,heading="h2",link=true,limit=10) %}
+  {% for post in posts|limitTo(limit) %}
     {% if post.attributes.type == 'diary' %}
       {{ m_postDiary (post,heading,link) }}
     {% endif %}

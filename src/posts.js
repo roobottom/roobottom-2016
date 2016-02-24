@@ -7,6 +7,9 @@ var fs  = require('fs'),
     trimHtml = require('trim-html'),
     string = require('string');
 
+var __basename = _.trimEnd(__dirname,'src');
+var all_posts = require(__basename + '/posts/posts.json');
+
 marked.setOptions({
     renderer: new marked.Renderer(),
     gfm: true,
@@ -19,9 +22,7 @@ marked.setOptions({
 });
 
 function get_all_posts (folders,cb) {
-  process_all_posts(folders,function(posts) {
-    cb(posts);
-  });
+  cb(all_posts);
 }
 
 //make this function the global "write new posts to a file"

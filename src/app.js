@@ -21,7 +21,8 @@ nunjucks.configure( __basename + 'templates/', {
     express: app,
 })
 .addFilter('date', require('nunjucks-date'))
-.addFilter('limitTo', require('./filters/limitTo.filter.js'));
+.addFilter('limitTo', require('./filters/limitTo.filter.js'))
+.addFilter('filterByType', require('./filters/filterByType.filter.js'));
 
 //statics
 app.use(express.static('assets'));

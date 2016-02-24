@@ -61,7 +61,7 @@
     </{{heading}}>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
     <div class="m_postDiary__body">
-      {{post.html_snippet | safe}}
+      {{post.html_body | safe | truncate(200) }}
     </div>
   </article>
 {% endmacro %}
@@ -105,5 +105,23 @@
     {% if post.attributes.type == 'notes' %}
       {{ m_postNote(post) }}
     {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+{% macro m_posts_diary (posts,heading="h2",link=true,limit=10) %}
+  {% for post in posts | filterByType('diary') | limitTo(limit) %}
+      {{ m_postDiary (post,heading,link) }}
+  {% endfor %}
+{% endmacro %}
+
+{% macro m_posts_notes (posts,heading="h2",link=true,limit=10) %}
+  {% for post in posts | filterByType('notes') | limitTo(limit) %}
+      {{ m_postNote (post,heading,link) }}
+  {% endfor %}
+{% endmacro %}
+
+{% macro m_posts_gallery (posts,heading="h2",link=true,limit=10) %}
+  {% for post in posts | filterByType('gallery') | limitTo(limit) %}
+      {{ m_postGallery (post,heading,link) }}
   {% endfor %}
 {% endmacro %}

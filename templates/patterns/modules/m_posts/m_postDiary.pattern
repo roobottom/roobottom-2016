@@ -9,7 +9,7 @@
     </{{heading}}>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
     <div class="m_postDiary__body">
-      {{post.html_snippet | safe}}
+      {{post.html_body | safe | truncate(200) }}
     </div>
   </article>
 {% endmacro %}

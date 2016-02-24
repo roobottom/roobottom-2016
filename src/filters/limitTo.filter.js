@@ -12,7 +12,6 @@ function limitTo(input, limit){
 	}
 	if(Array.isArray(input)){
 		limit = Math.min(limit, input.length);
-    console.log(limit);
     var returnArray;
 		if(limit >= 0){
 			return input.slice(0, limit);

@@ -58,7 +58,6 @@ function process_all_posts (folders,cb) {
                             return (a < b ? 1:-1);
                         });
                         write_file('./posts/posts.json',JSON.stringify(posts),function() {
-                          //var p = (limit === 0 ? posts : posts.splice(0,limit));
                           cb(posts);
                         });
                     };
@@ -105,23 +104,9 @@ function process_post(data,file,folder,cb) {
     post.attributes.type = type[2];
     post.html_body = marked(post.body);
     post.html_body = smart_tags.find_tags(post);
-    post.html_snippet = generate_snippet(post.html_body,200);
     cb(post);
 };
 
-function generate_snippet(body,len) { //sync
-  //this function should generate a sensible
-  //short snipped for the body
-  //it should strip out all images and smart_tags,
-  //but retain text formatting
-
-  var snippet = trimHtml(body, {
-    limit: len
-  });
-
-  return string(snippet.html).stripTags('img','div','figure','figcaption');
-
-};
 
 function write_file(file,data,cb) {
   fs.writeFile(file,data,'utf-8',function(err) {

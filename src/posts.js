@@ -48,8 +48,10 @@ function get_all_posts (folders,limit,cb) {
                             b = b.attributes.date;
                             return (a < b ? 1:-1);
                         });
-                        var p = (limit ===0 ? posts : posts.splice(0,limit));
-                        cb(p);
+                        write_file('./posts/posts.json',JSON.stringify(posts),function() {
+                          var p = (limit ===0 ? posts : posts.splice(0,limit));
+                          cb(p);
+                        });
                     };
                 };
 
@@ -62,6 +64,17 @@ function get_all_posts (folders,limit,cb) {
     });
 };
 
+function get_post(file,cb) {
+    get_file_contents(file,function(data) {
+        var folder = path.dirname(file);
+        process_post(data,file,folder,function(post) {
+            cb(post);
+        });
+    });
+};
+
+//private functions
+
 function get_files_in_folder(folder,cb) {
     fs.readdir(folder,function(err,files) {
         if(err) throw err;
@@ -73,15 +86,6 @@ function get_files_in_folder(folder,cb) {
         cb(files);
     });
 };
-
-function get_post(file) {
-    get_file_contents(file,function(data) {
-        var folder = path.dirname(file);
-        process_post(data,file,folder,function(post) {
-            return post;
-        });
-    });
-}
 
 function get_file_contents(file,cb) {
     fs.readFile(file, 'utf8', function(err,data) {
@@ -97,7 +101,7 @@ function process_post(data,file,folder,cb) {
     post.attributes.type = type[2];
     post.html_body = marked(post.body);
     post.html_body = smart_tags.find_tags(post);
-    post.html_snippet = generate_snippet(post.html_body,2000);
+    post.html_snippet = generate_snippet(post.html_body,200);
     cb(post);
 };
 
@@ -114,6 +118,13 @@ function generate_snippet(body,len) { //sync
   return string(snippet.html).stripTags('img','div','figure','figcaption');
 
 };
+
+function write_file(file,data,cb) {
+  fs.writeFile(file,data,'utf-8',function(err) {
+    console.log(err);
+    cb();
+  });
+}
 
 
 module.exports.get_all_posts = get_all_posts;

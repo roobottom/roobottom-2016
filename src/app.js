@@ -22,6 +22,9 @@ nunjucks.configure( __basename + 'templates/', {
 })
 .addFilter('date', require('nunjucks-date'));
 
+//statics
+app.use(express.static('assets'));
+
 //homepage
 app.get('/', function (req, res) {
     posts.get_all_posts(['./posts/diary/','./posts/gallery/','./posts/notes/'],20, function(posts) {
@@ -33,6 +36,7 @@ app.get('/', function (req, res) {
     });//end posts
 });
 
+//diary homepage
 app.get('/diary', function(req,res) {
     posts.get_all_posts(['./posts/diary/'],null, function(posts) {
       res.render('pages/diary.html', {
@@ -43,7 +47,21 @@ app.get('/diary', function(req,res) {
     });
 });
 
-app.use(express.static(__basename + 'assets'));
+//diary post
+app.get('/diary/:id', function(req,res) {
+  if(/^\d+$/.test(req.params.id)) {//only process main req
+    var id = './posts/diary/' + req.params.id + '.md';
+    posts.get_post(id,function(post) {
+      res.render('pages/diary_post.html', {
+        title: post.attributes.title,
+        post: post,
+        site: settings
+      });
+    });
+  } else {
+    res.end();
+  };
+});
 
 app.use(function(req, res){
     res.sendStatus(404);

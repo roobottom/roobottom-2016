@@ -1,9 +1,9 @@
 {% extends 'layouts/default.html' %}
 {% block body %}
-<h1>{{ post.title }}</h1>
-<time>{{ post.date | date }}</time>
+<h1>{{ post.attributes.title }}</h1>
+<time>{{ post.attributes.date | date }}</time>
 {{ post.html_body | safe }}
-{% for tag in post.tags %}
+{% for tag in post.attributes.tags %}
     #{{tag}}
 {% endfor %}
 {% endblock %}

@@ -50,9 +50,15 @@
 <h1 class="m_pageTitle">{{title}}</h1>
 {% endmacro %}
 
-{% macro m_postDiary(post) %}
+{% macro m_postDiary(post,heading,link) %}
   <article class="m_postDiary">
-    <h2>{{post.attributes.title}}</h2>
+    <{{heading}}>
+      {% if link %}
+        <a href="/diary/{{post.attributes.id}}">{{post.attributes.title}}</a>
+      {% else %}
+        {{post.attributes.title}}
+      {% endif %}
+    </{{heading}}>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
     <div class="m_postDiary__body">
       {{post.html_snippet | safe}}
@@ -88,10 +94,10 @@
   </article>
 {% endmacro %}
 
-{% macro m_posts (posts) %}
+{% macro m_posts (posts,heading="h2",link=true) %}
   {% for post in posts %}
     {% if post.attributes.type == 'diary' %}
-      {{ m_postDiary (post) }}
+      {{ m_postDiary (post,heading,link) }}
     {% endif %}
     {% if post.attributes.type == 'gallery' %}
       {{ m_postGallery (post) }}

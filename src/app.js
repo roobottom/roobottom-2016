@@ -64,8 +64,7 @@ app.get('/diary', function(req,res) {
 //diary post
 app.get('/diary/:id', function(req,res) {
   if(/^\d+$/.test(req.params.id)) {//only process main req
-    var id = './posts/diary/' + req.params.id + '.md';
-    posts.get_post(id,function(post) {
+    posts.get_post(req.params.id,'diary',function(post) {
       res.render('pages/diary_post.html', {
         title: post.attributes.title,
         post: post,

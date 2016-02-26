@@ -25,8 +25,6 @@ function get_all_posts (cb) {
   cb(all_posts);
 }
 
-//make this function the global "write new posts to a file"
-//and write a new function for getting of the data back from the file.
 function process_all_posts (folders,cb) {
     if(!posts) var posts = [];
 
@@ -61,7 +59,10 @@ function process_all_posts (folders,cb) {
                         posts = calculate_post_relations(posts);
 
                         write_file('./posts/posts.json',JSON.stringify(posts),function() {
-                          cb(posts);
+                          create_file_per_post(posts, function() {
+                            cb(posts);
+                          });
+
                         });
                     };
                 };
@@ -70,13 +71,8 @@ function process_all_posts (folders,cb) {
     });
 };
 
-function get_post(file,cb) {
-    get_file_contents(file,function(data) {
-        var folder = path.dirname(file);
-        process_post(data,file,folder,function(post) {
-            cb(post);
-        });
-    });
+function get_post(id,type,cb) {
+  cb();
 };
 
 //private functions
@@ -140,6 +136,24 @@ function write_file(file,data,cb) {
       console.log(err);
     }
   });
+};
+
+function create_file_per_post(posts,cb) {
+  var post = posts.pop();
+  var file = __basename + 'posts/.cache/' + post.attributes.type + '/' + post.attributes.id + '.json';
+
+  write_file(file, JSON.stringify(post), function write_caller(err) {
+    if(!err) {
+      post = posts.pop();
+      file = __basename + 'posts/.cache/' + post.attributes.type + '/' + post.attributes.id + '.json';
+      if(posts.length > 0) {
+        write_file(file, JSON.stringify(post), write_caller);
+      } else {
+        cb()
+      }
+    }
+  });
+
 }
 
 

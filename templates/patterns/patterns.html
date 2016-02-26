@@ -8,6 +8,15 @@
   </div>
 {% endmacro %}
 
+{% macro c_siteHeader(content) %}
+    <header class="c_siteHeader">
+        <div class="c_siteHeader__content">
+            {% for item in content %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </header>
+{% endmacro %}
 {% macro c_siteBody(content) %}
     <main class="c_siteBody">
         <div class="c_siteBody__content">
@@ -18,15 +27,6 @@
     </main>
 {% endmacro %}
 
-{% macro c_siteHeader(content) %}
-    <header class="c_siteHeader">
-        <div class="c_siteHeader__content">
-            {% for item in content %}
-                {{ item }}
-            {% endfor %}
-        </div>
-    </header>
-{% endmacro %}
 {% macro m_gallery(images) %}
     <figure>
         {% for i in images %}

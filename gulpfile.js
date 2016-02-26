@@ -28,15 +28,15 @@ gulp.task('less', function () {
 });
 
 //start nodemon, this will take over the 'watch' processes
-gulp.task('start', function () {
+gulp.task('nodemon', function () {
   nodemon({
     script: 'src/app.js'
   , ext: 'js html md less pattern'
-  , ignore: ["templates/patterns/patterns.html"]
+  , ignore: ["templates/patterns/patterns.html","posts/posts.json"]
   , env: { 'NODE_ENV': 'development' }
   , watch: ["src", "templates"]
-  , tasks: ['patterns','less']
+  //, tasks: ['patterns','less']
   })
 })
 
-gulp.task('default', ['patterns','less','start']);
+gulp.task('default', ['patterns','less','nodemon']);

@@ -29,7 +29,6 @@ function get_all_posts (cb) {
 //and write a new function for getting of the data back from the file.
 function process_all_posts (folders,cb) {
     if(!posts) var posts = [];
-    if(!limit) var limit = 0;
 
     //call folders
     var folder = folders.pop();
@@ -57,6 +56,10 @@ function process_all_posts (folders,cb) {
                             b = b.attributes.date;
                             return (a < b ? 1:-1);
                         });
+
+                        //now add-in 2-way relational data for this set:
+                        posts = calculate_post_relations(posts);
+
                         write_file('./posts/posts.json',JSON.stringify(posts),function() {
                           cb(posts);
                         });
@@ -107,6 +110,27 @@ function process_post(data,file,folder,cb) {
     cb(post);
 };
 
+function calculate_post_relations(posts) {
+  for (key in posts) {
+    var next = parseInt(key)+1;
+    var prev = parseInt(key)-1;
+    if(next in posts) {
+      posts[key].next = {};
+      posts[key].next.title = posts[next].attributes.title;
+      posts[key].next.type = posts[next].attributes.type;
+      posts[key].next.id = posts[next].attributes.id;
+      posts[key].next.date = posts[next].attributes.date;
+    }
+    if(prev in posts) {
+      posts[key].prev = {};
+      posts[key].prev.title = posts[prev].attributes.title;
+      posts[key].prev.type = posts[prev].attributes.type;
+      posts[key].prev.id = posts[prev].attributes.id;
+      posts[key].prev.date = posts[prev].attributes.date;
+    }
+  }
+  return posts;
+};
 
 function write_file(file,data,cb) {
   fs.writeFile(file,data,'utf-8',function(err) {

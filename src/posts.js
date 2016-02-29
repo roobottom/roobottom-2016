@@ -1,3 +1,4 @@
+'use strict';
 var fs  = require('fs'),
     path = require('path'),
     _ = require('lodash'),
@@ -5,7 +6,8 @@ var fs  = require('fs'),
     marked = require('marked'),
     smart_tags = require('./smart_tags.js'),
     trimHtml = require('trim-html'),
-    string = require('string');
+    string = require('string'),
+    async = require('async');
 
 var __basename = _.trimEnd(__dirname,'src');
 var all_posts = require(__basename + '/posts/posts.json');
@@ -21,15 +23,20 @@ marked.setOptions({
     smartypants: true
 });
 
+var folders = ['diary','gallery','notes'];
+var postsRoot = './posts/';
+
 function get_all_posts (cb) {
   cb(all_posts);
 }
 
-function process_all_posts (folders,cb) {
-    if(!posts) var posts = [];
+
+//update this to process files for each folder.
+function process_all_posts (cb) {
+    var posts = [];
 
     //call folders
-    var folder = folders.pop();
+    var folder = './posts/'+folders.pop()+'/';
     get_files_in_folder(folder, function folder_caller(files) {
 
         //call files:
@@ -38,7 +45,6 @@ function process_all_posts (folders,cb) {
 
             process_post(data,file,folder,function(post) {
                 posts.push(post);
-
                 //check if we want to call files again:
                 if(files.length > 0) {
                     file = files.pop();
@@ -46,7 +52,7 @@ function process_all_posts (folders,cb) {
                 } else {
                     //check if we want to call folders again:
                     if(folders.length > 0) {
-                        folder = folders.pop();
+                        folder = './posts/'+folders.pop()+'/';
                         get_files_in_folder(folder,folder_caller);
                     } else {
                         posts.sort(function(a,b) {
@@ -60,7 +66,7 @@ function process_all_posts (folders,cb) {
 
                         write_file('./posts/posts.json',JSON.stringify(posts),function() {
                           create_file_per_post(posts, function() {
-                            cb(posts);
+                            cb(all_posts);
                           });
 
                         });
@@ -74,6 +80,29 @@ function process_all_posts (folders,cb) {
 function get_post(id,type,cb) {
   cb();
 };
+
+function processAllPosts() {
+  Promise.all(folders.map(getFilesInFolder)).then((files) => {
+    console.log(files)
+  }).catch((err) => {
+    console.log('yuk, an error:' + err)
+  })
+}
+
+function getFilesInFolder(folder) {
+  return new Promise((resolve, reject) => {
+    fs.readdir(postsRoot+folder,function(err,files) {
+      if(!err) {
+        files = _.remove(files, n => n.match(/^\d*\.md$/))
+        resolve(files)
+      } else {
+        reject(err)
+      }
+    })
+  })
+}
+
+processAllPosts();
 
 //private functions
 
@@ -107,7 +136,7 @@ function process_post(data,file,folder,cb) {
 };
 
 function calculate_post_relations(posts) {
-  for (key in posts) {
+  for (let key in posts) {
     var next = parseInt(key)+1;
     var prev = parseInt(key)-1;
     if(next in posts) {

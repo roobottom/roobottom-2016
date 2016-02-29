@@ -40,7 +40,7 @@ app.get('/', function (req, res) {
 
 //update json cache files.
 app.get('/u',function (req,res) {
-  posts.process_all_posts(['./posts/diary/','./posts/gallery/','./posts/notes/'],function(posts) {
+  posts.process_all_posts(function(posts) {
     res.render('pages/u.html', {
       title: 'Refresh caches',
       posts: posts,

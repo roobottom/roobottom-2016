@@ -6,8 +6,7 @@ var fs  = require('fs'),
     marked = require('marked'),
     smart_tags = require('./smart_tags.js'),
     trimHtml = require('trim-html'),
-    string = require('string'),
-    async = require('async');
+    string = require('string');
 
 var __basename = _.trimEnd(__dirname,'src');
 var all_posts = require(__basename + '/posts/posts.json');
@@ -30,6 +29,42 @@ function get_all_posts (cb) {
   cb(all_posts);
 }
 
+
+function processAllPosts(cb) {
+  let posts = [];
+  let folder = folders.pop();
+
+  getFilesInFolder(folder, function filesCaller(err,files) {
+    if(!err) {
+
+
+
+      /* call any remaining folders recursivly*/
+      if(folders.length > 0) {
+        folder = folders.pop();
+        getFilesInFolder(folder,filesCaller);
+      }
+    }
+    else {console.log(err);}
+  });//getFilesInFolder
+}
+function getFilesInFolder(folder,cb) {
+    fs.readdir(postsRoot+folder,(err,files) => {
+        if(err) { cb(err) }
+        else {
+          files = _.remove(files, n => n.match(/^\d*\.md$/));
+          cb(null,files);
+        }
+    });
+};
+function getFileCOntent(file,cb) {
+    fs.readFile(file, 'utf8', function(err,data) {
+        if(err) throw err;
+        cb(data);
+    });
+};
+
+//processAllPosts();
 
 //update this to process files for each folder.
 function process_all_posts (cb) {
@@ -77,32 +112,17 @@ function process_all_posts (cb) {
     });
 };
 
+function processAllPostsCallbacks(cb) {
+  let posts = [];
+  let folder = './posts/'+folders.pop()+'/';
+  get_files_in_folder(folder, function folder_caller(files) {
+
+  });
+};
+
 function get_post(id,type,cb) {
   cb();
 };
-
-function processAllPosts() {
-  Promise.all(folders.map(getFilesInFolder)).then((files) => {
-    console.log(files)
-  }).catch((err) => {
-    console.log('yuk, an error:' + err)
-  })
-}
-
-function getFilesInFolder(folder) {
-  return new Promise((resolve, reject) => {
-    fs.readdir(postsRoot+folder,function(err,files) {
-      if(!err) {
-        files = _.remove(files, n => n.match(/^\d*\.md$/))
-        resolve(files)
-      } else {
-        reject(err)
-      }
-    })
-  })
-}
-
-processAllPosts();
 
 //private functions
 

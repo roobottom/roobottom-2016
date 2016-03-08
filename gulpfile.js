@@ -35,7 +35,7 @@ gulp.task('nodemon', function () {
   , ignore: ["templates/patterns/patterns.html","posts/posts.json"]
   , env: { 'NODE_ENV': 'development' }
   , watch: ["src", "templates"]
-  //, tasks: ['patterns','less']
+  , tasks: ['patterns','less']
   })
 })
 

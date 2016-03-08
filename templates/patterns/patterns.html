@@ -8,15 +8,6 @@
   </div>
 {% endmacro %}
 
-{% macro c_siteHeader(content) %}
-    <header class="c_siteHeader">
-        <div class="c_siteHeader__content">
-            {% for item in content %}
-                {{ item }}
-            {% endfor %}
-        </div>
-    </header>
-{% endmacro %}
 {% macro c_siteBody(content) %}
     <main class="c_siteBody">
         <div class="c_siteBody__content">
@@ -27,16 +18,28 @@
     </main>
 {% endmacro %}
 
-{% macro m_gallery(images) %}
-    <figure>
+{% macro c_siteHeader(content) %}
+    <header class="c_siteHeader">
+        <div class="c_siteHeader__content">
+            {% for item in content %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </header>
+{% endmacro %}
+{% macro m_gallery(images,type) %}
+    <div class="m_gallery">
         {% for i in images %}
-            <img src="{{ i.image }}"/>
+          <div class="m_gallery__image">
+            <img src="http://localhost:3003/r/600/auto/{{type}}/{{ i.image }}"/>
             {% if i.caption %}
             <figcaption>{{ i.caption }}</figcaption>
             {% endif %}
+          </div>
         {% endfor %}
-    </figure>
+    </div>
 {% endmacro %}
+
 {% macro m_navigation(items) %}
 <nav class="m_navigation">
     <ul class="m_navigation__items">
@@ -66,13 +69,11 @@
   </article>
 {% endmacro %}
 
-{% macro m_postGallery(post) %}
+{% macro m_postGallery(post,site) %}
   <article class="m_postGallery">
-    <h2>{{ post.attributes.title }}</h2>
+    <h2>{{ post.attributes.title }} {{site}}</h2>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
-    <div class="m_postGallery__gallery">
-      {{ m_gallery(post.attributes.images) }}
-    </div>
+    {{ m_gallery(post.attributes.images,'gallery') }}
     <div class="m_postGallery__body">
       {{post.html_body}}
     </div>

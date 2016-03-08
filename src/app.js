@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express'),
     nunjucks = require('nunjucks'),
     nunjucksDate = require('nunjucks-date'),
@@ -5,9 +7,9 @@ var express = require('express'),
     app = express(),
 
     posts = require('./posts.js'),
+    p_posts = require('./posts.promises.js'),
     tags = require('./tags.js'),
     settings = require('./settings.json');
-
 var __basename = _.trimEnd(__dirname,'src');
 
 app.listen(3002, function () {
@@ -22,7 +24,8 @@ nunjucks.configure( __basename + 'templates/', {
 })
 .addFilter('date', require('nunjucks-date'))
 .addFilter('limitTo', require('./filters/limitTo.filter.js'))
-.addFilter('filterByType', require('./filters/filterByType.filter.js'));
+.addFilter('filterByType', require('./filters/filterByType.filter.js'))
+.addGlobal('site','settings');
 
 //statics
 app.use(express.static('assets'));
@@ -32,8 +35,7 @@ app.get('/', function (req, res) {
     posts.get_all_posts(function(posts) {
           res.render('pages/home.html', {
             title: 'Homepage',
-            posts: posts,
-            site: settings
+            posts: posts
           });
     });//end posts
 });
@@ -43,9 +45,17 @@ app.get('/u',function (req,res) {
   posts.process_all_posts(function(posts) {
     res.render('pages/u.html', {
       title: 'Refresh caches',
-      posts: posts,
-      site: settings
+      posts: posts
     });
+  });
+});
+
+app.get('/test',function(req,res) {
+  p_posts.processAllPosts().then(function(posts){
+    console.log(posts);
+    res.render('pages/test.html', {
+      posts:posts
+    })
   });
 });
 

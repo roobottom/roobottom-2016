@@ -13,7 +13,6 @@ var fs  = require('fs'),
 
 function processAllPosts() {
 
-  let n=1;
   let all_posts = [];
 
   return Promise.map(folders,folder => {
@@ -33,6 +32,7 @@ function processAllPosts() {
     })
 
     .then(posts => {
+      sortPosts(posts);
       return posts;
     })
 
@@ -51,6 +51,7 @@ function getFilesInFolder(folder) {
     })
   })
 }
+
 function getFileContents(folder,file) {
   return new Promise((resolve,reject) => {
     fs.readFile(postsRoot+folder+'/'+file, 'utf8', function(err,data) {
@@ -61,6 +62,7 @@ function getFileContents(folder,file) {
     })
   })
 }
+
 function processPostData(data,folder) {
   return new Promise((resolve,reject) => {
     let post = frontmatter(data.content);
@@ -69,6 +71,24 @@ function processPostData(data,folder) {
     post.html_body = marked(post.body);
     post.html_body = smart_tags.find_tags(post);
     resolve(post);
+  });
+};
+
+function sortPosts(posts) {
+  return posts.sort(function(a,b) {
+      a = a.attributes.date;
+      b = b.attributes.date;
+      return (a < b ? 1:-1);
+  });
+}
+
+//rewrite this as just a return function
+function writeFile(file,data) {
+  return newPromise((resolve,reject) => {
+    fs.writeFile(file,data,'utf-8',function(err) {
+      if(!err) { resolve(null); }
+      else { reject(err); }
+    });
   });
 };
 

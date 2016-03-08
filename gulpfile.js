@@ -39,4 +39,14 @@ gulp.task('nodemon', function () {
   })
 })
 
+gulp.task('jsonly', function () {
+  nodemon({
+    script: 'src/app.js'
+  , ext: 'js html md less pattern'
+  , ignore: ["templates/patterns/patterns.html","posts/posts.json"]
+  , env: { 'NODE_ENV': 'development' }
+  , watch: ["src", "templates"]
+  })
+})
+
 gulp.task('default', ['patterns','less','nodemon']);

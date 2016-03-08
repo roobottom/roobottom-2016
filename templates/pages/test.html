@@ -3,7 +3,7 @@
 
   <li><ul>
     {% for thing in post %}
-    <li>{{thing.attributes.type}}</li>
+    <li>{{thing.attributes.type}}, {{thing.attributes.date | date}}</li>
     {% endfor %}
   </ul></li>
 {% endfor %}

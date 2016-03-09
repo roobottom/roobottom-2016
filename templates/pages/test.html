@@ -1,9 +1,9 @@
 <ol>
 {% for post in posts %}
-
+  {{post.gallery}}
   <li><ul>
-    {% for thing in post %}
-    <li>{{thing.attributes.type}}, {{thing.attributes.date | date}}</li>
+    {% for thing in post.gallery %}
+    <li>dalksj{{thing}}</li>
     {% endfor %}
   </ul></li>
 {% endfor %}

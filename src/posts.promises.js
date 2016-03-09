@@ -13,7 +13,8 @@ var fs  = require('fs'),
 
 function processAllPosts() {
 
-  let all_posts = [];
+  let all_posts = {};
+  let n = 1;
 
   return Promise.map(folders,folder => {
 
@@ -33,14 +34,24 @@ function processAllPosts() {
 
     .then(posts => {
       sortPosts(posts);
+      all_posts[folder] = posts;
       //we can do ALL the processing on the posts object here::
       posts.map(post => {
-        console.log(post.attributes.title,post.attributes.type);
+        //console.log(post.attributes.title,post.attributes.type);
       });
-      return Promise.map(posts,post => {
-        return writeFile(post.attributes.id,folder,post);
-      })
-      console.log(posts);
+      // return Promise.map(posts,post => {
+      //   return writeFile(post.attributes.id,folder,post);
+      // })
+
+      //IDEA: introduce a new sub-stream of promises here to process posts??
+
+    })
+
+    .then(function() {
+      fs.writeFile('./posts/test.json',JSON.stringify(all_posts),'utf-8',function(err) {
+        if(!err) { return all_posts; }
+      });
+
     })
 
     .catch(err => console.log('error: ', err))

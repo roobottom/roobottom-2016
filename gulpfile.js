@@ -27,8 +27,16 @@ gulp.task('less', function () {
     .pipe(gulp.dest('./assets/css/'))
 });
 
+var go_objects = {
+    script: 'src/app.js'
+  , ext: 'js html md less pattern'
+  , ignore: ["templates/patterns/patterns.html","posts/posts.json"]
+  , env: { 'NODE_ENV': 'development' }
+  , watch: ["src", "templates"]
+}
+
 //start nodemon, this will take over the 'watch' processes
-gulp.task('nodemon', function () {
+gulp.task('go', function () {
   nodemon({
     script: 'src/app.js'
   , ext: 'js html md less pattern'
@@ -39,7 +47,7 @@ gulp.task('nodemon', function () {
   })
 })
 
-gulp.task('jsonly', function () {
+gulp.task('go:js', function () {
   nodemon({
     script: 'src/app.js'
   , ext: 'js html md less pattern'
@@ -49,4 +57,4 @@ gulp.task('jsonly', function () {
   })
 })
 
-gulp.task('default', ['patterns','less','nodemon']);
+gulp.task('default', ['patterns','less','go']);

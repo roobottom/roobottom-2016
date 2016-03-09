@@ -33,8 +33,17 @@ function processAllPosts() {
 
     .then(posts => {
       sortPosts(posts);
-      return posts;
+      //we can do ALL the processing on the posts object here::
+      posts.map(post => {
+        console.log(post.attributes.title,post.attributes.type);
+      });
+      return Promise.map(posts,post => {
+        return writeFile(post.attributes.id,folder,post);
+      })
+      console.log(posts);
     })
+
+    .catch(err => console.log('error: ', err))
 
   });
 }
@@ -82,10 +91,12 @@ function sortPosts(posts) {
   });
 }
 
-//rewrite this as just a return function
-function writeFile(file,data) {
-  return newPromise((resolve,reject) => {
-    fs.writeFile(file,data,'utf-8',function(err) {
+//rewrite this as just a return function?
+function writeFile(id,folder,post) {
+  return new Promise((resolve,reject) => {
+    post = JSON.stringify(post);
+    let fullPath = './posts/.cache/' + folder + '/' + id + '.json';
+    fs.writeFile(fullPath,post,'utf-8',function(err) {
       if(!err) { resolve(null); }
       else { reject(err); }
     });

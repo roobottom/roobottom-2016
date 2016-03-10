@@ -1,10 +1,10 @@
-<ol>
 {% for post in posts %}
-  {{post.gallery}}
-  <li><ul>
-    {% for thing in post.gallery %}
-    <li>dalksj{{thing}}</li>
-    {% endfor %}
-  </ul></li>
+    <h2>Diary</h2>
+    <ol>
+      {% for diary in post.diary %}
+        <li>
+          {{diary.attributes.title}}
+        </li>
+      {% endfor %}
+    </ol>
 {% endfor %}
-</ol>

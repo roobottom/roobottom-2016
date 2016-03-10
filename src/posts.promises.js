@@ -33,30 +33,58 @@ function processAllPosts() {
     })
 
     .then(posts => {
+      //synchronous processing of the posts object:
       sortPosts(posts);
+      calculatePostRelationships(posts);
       all_posts[folder] = posts;
       //we can do ALL the processing on the posts object here::
+
+      //IDEA: https://github.com/substack/node-mkdirp
       posts.map(post => {
-        //console.log(post.attributes.title,post.attributes.type);
+        let fullPath = './posts/.cache/' + folder + '/' + post.attributes.id + '.json';
+        fs.writeFile(fullPath,JSON.stringify(post),'utf-8',function(err) {
+          if(!err) { return; }
+          if(err) { console.log(err); }
+        });
       });
-      // return Promise.map(posts,post => {
-      //   return writeFile(post.attributes.id,folder,post);
-      // })
-
-      //IDEA: introduce a new sub-stream of promises here to process posts??
-
     })
 
     .then(function() {
-      fs.writeFile('./posts/test.json',JSON.stringify(all_posts),'utf-8',function(err) {
-        if(!err) { return all_posts; }
+      fs.writeFile('./posts/.cache/posts.json',JSON.stringify(all_posts),'utf-8',function(err) {
+        if(!err) { return; }
+        if(err) { console.log(err); }
       });
+    })
 
+    .then(function() {
+      return all_posts;
     })
 
     .catch(err => console.log('error: ', err))
 
   });
+}
+
+function calculatePostRelationships(posts) {
+  for (let key in posts) {
+    let next = parseInt(key)+1;
+    let prev = parseInt(key)-1;
+    if(next in posts) {
+      posts[key].next = {};
+      posts[key].next.title = posts[next].attributes.title;
+      posts[key].next.type = posts[next].attributes.type;
+      posts[key].next.id = posts[next].attributes.id;
+      posts[key].next.date = posts[next].attributes.date;
+    }
+    if(prev in posts) {
+      posts[key].prev = {};
+      posts[key].prev.title = posts[prev].attributes.title;
+      posts[key].prev.type = posts[prev].attributes.type;
+      posts[key].prev.id = posts[prev].attributes.id;
+      posts[key].prev.date = posts[prev].attributes.date;
+    }
+  }
+  return posts;
 }
 
 function getFilesInFolder(folder) {

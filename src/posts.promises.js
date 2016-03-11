@@ -6,10 +6,13 @@ var fs  = require('fs'),
     Promise = require('bluebird'),
     frontmatter = require('front-matter'),
     marked = require('marked'),
+    mkdirp = require('mkdirp'),
     smart_tags = require('./smart_tags.js');
 
   let folders = ['diary','gallery','notes'];
   let postsRoot = './posts/';
+  let cacheRoot = postsRoot + '.cache/';
+
 
 function processAllPosts() {
 
@@ -17,8 +20,6 @@ function processAllPosts() {
   let n = 1;
 
   return new Promise((resolve,reject) => {
-
-    console.log(n,'outside promise');
 
     Promise.map(folders,folder => {
 
@@ -41,31 +42,25 @@ function processAllPosts() {
         sortPosts(posts);
         calculatePostRelationships(posts);
         all_posts = all_posts.concat(posts);
-        //we can do ALL the processing on the posts object here::
 
-        //IDEA: https://github.com/substack/node-mkdirp
-        posts.map(post => {
-          let fullPath = './posts/.cache/' + folder + '/' + post.attributes.id + '.json';
-          fs.writeFile(fullPath,JSON.stringify(post),'utf-8',function(err) {
-            if(!err) { return; }
-            if(err) { console.log(err); }
-          });
-        });
-      })
-
-      .then(function() {
-        fs.writeFile('./posts/.cache/posts.json',JSON.stringify(all_posts),'utf-8',function(err) {
-          if(!err) { return; }
-          if(err) { console.log(err); }
-        });
-        console.log(n++,'inside promise');
+        //now write out some files on each pass
+        return Promise.map(posts, post=> {
+          return writeFile(cacheRoot + folder ,post.attributes.id + '.json',JSON.stringify(post));
+        })
+        .then(function() {
+          return writeFile(cacheRoot + folder,'posts.json',JSON.stringify(posts));
+        })
       })
       .catch(err => console.log('error: ', err))
 
-    }).then(function() {
-      console.log(n++,'promise then');
+    })
+    .then(function() {
+      return writeFile(cacheRoot,'posts.json',JSON.stringify(all_posts)).then(function() {return});
+    })
+    .then(function() {
       resolve(all_posts);
-    });
+    })
+    .catch(err => console.log('error: ', err));
 
   });
 }
@@ -135,14 +130,18 @@ function sortPosts(posts) {
   });
 }
 
-//rewrite this as just a return function?
-function writeFile(id,folder,post) {
+function writeFile(folder,file,contents) {
   return new Promise((resolve,reject) => {
-    post = JSON.stringify(post);
-    let fullPath = './posts/.cache/' + folder + '/' + id + '.json';
-    fs.writeFile(fullPath,post,'utf-8',function(err) {
-      if(!err) { resolve(null); }
-      else { reject(err); }
+    mkdirp(folder, function (err) {
+      if(!err) {
+        fs.writeFile(folder+'/'+file,contents,'utf-8',function(err) {
+          if(!err) { resolve(file); }
+          else { reject(err); }
+        });
+      }
+      else {
+        console.log('mkdir error:',err);
+      }
     });
   });
 };

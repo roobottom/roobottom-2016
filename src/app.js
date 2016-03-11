@@ -52,8 +52,6 @@ app.get('/u',function (req,res) {
 
 app.get('/test',function(req,res) {
   p_posts.processAllPosts().then(function(posts){
-    console.log('inside then in app.get');
-    console.dir(posts);
     res.render('pages/test.html', {
       posts:posts
     })

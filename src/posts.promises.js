@@ -13,54 +13,59 @@ var fs  = require('fs'),
 
 function processAllPosts() {
 
-  let all_posts = {};
+  let all_posts = [];
   let n = 1;
 
-  return Promise.map(folders,folder => {
+  return new Promise((resolve,reject) => {
 
-    return getFilesInFolder(folder)
+    console.log(n,'outside promise');
 
-    .then(files => {
-      return Promise.map(files,(file) => {
-        return getFileContents(folder,file)
+    Promise.map(folders,folder => {
+
+      return getFilesInFolder(folder)
+
+      .then(files => {
+        return Promise.map(files,(file) => {
+          return getFileContents(folder,file)
+        })
       })
-    })
 
-    .then(dataObject => {
-      return Promise.map(dataObject,(data) => {
-        return processPostData(data,folder);
+      .then(dataObject => {
+        return Promise.map(dataObject,(data) => {
+          return processPostData(data,folder);
+        })
       })
-    })
 
-    .then(posts => {
-      //synchronous processing of the posts object:
-      sortPosts(posts);
-      calculatePostRelationships(posts);
-      all_posts[folder] = posts;
-      //we can do ALL the processing on the posts object here::
+      .then(posts => {
+        //synchronous processing of the posts object:
+        sortPosts(posts);
+        calculatePostRelationships(posts);
+        all_posts = all_posts.concat(posts);
+        //we can do ALL the processing on the posts object here::
 
-      //IDEA: https://github.com/substack/node-mkdirp
-      posts.map(post => {
-        let fullPath = './posts/.cache/' + folder + '/' + post.attributes.id + '.json';
-        fs.writeFile(fullPath,JSON.stringify(post),'utf-8',function(err) {
+        //IDEA: https://github.com/substack/node-mkdirp
+        posts.map(post => {
+          let fullPath = './posts/.cache/' + folder + '/' + post.attributes.id + '.json';
+          fs.writeFile(fullPath,JSON.stringify(post),'utf-8',function(err) {
+            if(!err) { return; }
+            if(err) { console.log(err); }
+          });
+        });
+      })
+
+      .then(function() {
+        fs.writeFile('./posts/.cache/posts.json',JSON.stringify(all_posts),'utf-8',function(err) {
           if(!err) { return; }
           if(err) { console.log(err); }
         });
-      });
-    })
+        console.log(n++,'inside promise');
+      })
+      .catch(err => console.log('error: ', err))
 
-    .then(function() {
-      fs.writeFile('./posts/.cache/posts.json',JSON.stringify(all_posts),'utf-8',function(err) {
-        if(!err) { return; }
-        if(err) { console.log(err); }
-      });
-    })
-
-    .then(function() {
-      return all_posts;
-    })
-
-    .catch(err => console.log('error: ', err))
+    }).then(function() {
+      console.log(n++,'promise then');
+      resolve(all_posts);
+    });
 
   });
 }

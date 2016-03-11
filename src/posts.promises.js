@@ -12,7 +12,23 @@ var fs  = require('fs'),
   let folders = ['diary','gallery','notes'];
   let postsRoot = './posts/';
   let cacheRoot = postsRoot + '.cache/';
+  let caches = {};
+  folders.map(folder => {
+    let cache = '.' + cacheRoot + folder + '/' + 'posts.json';
+    caches[folder] = require(cache);
+  });
 
+function getPosts(types) {
+  return new Promise((resolve,reject) => {
+
+  });
+}
+
+function getPost(type,id) {
+  return new Promise((resolve,reject) => {
+    
+  });
+}
 
 function processAllPosts() {
 

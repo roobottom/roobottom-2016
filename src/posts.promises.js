@@ -20,20 +20,21 @@ var fs  = require('fs'),
 
 function getPosts(types) {
   return new Promise((resolve,reject) => {
+    resolve(types.map(type => {
 
-  });
+    }))
+  })
 }
 
 function getPost(type,id) {
   return new Promise((resolve,reject) => {
-    
+
   });
 }
 
 function processAllPosts() {
 
   let all_posts = [];
-  let n = 1;
 
   return new Promise((resolve,reject) => {
 
@@ -74,6 +75,7 @@ function processAllPosts() {
       return writeFile(cacheRoot,'posts.json',JSON.stringify(all_posts)).then(function() {return});
     })
     .then(function() {
+      sortPosts(all_posts);
       resolve(all_posts);
     })
     .catch(err => console.log('error: ', err));
@@ -163,3 +165,5 @@ function writeFile(folder,file,contents) {
 };
 
 module.exports.processAllPosts = processAllPosts;
+module.exports.getPosts = getPosts;
+module.exports.getPost = getPost;

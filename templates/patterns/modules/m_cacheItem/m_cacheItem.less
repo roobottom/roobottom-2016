@@ -1,0 +1,18 @@
+#m_cacheItem {
+  .background(@c) {
+    background-color: @c;
+    color: contrast(@c);
+  }
+}
+
+.m_cacheItem {
+  &--diary {
+    #m_cacheItem > .background(@c_diary);
+  }
+  &--gallery {
+    #m_cacheItem > .background(@c_gallery);
+  }
+  &--notes {
+    #m_cacheItem > .background(@c_notes);
+  }
+}

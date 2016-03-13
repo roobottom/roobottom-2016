@@ -8,6 +8,16 @@
   </div>
 {% endmacro %}
 
+{% macro c_itemRepeater(items,pattern,type='ol') %}
+  <{{type}} class="c_itemRepeater">
+  {% for item in items %}
+    <li class="c_itemRepeater__item">
+      {{ pattern(item) }}
+    </li>
+  {% endfor %}
+  </{{type}}>
+{% endmacro %}
+
 {% macro c_siteBody(content) %}
     <main class="c_siteBody">
         <div class="c_siteBody__content">
@@ -27,6 +37,19 @@
         </div>
     </header>
 {% endmacro %}
+{% macro m_cacheItem(post) %}
+  <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
+    <h3>{{post.attributes.title}}</h3>
+    <p><em>{{post.attributes.type}}</em>, <time datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time></p>
+    {% if post.prev %}<p>
+      <em>Prev: {{post.prev.title}}, {{post.prev.date|date}}, {{post.prev.type}}, {{post.prev.id}}</em>
+    </p>{% endif %}
+    {% if post.next %}<p>
+      <em>Next: {{post.next.title}}, {{post.next.date|date}}, {{post.next.type}}, {{post.next.id}}</em>
+    </p>{% endif %}
+  </div>
+{% endmacro %}
+
 {% macro m_gallery(images,type) %}
     <div class="m_gallery">
         {% for i in images %}

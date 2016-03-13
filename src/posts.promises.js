@@ -15,20 +15,42 @@ var fs  = require('fs'),
   let caches = {};
   folders.map(folder => {
     let cache = '.' + cacheRoot + folder + '/' + 'posts.json';
-    caches[folder] = require(cache);
+    try {
+      caches[folder] = require(cache);
+    }
+    catch(err) {
+      processAllPosts();
+    }
   });
 
-function getPosts(types) {
+function getPosts(folders) {
+  let all_posts = [];
   return new Promise((resolve,reject) => {
-    resolve(types.map(type => {
-
-    }))
+    Promise.map(folders,folder => {
+      try {
+        let posts = require('.' + cacheRoot + folder + '/' + 'posts.json');
+        all_posts = all_posts.concat(posts);
+      }
+      catch(err) {
+        reject(err);
+      }
+    })
+    .then(() => {
+      sortPosts(all_posts);
+      resolve(all_posts);
+    });
   })
 }
 
-function getPost(type,id) {
+function getPost(folder,id) {
   return new Promise((resolve,reject) => {
-
+    try {
+      let post = require('.' + cacheRoot + folder + '/' + id + '.json');
+      resolve(post);
+    }
+    catch(err) {
+      reject(err);
+    }
   });
 }
 

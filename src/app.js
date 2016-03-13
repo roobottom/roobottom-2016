@@ -6,8 +6,7 @@ var express = require('express'),
     _ = require('lodash'),
     app = express(),
 
-    posts = require('./posts.js'),
-    p_posts = require('./posts.promises.js'),
+    posts = require('./posts.promises.js'),
     tags = require('./tags.js'),
     settings = require('./settings.json');
 var __basename = _.trimEnd(__dirname,'src');
@@ -32,53 +31,66 @@ app.use(express.static('assets'));
 
 //homepage
 app.get('/', function (req, res) {
-    posts.get_all_posts(function(posts) {
-          res.render('pages/home.html', {
-            title: 'Homepage',
-            posts: posts
-          });
-    });//end posts
-});
-
-//update json cache files.
-app.get('/u',function (req,res) {
-  posts.process_all_posts(function(posts) {
-    res.render('pages/u.html', {
-      title: 'Refresh caches',
-      posts: posts
-    });
-  });
-});
-
-app.get('/test',function(req,res) {
-  p_posts.processAllPosts().then(function(posts){
-    res.render('pages/test.html', {
-      posts:posts
+    posts.getPosts(['diary','gallery','notes'])
+    .then(function(posts){
+      res.render('pages/home.html', {
+        title: 'Homepage',
+        posts: posts,
+        site: settings
+      })
     })
+    .catch(err => {
+      console.log('error: ', err);
+      res.sendStatus(404);
+    });
+});
+
+
+app.get('/u',function(req,res) {
+  posts.processAllPosts()
+  .then(function(posts){
+    res.render('pages/u.html', {
+      title: 'Caches refreshed',
+      posts: posts
+    })
+  })
+  .catch(err => {
+    console.log('error: ', err);
+    res.sendStatus(404);
   });
 });
 
 
 //diary homepage
 app.get('/diary', function(req,res) {
-    posts.get_all_posts(function(posts) {
+    posts.getPosts(['diary'])
+    .then(function(posts){
       res.render('pages/diary.html', {
         title: 'Diary',
         posts: posts,
         site: settings
-      });
+      })
+    })
+    .catch(err => {
+      console.log('error: ', err);
+      res.sendStatus(404);
     });
 });
 
 //diary post
 app.get('/diary/:id', function(req,res) {
   if(/^\d+$/.test(req.params.id)) {//only process main req
-    posts.get_post(req.params.id,'diary',function(post) {
+    posts.getPost('diary',req.params.id)
+    .then(function(post){
       res.render('pages/diary_post.html', {
         title: post.attributes.title,
         post: post,
         site: settings
-      });
+      })
+    })
+    .catch(err => {
+      console.log('error: ', err);
+      res.sendStatus(404);
     });
   } else {
     res.end();

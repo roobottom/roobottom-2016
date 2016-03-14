@@ -7,6 +7,7 @@ var express = require('express'),
     app = express(),
 
     posts = require('./posts.promises.js'),
+    patterns = require('./patterns.js'),
     tags = require('./tags.js'),
     settings = require('./settings.json');
 var __basename = _.trimEnd(__dirname,'src');
@@ -24,7 +25,7 @@ nunjucks.configure( __basename + 'templates/', {
 .addFilter('date', require('nunjucks-date'))
 .addFilter('limitTo', require('./filters/limitTo.filter.js'))
 .addFilter('filterByType', require('./filters/filterByType.filter.js'))
-.addGlobal('site','settings');
+.addGlobal('site',settings);
 
 //statics
 app.use(express.static('assets'));
@@ -111,6 +112,18 @@ app.get('/gallery', function(req,res) {
       console.log('error: ', err);
       res.sendStatus(404);
     });
+});
+
+//patterns
+app.get('/patterns',function(req,res) {
+  patterns.getAllPatterns()
+  .then(patterns => {
+    res.render('pages/patterns.html', {
+      title: 'Pattern Library',
+      patterns: patterns,
+      site: settings
+    })
+  })
 });
 
 app.use(function(req, res){

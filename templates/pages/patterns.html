@@ -1,0 +1,27 @@
+{% extends 'layouts/default.html' %}
+{% macro eval(fn,data) %}
+  {{ fn(data) }}
+{% endmacro %}
+{% macro patternList() %}
+  {{patterns|dump}}
+  {% for patternMeta in patterns %}
+    <h2>
+      {{patternMeta.attributes.title}}
+    </h2>
+    {% for patternData in patternMeta.attributes.patterns %}
+      {% set fn = patternData.name %}
+      {% set d = 'hi' %}
+    {% endfor %}
+    {{patternMeta.body}}
+  {% endfor %}
+{% endmacro %}
+{% block body %}
+{{
+  pattern.c_siteBody([
+    pattern.m_pageTitle(title),
+    patternList()
+  ])
+}}
+
+
+{% endblock %}

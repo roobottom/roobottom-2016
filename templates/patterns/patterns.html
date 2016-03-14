@@ -18,15 +18,6 @@
   </{{type}}>
 {% endmacro %}
 
-{% macro c_siteHeader(content) %}
-    <header class="c_siteHeader">
-        <div class="c_siteHeader__content">
-            {% for item in content %}
-                {{ item }}
-            {% endfor %}
-        </div>
-    </header>
-{% endmacro %}
 {% macro c_siteBody(content) %}
     <main class="c_siteBody">
         <div class="c_siteBody__content">
@@ -37,6 +28,15 @@
     </main>
 {% endmacro %}
 
+{% macro c_siteHeader(content) %}
+    <header class="c_siteHeader">
+        <div class="c_siteHeader__content">
+            {% for item in content %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </header>
+{% endmacro %}
 {% macro m_cacheItem(post) %}
   <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
     <h3>{{post.attributes.title}}</h3>

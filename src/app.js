@@ -97,6 +97,22 @@ app.get('/diary/:id', function(req,res) {
   };
 });
 
+//gallery homepage
+app.get('/gallery', function(req,res) {
+    posts.getPosts(['gallery'])
+    .then(function(posts){
+      res.render('pages/gallery.html', {
+        title: 'Gallery',
+        posts: posts,
+        site: settings
+      })
+    })
+    .catch(err => {
+      console.log('error: ', err);
+      res.sendStatus(404);
+    });
+});
+
 app.use(function(req, res){
     res.sendStatus(404);
 });

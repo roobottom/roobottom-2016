@@ -12,19 +12,19 @@
   {% endfor %}
 {% endmacro %}
 
-{% macro m_posts_diary (posts,heading="h2",link=true,limit=10) %}
+{% macro m_postDiarySummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('diary') | limitTo(limit) %}
-      {{ m_postDiary (post,heading,link) }}
+      {{ m_postDiary (post,heading,link,true) }}
   {% endfor %}
 {% endmacro %}
 
-{% macro m_posts_notes (posts,heading="h2",link=true,limit=10) %}
+{% macro m_postNotesSummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('notes') | limitTo(limit) %}
       {{ m_postNote (post,heading,link) }}
   {% endfor %}
 {% endmacro %}
 
-{% macro m_posts_gallery (posts,heading="h2",link=true,limit=10) %}
+{% macro m_postGallerySummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('gallery') | limitTo(limit) %}
       {{ m_postGallery (post,heading,link) }}
   {% endfor %}

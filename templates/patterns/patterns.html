@@ -18,6 +18,15 @@
   </{{type}}>
 {% endmacro %}
 
+{% macro c_siteHeader(content) %}
+    <header class="c_siteHeader">
+        <div class="c_siteHeader__content">
+            {% for item in content %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </header>
+{% endmacro %}
 {% macro c_siteBody(content) %}
     <main class="c_siteBody">
         <div class="c_siteBody__content">
@@ -28,15 +37,6 @@
     </main>
 {% endmacro %}
 
-{% macro c_siteHeader(content) %}
-    <header class="c_siteHeader">
-        <div class="c_siteHeader__content">
-            {% for item in content %}
-                {{ item }}
-            {% endfor %}
-        </div>
-    </header>
-{% endmacro %}
 {% macro m_cacheItem(post) %}
   <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
     <h3>{{post.attributes.title}}</h3>
@@ -76,7 +76,7 @@
 <h1 class="m_pageTitle">{{title}}</h1>
 {% endmacro %}
 
-{% macro m_postDiary(post,heading,link) %}
+{% macro m_postDiary(post,heading,link=true,trimPost=false) %}
   <article class="m_postDiary">
     <{{heading}}>
       {% if link %}
@@ -87,7 +87,11 @@
     </{{heading}}>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
     <div class="m_postDiary__body">
-      {{post.html_body | safe | truncate(200) }}
+      {% if trimPost %}
+        {{post.html_body | safe | truncate(200) }}
+      {% else %}
+        {{post.html_body | safe }}
+      {% endif %}
     </div>
   </article>
 {% endmacro %}
@@ -132,19 +136,19 @@
   {% endfor %}
 {% endmacro %}
 
-{% macro m_posts_diary (posts,heading="h2",link=true,limit=10) %}
+{% macro m_postDiarySummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('diary') | limitTo(limit) %}
-      {{ m_postDiary (post,heading,link) }}
+      {{ m_postDiary (post,heading,link,true) }}
   {% endfor %}
 {% endmacro %}
 
-{% macro m_posts_notes (posts,heading="h2",link=true,limit=10) %}
+{% macro m_postNotesSummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('notes') | limitTo(limit) %}
       {{ m_postNote (post,heading,link) }}
   {% endfor %}
 {% endmacro %}
 
-{% macro m_posts_gallery (posts,heading="h2",link=true,limit=10) %}
+{% macro m_postGallerySummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('gallery') | limitTo(limit) %}
       {{ m_postGallery (post,heading,link) }}
   {% endfor %}

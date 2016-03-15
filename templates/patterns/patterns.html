@@ -8,6 +8,14 @@
   </div>
 {% endmacro %}
 
+{% macro c_block(name,items) %}
+  {% block name %}
+    {% for item in items %}
+      {{item}}
+    {% endfor %}
+  {% endblock %}
+{% endmacro %}
+
 {% macro c_itemRepeater(items,pattern,type='ol') %}
   <{{type}} class="c_itemRepeater">
   {% for item in items %}

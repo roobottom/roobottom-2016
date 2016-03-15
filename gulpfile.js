@@ -27,14 +27,6 @@ gulp.task('less', function () {
     .pipe(gulp.dest('./assets/css/'))
 });
 
-var go_objects = {
-    script: 'src/app.js'
-  , ext: 'js html md less pattern'
-  , ignore: ["templates/patterns/patterns.html","posts/posts.json"]
-  , env: { 'NODE_ENV': 'development' }
-  , watch: ["src", "templates"]
-}
-
 //start nodemon, this will take over the 'watch' processes
 gulp.task('go', function () {
   nodemon({
@@ -47,6 +39,7 @@ gulp.task('go', function () {
   })
 })
 
+//start nodemon, this will only rebuild the js, rather than the slow concat less and patterns
 gulp.task('go:js', function () {
   nodemon({
     script: 'src/app.js'

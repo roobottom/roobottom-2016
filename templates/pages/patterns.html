@@ -1,27 +1,25 @@
 {% extends 'layouts/default.html' %}
-{% macro eval(fn,data) %}
-  {{ fn(data) }}
-{% endmacro %}
-{% macro patternList() %}
-  {{patterns|dump}}
-  {% for patternMeta in patterns %}
-    <h2>
-      {{patternMeta.attributes.title}}
-    </h2>
-    {% for patternData in patternMeta.attributes.patterns %}
-      {% set fn = patternData.name %}
-      {% set d = 'hi' %}
-    {% endfor %}
-    {{patternMeta.body}}
-  {% endfor %}
-{% endmacro %}
 {% block body %}
-{{
-  pattern.c_siteBody([
-    pattern.m_pageTitle(title),
-    patternList()
-  ])
-}}
 
-
+    {{
+      pattern.c_siteBody([
+        pattern.grid([
+          pattern.c_block('sidebar',[
+            pattern.m_navigation([
+              {
+                name: "Overview",
+                url: "/patterns"
+              },
+              {
+                name: "Modules",
+                url: "/patterns/modules"
+              }
+            ])
+          ]),
+          pattern.c_block(content,[
+            pattern.m_pageTitle(title)
+          ])
+        ],'1-2')
+      ])
+    }}
 {% endblock %}

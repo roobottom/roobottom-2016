@@ -5,6 +5,11 @@ module.exports = function () {
 
   let nunjucks = require('nunjucks');
 
+  nunjucks.configure({
+      autoescape: false,
+      cache: false
+  })
+
   this.tags = ['pattern'];
 
   this.parse = function parse (parser, nodes) {
@@ -16,8 +21,7 @@ module.exports = function () {
   };
 
   this.run = function run (context, args) {
-      //console.log(args.name,args.data);
-      return nunjucks.renderString('{{pattern.'+args.name+'}}',args.data);
+      return nunjucks.render(args.name);
   };
-  
+
 };

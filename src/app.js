@@ -11,7 +11,7 @@ var express = require('express'),
     tags = require('./tags.js'),
     settings = require('./settings.json'),
     nunjucks_renderPattern = require('./tags/renderPattern.tag.js'),
-    nunjucks_eval = require('./tags/eval.tag.js');
+    nunjucks_markdown = require('./tags/markdown.tag.js');
 
 var __basename = _.trimEnd(__dirname,'src');
 
@@ -29,7 +29,7 @@ nunjucks.configure( __basename + 'templates/', {
 .addFilter('limitTo', require('./filters/limitTo.filter.js'))
 .addFilter('filterByType', require('./filters/filterByType.filter.js'))
 .addExtension('pattern', new nunjucks_renderPattern())
-.addExtension('eval', new nunjucks_eval())
+.addExtension('markdown', new nunjucks_markdown())
 .addGlobal('site',settings);
 
 //statics

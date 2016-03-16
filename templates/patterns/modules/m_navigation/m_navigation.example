@@ -1,0 +1,11 @@
+{% import "./m_navigation.pattern" as pattern %}
+
+
+{{
+  pattern.m_navigation(items=[
+    {
+      name: 'Home',
+      url: '#'
+    }
+  ])
+}}

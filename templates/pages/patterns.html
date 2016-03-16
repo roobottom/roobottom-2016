@@ -1,8 +1,17 @@
 {% extends 'layouts/default.html' %}
 {% macro ptn() %}
-  <pre>
-    {{patterns|dump}}
-  </pre>
+<p>
+  {{patterns|dump}}
+</p>
+{% markdown %}
+`this` and *that*
+{% endmarkdown %}
+  {% for pattern in patterns %}
+    <h2>{{pattern.type}}</h2>
+    {% for item in pattern.list %}
+      {% pattern name=item %}
+    {% endfor %}
+  {% endfor %}
 {% endmacro %}
 {% block body %}
 

@@ -1,4 +1,9 @@
 {% extends 'layouts/default.html' %}
+{% macro ptn() %}
+  <pre>
+    {{patterns|dump}}
+  </pre>
+{% endmacro %}
 {% block body %}
 
     {{
@@ -17,7 +22,8 @@
             ])
           ]),
           pattern.c_block(content,[
-            pattern.m_pageTitle(title)
+            pattern.m_pageTitle(title),
+            ptn()
           ])
         ],'1-2')
       ])

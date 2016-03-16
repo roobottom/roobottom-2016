@@ -121,10 +121,14 @@ app.get('/gallery', function(req,res) {
 
 //patterns
 app.get('/patterns',function(req,res) {
-  res.render('pages/patterns.html', {
-    title: 'Patterns',
-    site: settings
+  patterns.getPatternsList().then(patterns => {
+    res.render('pages/patterns.html', {
+      title: 'Patterns',
+      site: settings,
+      patterns: patterns
+    })
   })
+
 });
 
 app.get('/patterns/modules',function(req,res) {

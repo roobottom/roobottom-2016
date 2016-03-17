@@ -3,12 +3,16 @@
 
 module.exports = function () {
 
-  let nunjucks = require('nunjucks');
+  let nunjucks = require('nunjucks'),
+      nunjucks_markdown = require('nunjucks-markdown'),
+      marked = require('marked');
 
-  nunjucks.configure({
+  let env = nunjucks.configure({
       autoescape: false,
       cache: false
   })
+
+  nunjucks_markdown.register(env, marked);
 
   this.tags = ['pattern'];
 

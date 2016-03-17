@@ -10,8 +10,7 @@ var express = require('express'),
     patterns = require('./patterns.js'),
     tags = require('./tags.js'),
     settings = require('./settings.json'),
-    nunjucks_renderPattern = require('./tags/renderPattern.tag.js'),
-    nunjucks_markdown = require('./tags/markdown.tag.js');
+    nunjucks_renderPattern = require('./tags/renderPattern.tag.js');
 
 var __basename = _.trimEnd(__dirname,'src');
 
@@ -20,7 +19,7 @@ app.listen(3002, function () {
 });
 
 nunjucksDate.setDefaultFormat('MMMM Do YYYY');
-nunjucks.configure( __basename + 'templates/', {
+let env = nunjucks.configure( __basename + 'templates/', {
     autoescape: false,
     cache: false,
     express: app,
@@ -29,7 +28,6 @@ nunjucks.configure( __basename + 'templates/', {
 .addFilter('limitTo', require('./filters/limitTo.filter.js'))
 .addFilter('filterByType', require('./filters/filterByType.filter.js'))
 .addExtension('pattern', new nunjucks_renderPattern())
-.addExtension('markdown', new nunjucks_markdown())
 .addGlobal('site',settings);
 
 //statics

@@ -1,16 +1,15 @@
 {
   "name": "roobottom-express",
   "version": "1.0.0",
-  "description": "",
+  "description": "My personal site",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Jon J Roobottom",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.3.3",
-    "botkit": "0.0.5",
     "express": "^4.13.4",
     "front-matter": "^2.0.5",
     "githubhook": "^1.4.0",

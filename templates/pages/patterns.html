@@ -12,22 +12,20 @@
     {{
       pattern.c_siteBody([
         pattern.grid([
-          pattern.c_block('sidebar',[
-            pattern.m_navigation([
-              {
-                name: "Overview",
-                url: "/patterns"
-              },
-              {
-                name: "Modules",
-                url: "/patterns/modules"
-              }
-            ])
+          pattern.m_navigation([
+            {
+              name: "Overview",
+              url: "/patterns"
+            },
+            {
+              name: "Modules",
+              url: "/patterns/modules"
+            }
           ]),
-          pattern.c_block(content,[
+          [
             pattern.m_pageTitle(title),
             ptn()
-          ])
+          ]
         ],'1-2')
       ])
     }}

@@ -1,0 +1,16 @@
+{% import "./m_teaser.pattern" as pattern %}
+{% markdown %}
+### m_teaser
+`m_teaser` is an article block for previewing post information.
+{% endmarkdown %}
+{{
+  pattern.m_teaser(
+    type='article',
+    title='Firefly Learning Conference 2015',
+    url='#',
+    summaryText='Besides BETT, the Firefly Learning Conference is our biggest UK event of the year. It’s a chance for our clients to get together and listen to some fantastic speakers from all areas of Education.',
+    date='2015-11-12T00:00:00.000Z',
+    wordCount=551,
+    imageCount=6
+  )
+}}

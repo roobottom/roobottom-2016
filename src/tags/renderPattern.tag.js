@@ -11,6 +11,8 @@ module.exports = function () {
       autoescape: false,
       cache: false
   })
+  .addFilter('date', require('nunjucks-date'))
+  .addFilter('limitTo', require('../filters/limitTo.filter.js'))
 
   nunjucks_markdown.register(env, marked);
 

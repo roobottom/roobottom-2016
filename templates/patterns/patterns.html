@@ -26,6 +26,15 @@
   </{{type}}>
 {% endmacro %}
 
+{% macro c_siteHeader(content) %}
+    <header class="c_siteHeader">
+        <div class="c_siteHeader__content">
+            {% for item in content %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </header>
+{% endmacro %}
 {% macro c_siteBody(content) %}
     <main class="c_siteBody">
         <div class="c_siteBody__content">
@@ -36,15 +45,6 @@
     </main>
 {% endmacro %}
 
-{% macro c_siteHeader(content) %}
-    <header class="c_siteHeader">
-        <div class="c_siteHeader__content">
-            {% for item in content %}
-                {{ item }}
-            {% endfor %}
-        </div>
-    </header>
-{% endmacro %}
 {% macro m_cacheItem(post) %}
   <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
     <h3>{{post.attributes.title}}</h3>
@@ -80,10 +80,6 @@
     </ul>
 </nav>
 {% endmacro %}
-{% macro m_pageTitle(title) %}
-<h1 class="m_pageTitle">{{title}}</h1>
-{% endmacro %}
-
 {% macro m_postDiary(post,heading,link=true,trimPost=false) %}
   <article class="m_postDiary">
     <{{heading}}>
@@ -162,6 +158,10 @@
   {% endfor %}
 {% endmacro %}
 
+{% macro m_pageTitle(title) %}
+<h1 class="m_pageTitle">{{title}}</h1>
+{% endmacro %}
+
 {% macro m_teaser(type,title,url,summaryText,date,wordCount,imageCount,image,hLevel='2') %}
   <article class="m_teaser m_teaser--{{type}}{% if not image %}-no-image{% endif %}">
     {% if image %}
@@ -170,7 +170,7 @@
     <p class="m_teaser__type">
       {{type}}
     </p>
-    <h{{hLevel}} class="m_teaser__title"><a href="{{url}}">{{title}}</a></h{{hLevel}}>
+    <h{{hLevel}} class="m_teaser__title"><a href="{{url}}" class="m_teaser__link">{{title}}</a></h{{hLevel}}>
     <p class="m_teaser__meta">
       <time class="m_teaser__date" datetime="{{date}}">{{date|date}}</time>
       {% if wordCount %}<span class="m_teaser__word-count"> / {{wordCount}} word{%if wordCount > 1%}s{%endif%}</span>{%endif%}

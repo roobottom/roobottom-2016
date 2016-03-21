@@ -20,6 +20,7 @@ gulp.task('patterns' ,function() {
 gulp.task('less', function () {
   return gulp.src('./templates/patterns/**/*.less')
     .pipe(concat('roobottom-com.less'))
+    .pipe(gulp.dest('./assets/css/.cache/'))
     .pipe(less({
       paths: [ path.join(__dirname, './templates/patterns/_shared') ],
       plugins: [autoprefix, cleancss]

@@ -1,0 +1,51 @@
+#u_type() {
+
+  .h1() {
+    font-size: unit(80/@base,rem);
+    line-height: 84/80;
+    #u_space > .push(1);
+  }
+  .h2() {
+    font-size: unit(35/@base,rem);
+    line-height: 39/35;
+    #u_space > .push(1);
+  }
+  .p() {
+    font-size: unit(21/@base,rem);
+    line-height: @spacing_vertical/21;
+    #u_space > .push(1);
+  }
+  .p--summary() {
+    font-size: unit(18/@base,rem);
+    line-height: 30/18;
+    #u_space > .push(1);
+  }
+  .a {
+    color: @blue;
+    text-decoration: none;
+  }
+
+}
+
+.u_type {
+  //headings
+  h1 {
+    #u_type > .h1();
+  }
+  h2 {
+    #u_type > .h2();
+  }
+
+  //paragraphs
+  p {
+    #u_type > .p();
+  }
+  p.summary {
+    #u_type > .p--summary();
+  }
+
+  //links
+  a {
+    #u_type > .a();
+  }
+}

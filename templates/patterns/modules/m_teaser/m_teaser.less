@@ -1,0 +1,18 @@
+.m_teaser {
+
+  background-color: white;
+  padding: unit(@spacing_vertical/@base,rem) unit(@spacing_horizontal/@base,rem);
+  box-sizing: border-box;
+  border: 1px solid @grey;
+
+  &__title {
+    #u_type > .h2();
+  }
+  &__link {
+    #u_type > .a();
+  }
+  &__summary {
+    #u_type > .p--summary();
+    #u_space > .push(0);
+  }
+}

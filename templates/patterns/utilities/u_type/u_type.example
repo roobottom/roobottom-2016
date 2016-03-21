@@ -1,0 +1,12 @@
+{% markdown %}
+`u_type` is a set of utilitily classes and mixins to style text. Because we're hooking directly onto HTML tags, a container class is required to stop unwanted, over-zealous styling elsewhere.
+{% endmarkdown %}
+
+<div class="u_type">
+{% markdown %}
+# Heading 1
+`.u_type h1` or `#u_type > .h1()` is used to give an element heading-1 styling.
+## Heading 2
+`.u_type h2` or `#u_type > .h2()` is used to give an element heading-2 styling.
+{% endmarkdown %}
+</div>

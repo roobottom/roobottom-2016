@@ -1,0 +1,508 @@
+//global base size
+@base:                      16;
+
+//vertical spacing
+@spacing_vertical:          32;
+@spacing_horizontal:        20;
+
+//layouts
+@layout_narrow:             720; //the max width for text
+@layout_medium:             980; //the next step up
+@layout_wide:              1270; //max site width, never stretch beyond this.
+
+//colours
+@blue:                      #008EEF;
+@red:                       #ff0033;
+@yellow:                    #ECB538;
+
+@c_diary:                   @blue;
+@c_gallery:                 @red;
+@c_notes:                   @yellow;
+
+@grey:                      #cccccc;
+@lightgrey:                 #f1f1f1;
+@darkgrey:                  #333333;
+
+/* Aleo licence: http://www.fontfabric.com/aleo-free-font/ */
+@font-face {
+    font-family: "Aleo";
+    src: url("fonts/aleo-regular-webfont.woff") format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Aleo";
+    src: url("fonts/aleo-italic-webfont.woff") format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Aleo";
+    src: url("fonts/aleo-bold-webfont.woff") format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Aleo";
+    src: url("fonts/aleo-bolditalic-webfont.woff") format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* Clear Sans licence: https://01.org/clear-sans */
+@font-face {
+    font-family: "Clear Sans";
+    src: url("fonts/ClearSans-Thin.woff") format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+  font-family: "Aleo";
+  background-color: @lightgrey;
+}
+h1,h2,h3,h4 {
+  font-family: "Clear Sans";
+  font-weight: normal;
+}
+
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+body {
+  margin: 0;
+  font-weight: normal;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+[hidden],
+template {
+  display: none;
+}
+
+a {
+  background-color: transparent;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+b,
+strong {
+  font-weight: bold;
+}
+
+i,
+em {
+  font-style: italic;
+}
+
+i b,
+b i,
+em b,
+b em,
+strong i,
+i strong,
+strong em,
+em strong {
+  font-style: italic;
+  font-weight: bold;
+}
+
+dfn {
+  font-style: italic;
+}
+
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+img {
+  border: 0;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+pre {
+  overflow: auto;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+
+button {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+input {
+  line-height: normal;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+input[type="search"] {
+  box-sizing: content-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+
+textarea {
+  overflow: auto;
+}
+
+optgroup {
+  font-weight: bold;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+.wrapper() {
+  padding-left: unit(@spacing_horizontal/@base,rem);
+  padding-right: unit(@spacing_horizontal/@base,rem);
+
+  @media screen and (min-width:(unit(@layout_wide/@base,rem))) {
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0 auto;
+    max-width: unit(@layout_wide/@base,rem);
+  }
+
+}
+.clearfix() {
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear:both;
+  }
+}
+
+@grid-gap-horizonal: 3%;
+
+//2col
+@grid-2col-base: 100% - @grid-gap-horizonal;
+@grid-2col-equal: @grid-2col-base / 2;
+
+//width bases for wide and narrow
+@grid-2col-wide-base: .75;
+@grid-2col-narrow-base: 1 - @grid-2col-wide-base;
+
+//set widths of wide and narrow columns
+@grid-2col-narrow: @grid-2col-base * (@grid-2col-narrow-base);
+@grid-2col-wide: @grid-2col-base * (@grid-2col-wide-base);
+
+.grid {
+  .clearfix();
+}
+
+.grid__column {
+  width: 100%;
+  clear: left;
+  box-sizing: border-box;
+}
+
+@media (min-width: (unit(@layout_medium/@base,rem))) {
+
+    .grid--1-1 .grid__column,
+    .grid--2-1 .grid__column,
+    .grid--1-2 .grid__column {
+      width: @grid-2col-equal;
+      float: left;
+      &:nth-of-type(2n-1) {
+          margin-right: @grid-gap-horizonal;
+      }
+    }
+
+    .grid--1-1 .grid__column:nth-of-type(2n),
+    .grid--1-2 .grid__column:nth-of-type(2n),
+    .grid--2-1 .grid__column:nth-of-type(2n) {
+      clear: none;
+    }
+
+    .grid--1-2 .grid__column,
+    .grid--2-1 .grid__column {
+      width: @grid-2col-narrow;
+    }
+
+    .grid--1-2 .grid__column:nth-of-type(2),
+    .grid--2-1 .grid__column:nth-of-type(1) {
+      width: @grid-2col-wide;
+    }
+
+}
+
+.c_siteHeader {
+    background-color: @darkgrey;
+    &__content {
+        .wrapper();
+        padding-top: unit(@spacing_horizontal/@base,rem);
+        padding-bottom: unit(@spacing_horizontal/@base,rem);
+    }
+}
+
+.c_siteBody {
+    &__content {
+        .wrapper();
+        padding-top: unit(@spacing_horizontal/@base,rem);
+        padding-bottom: unit(@spacing_horizontal/@base,rem);
+    }
+}
+
+#m_cacheItem {
+  .background(@c) {
+    background-color: @c;
+    color: contrast(@c);
+  }
+}
+
+.m_cacheItem {
+  &--diary {
+    #m_cacheItem > .background(@c_diary);
+  }
+  &--gallery {
+    #m_cacheItem > .background(@c_gallery);
+  }
+  &--notes {
+    #m_cacheItem > .background(@c_notes);
+  }
+}
+
+.m_gallery {
+  column-count: 3;
+}
+
+.m_navigation {
+    padding: unit(@spacing_vertical/@base,rem) 0;
+    &__items {
+        padding:0;
+        margin: 0;
+        display: flex;
+    }
+    &__item {
+        list-style: none;
+        margin-right: 20px;
+    }
+    &__link {
+        text-decoration: none;
+    }
+}
+
+.m_teaser {
+
+  background-color: white;
+  padding: unit(@spacing_vertical/@base,rem) unit(@spacing_horizontal/@base,rem);
+  box-sizing: border-box;
+  border: 1px solid @grey;
+
+  &__title {
+    #u_type > .h2();
+  }
+  &__link {
+    #u_type > .a();
+  }
+  &__summary {
+    #u_type > .p--summary();
+    #u_space > .push(0);
+  }
+}
+
+#u_space() {
+  .push(@v) {
+    margin-bottom: unit((@spacing_vertical*@v)/@base,rem);
+  }
+}
+.u_space----loop(@i) when (@i >= 0) {
+  .u_space {
+    &__push-@{i} {
+      #u_space > .push(@i);
+    }
+  }
+  .u_space----loop(@i - 1);
+}
+.u_space----loop(5);
+
+#u_type() {
+
+  .h1() {
+    font-size: unit(80/@base,rem);
+    line-height: 84/80;
+    #u_space > .push(1);
+  }
+  .h2() {
+    font-size: unit(35/@base,rem);
+    line-height: 39/35;
+    #u_space > .push(1);
+  }
+  .p() {
+    font-size: unit(21/@base,rem);
+    line-height: @spacing_vertical/21;
+    #u_space > .push(1);
+  }
+  .p--summary() {
+    font-size: unit(18/@base,rem);
+    line-height: 30/18;
+    #u_space > .push(1);
+  }
+  .a {
+    color: @blue;
+    text-decoration: none;
+  }
+
+}
+
+.u_type {
+  //headings
+  h1 {
+    #u_type > .h1();
+  }
+  h2 {
+    #u_type > .h2();
+  }
+
+  //paragraphs
+  p {
+    #u_type > .p();
+  }
+  p.summary {
+    #u_type > .p--summary();
+  }
+
+  //links
+  a {
+    #u_type > .a();
+  }
+}

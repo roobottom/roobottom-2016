@@ -3,9 +3,7 @@
     {% if image %}
     <img src="{{image}}" alt="{{title}}"/>
     {% endif %}
-    <p class="m_teaser__type">
-      {{type}}
-    </p>
+    <span class="m_teaser__type">{{type}}</span>
     <h{{hLevel}} class="m_teaser__title"><a href="{{url}}" class="m_teaser__link">{{title}}</a></h{{hLevel}}>
     <p class="m_teaser__meta">
       <time class="m_teaser__date" datetime="{{date}}">{{date|date}}</time>

@@ -2,6 +2,8 @@
 {% markdown %}
 ### m_teaser
 `m_teaser` is an article block for previewing post information.
+
+#### Article Example
 {% endmarkdown %}
 {{
   pattern.m_teaser(
@@ -12,5 +14,21 @@
     date='2015-11-12T00:00:00.000Z',
     wordCount=551,
     imageCount=6
+  )
+}}
+
+
+{% markdown %}
+#### Note Example
+{% endmarkdown %}
+{{
+  pattern.m_teaser(
+    type='note',
+    title='All I want for Christmas is my two front teeth',
+    url='#',
+    summaryText='PRL came over for lunch and later we all decorated the tree. Baby Roo (seemingly recovered from the emergence of her first tooth) had a great time playing with all the baubles and lights.',
+    date='2015-11-12T00:00:00.000Z',
+    wordCount=34,
+    imageCount=2
   )
 }}

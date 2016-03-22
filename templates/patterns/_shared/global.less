@@ -1,8 +1,16 @@
+#font() {
+  .aleo() {
+    font-family: "Aleo";
+  }
+  .clear-sans() {
+    font-family: "Clear Sans";
+  }
+}
+
 body {
-  font-family: "Aleo";
-  background-color: @lightgrey;
+  #font > .aleo();
 }
 h1,h2,h3,h4 {
-  font-family: "Clear Sans";
-  font-weight: normal;
+  #font > .clear-sans();
+  font-weight: 200;
 }

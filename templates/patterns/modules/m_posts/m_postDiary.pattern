@@ -8,7 +8,7 @@
       {% endif %}
     </{{heading}}>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
-    <div class="m_postDiary__body">
+    <div class="m_postDiary__body u_type">
       {% if trimPost %}
         {{post.html_body | safe | truncate(200) }}
       {% else %}

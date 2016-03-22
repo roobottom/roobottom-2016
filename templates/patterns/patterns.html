@@ -26,15 +26,6 @@
   </{{type}}>
 {% endmacro %}
 
-{% macro c_siteHeader(content) %}
-    <header class="c_siteHeader">
-        <div class="c_siteHeader__content">
-            {% for item in content %}
-                {{ item }}
-            {% endfor %}
-        </div>
-    </header>
-{% endmacro %}
 {% macro c_siteBody(content) %}
     <main class="c_siteBody">
         <div class="c_siteBody__content">
@@ -45,6 +36,15 @@
     </main>
 {% endmacro %}
 
+{% macro c_siteHeader(content) %}
+    <header class="c_siteHeader">
+        <div class="c_siteHeader__content">
+            {% for item in content %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </header>
+{% endmacro %}
 {% macro m_cacheItem(post) %}
   <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
     <h3>{{post.attributes.title}}</h3>
@@ -80,6 +80,10 @@
     </ul>
 </nav>
 {% endmacro %}
+{% macro m_pageTitle(title) %}
+<h1 class="m_pageTitle">{{title}}</h1>
+{% endmacro %}
+
 {% macro m_postDiary(post,heading,link=true,trimPost=false) %}
   <article class="m_postDiary">
     <{{heading}}>
@@ -90,7 +94,7 @@
       {% endif %}
     </{{heading}}>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
-    <div class="m_postDiary__body">
+    <div class="m_postDiary__body u_type">
       {% if trimPost %}
         {{post.html_body | safe | truncate(200) }}
       {% else %}
@@ -105,7 +109,7 @@
     <h2>{{ post.attributes.title }} {{site}}</h2>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
     {{ m_gallery(post.attributes.images,'gallery') }}
-    <div class="m_postGallery__body">
+    <div class="m_postGallery__body u_type">
       {{post.html_body}}
     </div>
   </article>
@@ -120,7 +124,7 @@
         {{ m_gallery(post.attributes.images) }}
       </div>
     {% endif %}
-    <div class="m_postNote__body">
+    <div class="m_postNote__body u_type">
       {{post.html_body}}
     </div>
   </article>
@@ -158,18 +162,12 @@
   {% endfor %}
 {% endmacro %}
 
-{% macro m_pageTitle(title) %}
-<h1 class="m_pageTitle">{{title}}</h1>
-{% endmacro %}
-
 {% macro m_teaser(type,title,url,summaryText,date,wordCount,imageCount,image,hLevel='2') %}
   <article class="m_teaser m_teaser--{{type}}{% if not image %}-no-image{% endif %}">
     {% if image %}
     <img src="{{image}}" alt="{{title}}"/>
     {% endif %}
-    <p class="m_teaser__type">
-      {{type}}
-    </p>
+    <span class="m_teaser__type">{{type}}</span>
     <h{{hLevel}} class="m_teaser__title"><a href="{{url}}" class="m_teaser__link">{{title}}</a></h{{hLevel}}>
     <p class="m_teaser__meta">
       <time class="m_teaser__date" datetime="{{date}}">{{date|date}}</time>

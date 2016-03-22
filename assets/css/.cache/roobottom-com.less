@@ -16,11 +16,13 @@
 @yellow:                    #ECB538;
 
 @c_diary:                   @blue;
+@c_article:                 @blue;
 @c_gallery:                 @red;
 @c_notes:                   @yellow;
 
 @grey:                      #cccccc;
 @lightgrey:                 #f1f1f1;
+@medgrey:                   #5E5E5E;
 @darkgrey:                  #333333;
 
 /* Aleo licence: http://www.fontfabric.com/aleo-free-font/ */
@@ -55,18 +57,40 @@
 /* Clear Sans licence: https://01.org/clear-sans */
 @font-face {
     font-family: "Clear Sans";
-    src: url("fonts/ClearSans-Thin.woff") format('woff');
+    src: url("fonts/ClearSans-thin.woff") format('woff');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Clear Sans";
+    src: url("fonts/ClearSans-regular.woff") format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
+@font-face {
+    font-family: "Clear Sans";
+    src: url("fonts/ClearSans-bold.woff") format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+#font() {
+  .aleo() {
+    font-family: "Aleo";
+  }
+  .clear-sans() {
+    font-family: "Clear Sans";
+  }
+}
+
 body {
-  font-family: "Aleo";
-  background-color: @lightgrey;
+  #font > .aleo();
 }
 h1,h2,h3,h4 {
-  font-family: "Clear Sans";
-  font-weight: normal;
+  #font > .clear-sans();
+  font-weight: 200;
 }
 
 html {
@@ -146,6 +170,11 @@ strong em,
 em strong {
   font-style: italic;
   font-weight: bold;
+}
+
+p, li, ul, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
 }
 
 dfn {
@@ -365,8 +394,7 @@ th {
 
 }
 
-.c_siteHeader {
-    background-color: @darkgrey;
+.c_siteBody {
     &__content {
         .wrapper();
         padding-top: unit(@spacing_horizontal/@base,rem);
@@ -374,7 +402,8 @@ th {
     }
 }
 
-.c_siteBody {
+.c_siteHeader {
+    background-color: @darkgrey;
     &__content {
         .wrapper();
         padding-top: unit(@spacing_horizontal/@base,rem);
@@ -425,19 +454,67 @@ th {
 
   background-color: white;
   padding: unit(@spacing_vertical/@base,rem) unit(@spacing_horizontal/@base,rem);
+  padding-top:0;
   box-sizing: border-box;
   border: 1px solid @grey;
+  position: relative;
 
+  &[class$=-no-image] {
+    padding-top: unit(@spacing_vertical/@base,rem);
+    background-image: linear-gradient(lighten(@lightgrey,2%) unit(@spacing_vertical*1.5/@base,rem), white unit(@spacing_vertical*1.5/@base,rem));
+  }
+
+  &__type {
+    text-shadow: 0 1px 0 fade(black,10%);
+    color: white;
+    font-size: 1rem;
+    padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/2/@base,rem);
+    border-radius: 2rem;
+    background-color: @c_article;
+    margin-bottom: unit(@spacing_vertical/2/@base,rem);
+    #font > .clear-sans();
+    display: inline-block;
+  }
   &__title {
     #u_type > .h2();
+    #u_space > .push(0);
   }
-  &__link {
-    #u_type > .a();
+  &__meta {
+    #u_type > .meta();
+  }
+  &__date {
+    #u_type > .bold();
+    #u_type > .uppercase();
   }
   &__summary {
     #u_type > .p--summary();
     #u_space > .push(0);
   }
+
+
+  //article specific
+  &[class*=article] &__link {
+    #u_type > .a(@c_article);
+  }
+  &[class*=article] &__type {
+    background-color: @c_article;
+  }
+  //note specific
+  &[class*=note] &__link {
+    #u_type > .a(@c_notes);
+  }
+  &[class*=note] &__type {
+    background-color: @c_notes;
+  }
+
+  //gallery specific
+  &[class*=gallery] &__link {
+    #u_type > .a(@c_gallery);
+  }
+  &[class*=gallery] &__type {
+    background-color: @c_gallery;
+  }
+
 }
 
 #u_space() {
@@ -473,13 +550,50 @@ th {
     #u_space > .push(1);
   }
   .p--summary() {
+    #font > .clear-sans();
     font-size: unit(18/@base,rem);
     line-height: 30/18;
     #u_space > .push(1);
   }
-  .a {
-    color: @blue;
+
+  .a(@c:@blue) {
+    color: @c;
     text-decoration: none;
+  }
+  .a--underline(@c:@blue,@bg:white) {
+    #u_type > .a(@c);
+    text-shadow:
+      1px 0 0 @bg,-1px 0 0 @bg,0 1px 0 @bg,0 -1px 0 @bg;
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      background-color: @c;
+      bottom: 1px;
+      height: 1px;
+      z-index: -1;
+    }
+  }
+
+  .meta() {
+    color: @medgrey;
+    font-size: unit(14/@base,rem);
+    line-height: 19/14;
+    #u_space > .push(1);
+    #font > .clear-sans();
+  }
+
+  //general utilities
+  .bold() {
+    font-weight: bold;
+  }
+  .italic() {
+    font-style: italic;
+  }
+  .uppercase() {
+    text-transform: uppercase;
   }
 
 }
@@ -497,12 +611,19 @@ th {
   p {
     #u_type > .p();
   }
-  p.summary {
+  .summary {
     #u_type > .p--summary();
+  }
+  .meta {
+    #u_type > .meta();
+  }
+
+  time {
+    #u_type > .uppercase();
   }
 
   //links
   a {
-    #u_type > .a();
+    #u_type > .a--underline();
   }
 }

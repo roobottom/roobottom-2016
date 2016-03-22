@@ -1,7 +1,5 @@
-{% macro c_block(name,items) %}
-  {% block name %}
-    {% for item in items %}
-      {{item}}
-    {% endfor %}
-  {% endblock %}
+{% macro c_block(items) %}
+  {% for item in items %}
+    {{item}}
+  {% endfor %}
 {% endmacro %}

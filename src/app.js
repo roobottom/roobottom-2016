@@ -10,7 +10,9 @@ var express = require('express'),
     patterns = require('./patterns.js'),
     tags = require('./tags.js'),
     settings = require('./settings.json'),
-    nunjucks_renderPattern = require('./tags/renderPattern.tag.js');
+    nunjucks_renderPattern = require('./tags/renderPattern.tag.js'),
+    nunjucks_markdown = require('nunjucks-markdown'),
+    marked = require('marked');
 
 var __basename = _.trimEnd(__dirname,'src');
 
@@ -27,8 +29,11 @@ let env = nunjucks.configure( __basename + 'templates/', {
 .addFilter('date', require('nunjucks-date'))
 .addFilter('limitTo', require('./filters/limitTo.filter.js'))
 .addFilter('filterByType', require('./filters/filterByType.filter.js'))
+.addFilter('jsonParse', require('./filters/jsonParse.filter.js'))
 .addExtension('pattern', new nunjucks_renderPattern())
 .addGlobal('site',settings);
+
+nunjucks_markdown.register(env, marked);
 
 //statics
 app.use(express.static('assets'));
@@ -120,20 +125,24 @@ app.get('/gallery', function(req,res) {
 //patterns
 app.get('/patterns',function(req,res) {
   patterns.getPatternsList().then(patterns => {
-    res.render('pages/patterns.html', {
+    res.render('pages/patterns_overview.html', {
       title: 'Patterns',
+      patterns: patterns,
+      site: settings
+    })
+  })
+});
+
+app.get('/patterns/:category',function(req,res) {
+  patterns.getPatternsList().then(patterns => {
+    res.render('pages/patterns_category.html', {
+      title: 'Patterns / '+req.params.category,
       site: settings,
-      patterns: patterns
+      patterns: patterns,
+      category: req.params.category
     })
   })
 
-});
-
-app.get('/patterns/modules',function(req,res) {
-  res.render('pages/patterns_modules.html', {
-    title: 'Patterns / modules',
-    site: settings
-  })
 });
 
 app.use(function(req, res){

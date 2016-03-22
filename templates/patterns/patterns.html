@@ -8,12 +8,10 @@
   </div>
 {% endmacro %}
 
-{% macro c_block(name,items) %}
-  {% block name %}
-    {% for item in items %}
-      {{item}}
-    {% endfor %}
-  {% endblock %}
+{% macro c_block(items) %}
+  {% for item in items %}
+    {{item}}
+  {% endfor %}
 {% endmacro %}
 
 {% macro c_itemRepeater(items,pattern,type='ol') %}
@@ -75,11 +73,23 @@
 <nav class="m_navigation">
     <ul class="m_navigation__items">
         {% for item in items %}
-        <li class="m_navigation__item"><a href="{{item.url}}" class="m_navigation__link{%if item.current %} m_navigation__link--is-current {% endif %}">{{item.name}}</a></li>
+        <li class="m_navigation__item{% if item.items %}--has-child{% endif %}">
+          <a href="{{item.url}}" class="m_navigation__link">{{item.name}}</a>
+          {% if item.items %}
+            <ul class="m_navigation__items--child">
+              {% for item in item.items %}
+                <li class="m_navigation__item--child">
+                  <a href="{{item.url}}" class="m_navigation__link--child">{{item.name}}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </li>
         {% endfor %}
     </ul>
 </nav>
 {% endmacro %}
+
 {% macro m_pageTitle(title) %}
 <h1 class="m_pageTitle">{{title}}</h1>
 {% endmacro %}

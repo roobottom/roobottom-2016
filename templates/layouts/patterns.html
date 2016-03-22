@@ -1,0 +1,24 @@
+{% extends './default.html' %}
+
+{% set navItems=[
+  {name: "Overview",url:'/patterns'},
+  {name: "Modules",url: '/patterns/modules'}
+] %}
+
+{% block body %}
+  {# this is disgusting, but currently the only way to do this #}
+  <main class="c_siteBody">
+    <div class="c_siteBody__content">
+      <div class="grid grid--1-2">
+        <div class="grid__column">
+          {{pattern.m_navigation(navItems)}}
+        </div>
+        <div class="grid__column">
+          <h1>{{title}}</h1>
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

@@ -1,6 +1,12 @@
 var _ = require('lodash'),
     nunjucks = require('nunjucks');
 
+var __basename = _.trimEnd(__dirname,'src');
+var env = nunjucks.configure( __basename + 'templates/', {
+    autoescape: false,
+    cache: false
+})
+
 var tags = [
     'gallery'
 ];

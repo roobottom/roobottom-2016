@@ -1,9 +1,10 @@
 {% extends './default.html' %}
 
-{% set navItems=[
-  {name: "Overview",url:'/patterns'},
-  {name: "Modules",url: '/patterns/modules'}
-] %}
+{% set navigationItems %}
+  [{% for pattern in patterns %}
+    {"name": "{{pattern.type}}", "url": "/patterns/{{pattern.type}}"}{% if not loop.last %},{% endif %}
+  {% endfor %}]
+{% endset %}
 
 {% block body %}
   {# this is disgusting, but currently the only way to do this #}
@@ -11,10 +12,10 @@
     <div class="c_siteBody__content">
       <div class="grid grid--1-2">
         <div class="grid__column">
-          {{pattern.m_navigation(navItems)}}
+          {{pattern.m_navigation(items=navigationItems|jsonParse)}}
         </div>
         <div class="grid__column">
-          <h1>{{title}}</h1>
+          {{pattern.m_pageTitle(title)}}
           {% block content %}
           {% endblock %}
         </div>

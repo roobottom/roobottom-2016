@@ -1,7 +1,9 @@
-function jsonParse(object){
-	'use strict';
+var _ = require('lodash');
 
-  return JSON.parse(object);
+function jsonParse(str){
+	'use strict';
+	str = _.replace(str, /\s/g, '');
+  return JSON.parse(str);
 }
 
 module.exports = jsonParse;

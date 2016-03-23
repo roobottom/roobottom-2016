@@ -69,6 +69,10 @@
     </div>
 {% endmacro %}
 
+{% macro m_pageTitle(title) %}
+<h1 class="m_pageTitle">{{title}}</h1>
+{% endmacro %}
+
 {% macro m_navigation(items) %}
 <nav class="m_navigation">
     <ul class="m_navigation__items">
@@ -88,10 +92,6 @@
         {% endfor %}
     </ul>
 </nav>
-{% endmacro %}
-
-{% macro m_pageTitle(title) %}
-<h1 class="m_pageTitle">{{title}}</h1>
 {% endmacro %}
 
 {% macro m_postDiary(post,heading,link=true,trimPost=false) %}

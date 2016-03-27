@@ -90,6 +90,10 @@
 </nav>
 {% endmacro %}
 
+{% macro m_pageTitle(title) %}
+<h1 class="m_pageTitle">{{title}}</h1>
+{% endmacro %}
+
 {% macro m_postDiary(post,heading,link=true,trimPost=false) %}
   <article class="m_postDiary">
     <{{heading}}>
@@ -166,10 +170,6 @@
   {% for post in posts | filterByType('gallery') | limitTo(limit) %}
       {{ m_postGallery (post,heading,link) }}
   {% endfor %}
-{% endmacro %}
-
-{% macro m_pageTitle(title) %}
-<h1 class="m_pageTitle">{{title}}</h1>
 {% endmacro %}
 
 {% macro m_teaser(type,title,url,summaryText,date,wordCount,imageCount,image,hLevel='2') %}

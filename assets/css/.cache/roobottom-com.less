@@ -413,10 +413,17 @@ th {
   }
 
   //grid third
-  @media screen and (min-width (unit(@grid_third/@base,rem))) {
+  @media screen and (min-width: (unit(@grid_third/@base,rem))) {
     &--1-2, &--2-1 {
       margin: 0 auto;
       max-width: unit(@grid_third/@base,rem);
+    }
+  }
+  @media screen and (min-width: (unit((@grid_third + @grid_padding) /@base,rem))) {
+    &--1-2 &__column,
+    &--2-1 &__column {
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 

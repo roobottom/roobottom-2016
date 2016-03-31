@@ -1,3 +1,10 @@
+#m_navigation() {
+  .active(@bg) {
+    color: contrast(@bg);
+    background-color: @bg;
+  }
+}
+
 .m_navigation {
 
   &__items {
@@ -21,33 +28,38 @@
     color: @c_default;
     display: block;
   }
-  &__link--active {
-    color: @c_link;
+
+  &__link--homepage-active {
+    #m_navigation > .active(@c_link);
+  }
+  &__link--articles-active {
+    #m_navigation > .active(@c_article);
+  }
+  &__link--gallery-active {
+    #m_navigation > .active(@c_gallery);
+  }
+  &__link--notes-active {
+    #m_navigation > .active(@c_notes);
+  }
+  &__link--archives-active {
+    #m_navigation > .active(@c_link);
+  }
+  &__link--portfolio-active {
+    #m_navigation > .active(@c_portfolio);
+  }
+  &__link--pattern-library-active {
+    #m_navigation > .active(@c_link);
   }
 
-  //special colour coding:
-  &__item--articles &__link--active {
-    color: @c_article;
-  }
-  &__item--gallery &__link--active {
-    color: @c_gallery;
-  }
-  &__item--notes &__link--active {
-    color: @c_notes;
-  }
 
   @media screen and (min-width: (unit((@layout_transitional + @spacing_horizontal)/@base,rem))) {
     &--stacked &__item {
       text-align: right;
-      margin-right: 0;
       display: block;
-      margin-bottom: unit(@spacing_vertical/@base,rem);
+      margin-right: 0;
     }
     &--stacked &__link {
-      border-left: 9px solid transparent;
-    }
-    &--stacked &__link--active {
-      border-color: inherit;
+      padding: unit((@spacing_vertical/2)/@base,rem);
     }
   }
 }

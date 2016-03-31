@@ -9,12 +9,13 @@
 </head>
 <body>
   {% macro body() %}
-    {% block body %}
-    {% endblock %}
+  {% block body %}
+  {% endblock %}
   {% endmacro %}
   {{
-    pattern.c_siteBody([
-      pattern.grid([
+    pattern.grid([
+      pattern.c_menuBlock([
+        pattern.m_logo(),
         pattern.m_navigation([
           {name:'Homepage',url:'/'},
           {name:'Articles',url:'/articles'},
@@ -23,10 +24,12 @@
           {name:'Archives',url:'/archives'},
           {name:'Portfolio',url:'/portfolio'},
           {name:'Pattern Library',url:'/patterns'}
-        ],active,'stacked'),
+        ],active,'stacked')
+      ]),
+      pattern.c_siteBody([
         body()
-      ],'1-2')
-    ])
+      ])
+    ],'1-2')
   }}
 
 </body>

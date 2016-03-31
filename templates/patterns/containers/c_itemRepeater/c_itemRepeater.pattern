@@ -1,9 +1,0 @@
-{% macro c_itemRepeater(items,pattern,type='ol') %}
-  <{{type}} class="c_itemRepeater">
-  {% for item in items %}
-    <li class="c_itemRepeater__item">
-      {{ pattern(item) }}
-    </li>
-  {% endfor %}
-  </{{type}}>
-{% endmacro %}

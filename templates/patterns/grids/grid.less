@@ -52,8 +52,9 @@
 
   //grid second
   @media screen and (min-width: (unit(@layout_contained/@base,rem))) {
+
     &--1-2 &__column:nth-of-type(2n-1) {
-      width: unit((1/7)*100,%);
+      width: unit((@layout_full/7)/@base,rem);
       max-width: none;
     }
     &--1-2 &__column:nth-of-type(2n) {

@@ -102,6 +102,7 @@
 
 body {
   #font > .aleo();
+  background-color: #FBFBFB;
 }
 h1,h2,h3,h4 {
   #font > .clear-sans();
@@ -399,8 +400,9 @@ th {
 
   //grid second
   @media screen and (min-width: (unit(@layout_contained/@base,rem))) {
+
     &--1-2 &__column:nth-of-type(2n-1) {
-      width: unit((1/7)*100,%);
+      width: unit((@layout_full/7)/@base,rem);
       max-width: none;
     }
     &--1-2 &__column:nth-of-type(2n) {
@@ -427,9 +429,26 @@ th {
 
 }
 
+.icon {
+  &--logo {
+    width: unit(57/@base,rem);
+    height: unit(84/@base,rem);
+    fill: @lightgrey;
+  }
+}
+
+.c_menuBlock {
+  background-color: white;
+  box-shadow: 0 0 1px fade(black,10%);
+}
+
 .c_siteBody {
     padding-top: unit(@spacing_horizontal/@base,rem);
     padding-bottom: unit(@spacing_horizontal/@base,rem);
+}
+
+.m_gallery {
+  column-count: 3;
 }
 
 #m_cacheItem {
@@ -449,10 +468,6 @@ th {
   &--notes {
     #m_cacheItem > .background(@c_notes);
   }
-}
-
-.m_gallery {
-  column-count: 3;
 }
 
 .m_introduction {
@@ -491,6 +506,19 @@ th {
 
 }
 
+.m_logo {
+  display: block;
+  text-align: right;
+  margin-bottom: unit(@spacing_vertical/@base,rem);
+}
+
+#m_navigation() {
+  .active(@bg) {
+    color: contrast(@bg);
+    background-color: @bg;
+  }
+}
+
 .m_navigation {
 
   &__items {
@@ -514,33 +542,38 @@ th {
     color: @c_default;
     display: block;
   }
-  &__link--active {
-    color: @c_link;
+
+  &__link--homepage-active {
+    #m_navigation > .active(@c_link);
+  }
+  &__link--articles-active {
+    #m_navigation > .active(@c_article);
+  }
+  &__link--gallery-active {
+    #m_navigation > .active(@c_gallery);
+  }
+  &__link--notes-active {
+    #m_navigation > .active(@c_notes);
+  }
+  &__link--archives-active {
+    #m_navigation > .active(@c_link);
+  }
+  &__link--portfolio-active {
+    #m_navigation > .active(@c_portfolio);
+  }
+  &__link--pattern-library-active {
+    #m_navigation > .active(@c_link);
   }
 
-  //special colour coding:
-  &__item--articles &__link--active {
-    color: @c_article;
-  }
-  &__item--gallery &__link--active {
-    color: @c_gallery;
-  }
-  &__item--notes &__link--active {
-    color: @c_notes;
-  }
 
   @media screen and (min-width: (unit((@layout_transitional + @spacing_horizontal)/@base,rem))) {
     &--stacked &__item {
       text-align: right;
-      margin-right: 0;
       display: block;
-      margin-bottom: unit(@spacing_vertical/@base,rem);
+      margin-right: 0;
     }
     &--stacked &__link {
-      border-left: 9px solid transparent;
-    }
-    &--stacked &__link--active {
-      border-color: inherit;
+      padding: unit((@spacing_vertical/2)/@base,rem);
     }
   }
 }

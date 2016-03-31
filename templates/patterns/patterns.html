@@ -8,10 +8,24 @@
   </div>
 {% endmacro %}
 
+{% macro icon(name) %}
+  <svg class="icon icon--{{name}}" aria-hidden="true">
+    <use xlink:href="/icons.svg#{{name}}"/>
+  </svg>
+{% endmacro %}
+
 {% macro c_block(items) %}
   {% for item in items %}
     {{item}}
   {% endfor %}
+{% endmacro %}
+
+{% macro c_menuBlock(items) %}
+  <div class="c_menuBlock">
+    {% for item in items %}
+    {{item}}
+    {% endfor %}
+  </div>
 {% endmacro %}
 
 {% macro c_siteBody(content) %}
@@ -20,29 +34,6 @@
         {{ item }}
     {% endfor %}
   </main>
-{% endmacro %}
-
-{% macro c_itemRepeater(items,pattern,type='ol') %}
-  <{{type}} class="c_itemRepeater">
-  {% for item in items %}
-    <li class="c_itemRepeater__item">
-      {{ pattern(item) }}
-    </li>
-  {% endfor %}
-  </{{type}}>
-{% endmacro %}
-
-{% macro m_cacheItem(post) %}
-  <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
-    <h3>{{post.attributes.title}}</h3>
-    <p><em>{{post.attributes.type}}</em>, <time datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time></p>
-    {% if post.prev %}<p>
-      <em>Prev: {{post.prev.title}}, {{post.prev.date|date}}, {{post.prev.type}}, {{post.prev.id}}</em>
-    </p>{% endif %}
-    {% if post.next %}<p>
-      <em>Next: {{post.next.title}}, {{post.next.date|date}}, {{post.next.type}}, {{post.next.id}}</em>
-    </p>{% endif %}
-  </div>
 {% endmacro %}
 
 {% macro m_gallery(images,type) %}
@@ -58,18 +49,38 @@
     </div>
 {% endmacro %}
 
+{% macro m_cacheItem(post) %}
+  <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
+    <h3>{{post.attributes.title}}</h3>
+    <p><em>{{post.attributes.type}}</em>, <time datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time></p>
+    {% if post.prev %}<p>
+      <em>Prev: {{post.prev.title}}, {{post.prev.date|date}}, {{post.prev.type}}, {{post.prev.id}}</em>
+    </p>{% endif %}
+    {% if post.next %}<p>
+      <em>Next: {{post.next.title}}, {{post.next.date|date}}, {{post.next.type}}, {{post.next.id}}</em>
+    </p>{% endif %}
+  </div>
+{% endmacro %}
+
 {% macro m_introduction(markdownFile) %}
   <div class="m_introduction">
     {% markdown markdownFile %}
   </div>
 {% endmacro %}
 
+{% import "./icons/icon.pattern" as icon %}
+{% macro m_logo() %}
+  <a href="/" class="m_logo" aria-label="Website logo">
+    {{icon.icon('logo')}}
+  </a>
+{% endmacro %}
+
 {% macro m_navigation(items, active, modifier) %}
 <nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}">
     <ul class="m_navigation__items">
         {% for item in items %}
-        <li class="m_navigation__item m_navigation__item--{{item.name|lower|replace(' ','-')}}">
-          <a href="{{item.url}}" class="m_navigation__link{% if item.name|lower|replace(' ','-') == active %} m_navigation__link--active{% endif %}">{{item.name|capitalize}}</a>
+        <li class="m_navigation__item">
+          <a href="{{item.url}}" class="m_navigation__link m_navigation__link--{{item.name|lower|replace(' ','-')}}{% if item.name|lower|replace(' ','-') == active %}-active{% endif %}">{{item.name|capitalize}}</a>
         </li>
         {% endfor %}
     </ul>

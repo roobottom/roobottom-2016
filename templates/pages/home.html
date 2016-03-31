@@ -1,12 +1,4 @@
 {% extends 'layouts/default.html' %}
 {% block body %}
-  {{
-    pattern.c_siteBody([
-      pattern.m_pageTitle(title),
-      pattern.grid([
-        'GRIDS TEST',
-        pattern.m_posts(posts,limit=20)
-      ],'1-2')
-    ])
-  }}
+  {{pattern.m_introduction('./static_content/introduction.md')}}
 {% endblock %}

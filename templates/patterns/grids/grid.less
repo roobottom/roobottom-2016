@@ -1,22 +1,4 @@
-//types: 2-1 and 1-2
-
-@grid_base: 568;
-@grid_first: 710;
-@grid_second: 852;
-@grid_third: 1260;
-
-@grid_padding: 36;
-
 .grid {
-
-  //debug
-  background-color: #EEF6E4;
-  &__column:nth-of-type(2n-1) {
-    background-color: #E8EFF8;
-  }
-  &__column:nth-of-type(2n) {
-    background-color: #F6E1E4;
-  }
 
   &--1-2,
   &--2-1 {
@@ -30,22 +12,22 @@
   //grid default
   &--2-1 &__column,
   &--1-2 &__column {
-    padding-left: unit(@grid_padding/@base,rem);
-    padding-right: unit(@grid_padding/@base,rem);
+    padding-left: unit(@spacing_horizontal/@base,rem);
+    padding-right: unit(@spacing_horizontal/@base,rem);
   }
 
   //grid base
-  @media screen and (min-width: (unit(@grid_base/@base,rem))) {
+  @media screen and (min-width: (unit(@layout_base/@base,rem))) {
     &--1-2 &__column:nth-of-type(2n) {
       float: right;
-      max-width: unit(@grid_base/@base,rem);
+      max-width: unit(@layout_base/@base,rem);
     }
     &--2-1 &__column:nth-of-type(2n-1) {
       float: left;
-      max-width: unit(@grid_base/@base,rem);
+      max-width: unit(@layout_base/@base,rem);
     }
   }
-  @media screen and (min-width: (unit((@grid_base + @grid_padding)/@base,rem))) {
+  @media screen and (min-width: (unit((@layout_base + @spacing_horizontal)/@base,rem))) {
     &--1-2 &__column:nth-of-type(2n) {
       padding-left: 0;
     }
@@ -55,21 +37,21 @@
   }
 
   //grid first
-  @media screen and (min-width: (unit(@grid_first/@base,rem))) {
+  @media screen and (min-width: (unit(@layout_transitional/@base,rem))) {
     &--1-2 &__column:nth-of-type(2n-1) {
-      float: left;
-      max-width: unit((@grid_second/6)/@base,rem);
+      max-width: unit((@layout_contained/6)/@base,rem);
       padding-right: 0;
+      position: fixed;
     }
     &--2-1 &__column:nth-of-type(2n) {
-      float: right;
-      max-width: unit((@grid_second/6)/@base,rem);
+      position: fixed;
+      max-width: unit((@layout_contained/6)/@base,rem);
       padding-left: 0;
     }
   }
 
   //grid second
-  @media screen and (min-width: (unit(@grid_second/@base,rem))) {
+  @media screen and (min-width: (unit(@layout_contained/@base,rem))) {
     &--1-2 &__column:nth-of-type(2n-1) {
       width: unit((1/7)*100,%);
       max-width: none;
@@ -81,13 +63,13 @@
   }
 
   //grid third
-  @media screen and (min-width: (unit(@grid_third/@base,rem))) {
+  @media screen and (min-width: (unit(@layout_full/@base,rem))) {
     &--1-2, &--2-1 {
       margin: 0 auto;
-      max-width: unit(@grid_third/@base,rem);
+      max-width: unit(@layout_full/@base,rem);
     }
   }
-  @media screen and (min-width: (unit((@grid_third + @grid_padding) /@base,rem))) {
+  @media screen and (min-width: (unit((@layout_full + @spacing_horizontal) /@base,rem))) {
     &--1-2 &__column,
     &--2-1 &__column {
       padding-left: 0;

@@ -1,0 +1,5 @@
+{% macro m_introduction(markdownFile) %}
+  <div class="m_introduction">
+    {% markdown markdownFile %}
+  </div>
+{% endmacro %}

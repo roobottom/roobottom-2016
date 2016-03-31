@@ -1,164 +1,114 @@
 'use strict';
+
 var fs  = require('fs'),
     path = require('path'),
     _ = require('lodash'),
+    Promise = require('bluebird'),
     frontmatter = require('front-matter'),
     marked = require('marked'),
-    smart_tags = require('./smart_tags.js'),
-    trimHtml = require('trim-html'),
-    string = require('string');
+    mkdirp = require('mkdirp'),
+    smart_tags = require('./smart_tags.js');
 
-var __basename = _.trimEnd(__dirname,'src');
-var all_posts = require(__basename + '/posts/posts.json');
-
-marked.setOptions({
-    renderer: new marked.Renderer(),
-    gfm: true,
-    tables: true,
-    breaks: true,
-    pedantic: false,
-    sanitize: false,
-    smartLists: true,
-    smartypants: true
-});
-
-var folders = ['diary','gallery','notes'];
-var postsRoot = './posts/';
-
-function get_all_posts (cb) {
-  cb(all_posts);
-}
-
-
-function processAllPosts(cb) {
-  let posts = [];
-  let folder = folders.pop();
-
-  getFilesInFolder(folder, function filesCaller(err,files) {
-    if(!err) {
-
-
-
-      /* call any remaining folders recursivly*/
-      if(folders.length > 0) {
-        folder = folders.pop();
-        getFilesInFolder(folder,filesCaller);
-      }
+  let folders = ['articles','gallery','notes'];
+  let postsRoot = './posts/';
+  let cacheRoot = postsRoot + '.cache/';
+  let caches = {};
+  folders.map(folder => {
+    let cache = '.' + cacheRoot + folder + '/' + 'posts.json';
+    try {
+      caches[folder] = require(cache);
     }
-    else {console.log(err);}
-  });//getFilesInFolder
+    catch(err) {
+      processAllPosts();
+    }
+  });
+
+function getPosts(folders) {
+  let all_posts = [];
+  return new Promise((resolve,reject) => {
+    Promise.map(folders,folder => {
+      try {
+        let posts = require('.' + cacheRoot + folder + '/' + 'posts.json');
+        all_posts = all_posts.concat(posts);
+      }
+      catch(err) {
+        reject(err);
+      }
+    })
+    .then(() => {
+      sortPosts(all_posts);
+      resolve(all_posts);
+    });
+  })
 }
-function getFilesInFolder(folder,cb) {
-    fs.readdir(postsRoot+folder,(err,files) => {
-        if(err) { cb(err) }
-        else {
-          files = _.remove(files, n => n.match(/^\d*\.md$/));
-          cb(null,files);
-        }
-    });
-};
-function getFileCOntent(file,cb) {
-    fs.readFile(file, 'utf8', function(err,data) {
-        if(err) throw err;
-        cb(data);
-    });
-};
 
-//processAllPosts();
+function getPost(folder,id) {
+  return new Promise((resolve,reject) => {
+    try {
+      let post = require('.' + cacheRoot + folder + '/' + id + '.json');
+      resolve(post);
+    }
+    catch(err) {
+      reject(err);
+    }
+  });
+}
 
-//update this to process files for each folder.
-function process_all_posts (cb) {
-    var posts = [];
+function processAllPosts() {
 
-    //call folders
-    var folder = './posts/'+folders.pop()+'/';
-    get_files_in_folder(folder, function folder_caller(files) {
+  let all_posts = [];
 
-        //call files:
-        var file = files.pop();
-        get_file_contents(folder+file, function file_caller(data) {
+  return new Promise((resolve,reject) => {
 
-            process_post(data,file,folder,function(post) {
-                posts.push(post);
-                //check if we want to call files again:
-                if(files.length > 0) {
-                    file = files.pop();
-                    get_file_contents(folder+file,file_caller);
-                } else {
-                    //check if we want to call folders again:
-                    if(folders.length > 0) {
-                        folder = './posts/'+folders.pop()+'/';
-                        get_files_in_folder(folder,folder_caller);
-                    } else {
-                        posts.sort(function(a,b) {
-                            a = a.attributes.date;
-                            b = b.attributes.date;
-                            return (a < b ? 1:-1);
-                        });
+    Promise.map(folders,folder => {
 
-                        //now add-in 2-way relational data for this set:
-                        posts = calculate_post_relations(posts);
+      return getFilesInFolder(folder)
 
-                        write_file('./posts/posts.json',JSON.stringify(posts),function() {
-                          create_file_per_post(posts, function() {
-                            cb(all_posts);
-                          });
+      .then(files => {
+        return Promise.map(files,(file) => {
+          return getFileContents(folder,file)
+        })
+      })
 
-                        });
-                    };
-                };
-            });
-        });
-    });
-};
+      .then(dataObject => {
+        return Promise.map(dataObject,(data) => {
+          return processPostData(data,folder);
+        })
+      })
 
-function processAllPostsCallbacks(cb) {
-  let posts = [];
-  let folder = './posts/'+folders.pop()+'/';
-  get_files_in_folder(folder, function folder_caller(files) {
+      .then(posts => {
+        //synchronous processing of the posts object:
+        sortPosts(posts);
+        calculatePostRelationships(posts);
+        all_posts = all_posts.concat(posts);
+
+        //now write out some files on each pass
+        return Promise.map(posts, post=> {
+          return writeFile(cacheRoot + folder ,post.attributes.id + '.json',JSON.stringify(post));
+        })
+        .then(function() {
+          return writeFile(cacheRoot + folder,'posts.json',JSON.stringify(posts));
+        })
+      })
+      .catch(err => console.log('error: ', err))
+
+    })
+    .then(function() {
+      return writeFile(cacheRoot,'posts.json',JSON.stringify(all_posts)).then(function() {return});
+    })
+    .then(function() {
+      sortPosts(all_posts);
+      resolve(all_posts);
+    })
+    .catch(err => console.log('error: ', err));
 
   });
-};
+}
 
-function get_post(id,type,cb) {
-  cb();
-};
-
-//private functions
-
-function get_files_in_folder(folder,cb) {
-    fs.readdir(folder,function(err,files) {
-        if(err) throw err;
-
-        var files = _.remove(files,function(n) {
-            return n.match(/^\d*\.md$/);
-        });
-
-        cb(files);
-    });
-};
-
-function get_file_contents(file,cb) {
-    fs.readFile(file, 'utf8', function(err,data) {
-        if(err) throw err;
-        cb(data);
-    });
-};
-
-function process_post(data,file,folder,cb) {
-    var post = frontmatter(data);
-    var type = folder.split(path.sep);
-    post.attributes.id = path.basename(file,'.md');
-    post.attributes.type = type[2];
-    post.html_body = marked(post.body);
-    post.html_body = smart_tags.find_tags(post);
-    cb(post);
-};
-
-function calculate_post_relations(posts) {
+function calculatePostRelationships(posts) {
   for (let key in posts) {
-    var next = parseInt(key)+1;
-    var prev = parseInt(key)-1;
+    let next = parseInt(key)+1;
+    let prev = parseInt(key)-1;
     if(next in posts) {
       posts[key].next = {};
       posts[key].next.title = posts[next].attributes.title;
@@ -175,37 +125,67 @@ function calculate_post_relations(posts) {
     }
   }
   return posts;
-};
-
-function write_file(file,data,cb) {
-  fs.writeFile(file,data,'utf-8',function(err) {
-    if(!err) {
-      cb();
-    } else {
-      console.log(err);
-    }
-  });
-};
-
-function create_file_per_post(posts,cb) {
-  var post = posts.pop();
-  var file = __basename + 'posts/.cache/' + post.attributes.type + '/' + post.attributes.id + '.json';
-
-  write_file(file, JSON.stringify(post), function write_caller(err) {
-    if(!err) {
-      post = posts.pop();
-      file = __basename + 'posts/.cache/' + post.attributes.type + '/' + post.attributes.id + '.json';
-      if(posts.length > 0) {
-        write_file(file, JSON.stringify(post), write_caller);
-      } else {
-        cb()
-      }
-    }
-  });
-
 }
 
+function getFilesInFolder(folder) {
+  return new Promise((resolve, reject) => {
+    fs.readdir(postsRoot+folder,function(err,files) {
+      if(!err) {
+        files = _.remove(files, n => n.match(/^\d*\.md$/))
+        resolve(files)
+      } else {
+        reject(err)
+      }
+    })
+  })
+}
 
-module.exports.get_all_posts = get_all_posts;
-module.exports.get_post = get_post;
-module.exports.process_all_posts = process_all_posts;
+function getFileContents(folder,file) {
+  return new Promise((resolve,reject) => {
+    fs.readFile(postsRoot+folder+'/'+file, 'utf8', function(err,data) {
+        if(!err) {
+          resolve({id:path.basename(file,'.md'),content:data})
+        }
+        else { reject(err) }
+    })
+  })
+}
+
+function processPostData(data,folder) {
+  return new Promise((resolve,reject) => {
+    let post = frontmatter(data.content);
+    post.attributes.type = folder;
+    post.attributes.id = data.id;
+    post.html_body = marked(post.body);
+    post.html_body = smart_tags.find_tags(post);
+    resolve(post);
+  });
+};
+
+function sortPosts(posts) {
+  return posts.sort(function(a,b) {
+      a = a.attributes.date;
+      b = b.attributes.date;
+      return (a < b ? 1:-1);
+  });
+}
+
+function writeFile(folder,file,contents) {
+  return new Promise((resolve,reject) => {
+    mkdirp(folder, function (err) {
+      if(!err) {
+        fs.writeFile(folder+'/'+file,contents,'utf-8',function(err) {
+          if(!err) { resolve(file); }
+          else { reject(err); }
+        });
+      }
+      else {
+        console.log('mkdir error:',err);
+      }
+    });
+  });
+};
+
+module.exports.processAllPosts = processAllPosts;
+module.exports.getPosts = getPosts;
+module.exports.getPost = getPost;

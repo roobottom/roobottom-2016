@@ -51,7 +51,7 @@ smart_tag_gallery = function (post,string,opts) {
             images_for_gallery["images"].push(post.attributes.images[i]);
         }
     }
-    gallery_rendered = nunjucks.render('patterns/modules/m_gallery/m_gallery.smartTag',images_for_gallery);
+    gallery_rendered = env.render('patterns/modules/m_gallery/m_gallery.smartTag',images_for_gallery);
     return gallery_rendered;
 
 }

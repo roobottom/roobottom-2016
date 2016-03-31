@@ -22,24 +22,15 @@
     #u_space > .push(1);
   }
 
-  .a(@c:@blue) {
+  .a(@c:@c_link) {
     color: @c;
     text-decoration: none;
   }
-  .a--underline(@c:@blue,@bg:white) {
+  .a--underline(@c:@c_link,@bg:white) {
     #u_type > .a(@c);
-    text-shadow:
-      1px 0 0 @bg,-1px 0 0 @bg,0 1px 0 @bg,0 -1px 0 @bg;
-    position: relative;
-    &:before {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      background-color: @c;
-      bottom: 1px;
-      height: 1px;
-      z-index: -1;
+    border-bottom: 1px solid @lightgrey;
+    &:hover {
+      border-color: @medgrey;
     }
   }
 

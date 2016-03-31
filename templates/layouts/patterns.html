@@ -8,19 +8,8 @@
 {% endset %}
 
 {% block body %}
-  {# this is disgusting, but currently the only way to do this #}
-  <main class="c_siteBody">
-    <div class="c_siteBody__content">
-      <div class="grid grid--1-2">
-        <div class="grid__column">
-          {{pattern.m_navigation(items=navigationItems|jsonParse)}}
-        </div>
-        <div class="grid__column">
-          {{pattern.m_pageTitle(title)}}
-          {% block content %}
-          {% endblock %}
-        </div>
-      </div>
-    </div>
-  </main>
+  {{pattern.m_navigation(items=navigationItems|jsonParse)}}
+  {{pattern.m_pageTitle(title)}}
+  {% block content %}
+  {% endblock %}
 {% endblock %}

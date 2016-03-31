@@ -6,7 +6,7 @@ var express = require('express'),
     _ = require('lodash'),
     app = express(),
 
-    posts = require('./posts.promises.js'),
+    posts = require('./posts.js'),
     patterns = require('./patterns.js'),
     tags = require('./tags.js'),
     settings = require('./settings.json'),
@@ -35,15 +35,16 @@ let env = nunjucks.configure( __basename + 'templates/', {
 
 nunjucks_markdown.register(env, marked);
 
-//statics
+//static files
 app.use(express.static('assets'));
 
 //homepage
 app.get('/', function (req, res) {
-    posts.getPosts(['diary','gallery','notes'])
+    posts.getPosts(['articles','gallery','notes'])
     .then(function(posts){
       res.render('pages/home.html', {
         title: 'Homepage',
+        active: 'homepage',
         posts: posts,
         site: settings
       })
@@ -70,12 +71,13 @@ app.get('/u',function(req,res) {
 });
 
 
-//diary homepage
-app.get('/diary', function(req,res) {
-    posts.getPosts(['diary'])
+//articles homepage
+app.get('/articles', function(req,res) {
+    posts.getPosts(['articles'])
     .then(function(posts){
-      res.render('pages/diary.html', {
-        title: 'Diary',
+      res.render('pages/articles.html', {
+        title: 'Articles',
+        active: 'articles',
         posts: posts,
         site: settings
       })
@@ -86,13 +88,14 @@ app.get('/diary', function(req,res) {
     });
 });
 
-//diary post
-app.get('/diary/:id', function(req,res) {
+//articles post
+app.get('/articles/:id', function(req,res) {
   if(/^\d+$/.test(req.params.id)) {//only process main req
-    posts.getPost('diary',req.params.id)
+    posts.getPost('articles',req.params.id)
     .then(function(post){
-      res.render('pages/diary_post.html', {
+      res.render('pages/article.html', {
         title: post.attributes.title,
+        active: 'articles',
         post: post,
         site: settings
       })
@@ -106,12 +109,41 @@ app.get('/diary/:id', function(req,res) {
   };
 });
 
-//gallery homepage
+//articles redirection from old /diary url:
+app.get('/diary', function(req,res) {
+  res.writeHead(301, {'Location':'/articles'});
+  res.end();
+});
+//articles redirection from old /diary/:id url:
+app.get('/diary/:id', function(req,res) {
+  res.writeHead(301, {'Location':'/articles/'+req.params.id});
+  res.end();
+});
+
+//Galleries
 app.get('/gallery', function(req,res) {
     posts.getPosts(['gallery'])
     .then(function(posts){
       res.render('pages/gallery.html', {
         title: 'Gallery',
+        active: 'gallery',
+        posts: posts,
+        site: settings
+      })
+    })
+    .catch(err => {
+      console.log('error: ', err);
+      res.sendStatus(404);
+    });
+});
+
+//notes
+app.get('/notes', function(req,res) {
+    posts.getPosts(['notes'])
+    .then(function(posts){
+      res.render('pages/notes.html', {
+        title: 'Notes',
+        active: 'notes',
         posts: posts,
         site: settings
       })
@@ -126,7 +158,8 @@ app.get('/gallery', function(req,res) {
 app.get('/patterns',function(req,res) {
   patterns.getPatternsList().then(patterns => {
     res.render('pages/patterns_overview.html', {
-      title: 'Patterns',
+      title: 'Pattern Library',
+      active: 'pattern-library',
       patterns: patterns,
       site: settings
     })
@@ -136,7 +169,8 @@ app.get('/patterns',function(req,res) {
 app.get('/patterns/:category',function(req,res) {
   patterns.getPatternsList().then(patterns => {
     res.render('pages/patterns_category.html', {
-      title: 'Patterns / '+req.params.category,
+      title: 'Patterns / ' + req.params.category,
+      active: 'pattern-library',
       site: settings,
       patterns: patterns,
       category: req.params.category

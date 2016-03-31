@@ -1,9 +1,7 @@
 {% macro c_siteBody(content) %}
-    <main class="c_siteBody">
-        <div class="c_siteBody__content">
-            {% for item in content %}
-                {{ item }}
-            {% endfor %}
-        </div>
-    </main>
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
+    {% endfor %}
+  </main>
 {% endmacro %}

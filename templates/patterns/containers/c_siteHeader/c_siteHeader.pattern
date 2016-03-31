@@ -1,9 +1,0 @@
-{% macro c_siteHeader(content) %}
-    <header class="c_siteHeader">
-        <div class="c_siteHeader__content">
-            {% for item in content %}
-                {{ item }}
-            {% endfor %}
-        </div>
-    </header>
-{% endmacro %}

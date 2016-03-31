@@ -3,22 +3,30 @@
 
 //vertical spacing
 @spacing_vertical:          32;
-@spacing_horizontal:        20;
+@spacing_horizontal:        36;
 
 //layouts
-@layout_narrow:             720; //the max width for text
-@layout_medium:             980; //the next step up
-@layout_wide:              1270; //max site width, never stretch beyond this.
+@layout_base:               568;
+@layout_transitional:       710;
+@layout_contained:          852;
+@layout_full:               1260;
+@layout_pull:               1/4;
 
 //colours
 @blue:                      #008EEF;
 @red:                       #ff0033;
 @yellow:                    #ECB538;
+@green:                     #00BDA5;
+@turquoise:                 #60C5D6;
 
-@c_diary:                   @blue;
+@c_articles:                @blue;
 @c_article:                 @blue;
 @c_gallery:                 @red;
 @c_notes:                   @yellow;
+@c_portfolio:               @green;
+@c_link:                    @turquoise;
+
+@c_default:                 @darkgrey;
 
 @grey:                      #cccccc;
 @lightgrey:                 #f1f1f1;
@@ -64,6 +72,13 @@
 
 @font-face {
     font-family: "Clear Sans";
+    src: url("fonts/ClearSans-light.woff") format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Clear Sans";
     src: url("fonts/ClearSans-regular.woff") format('woff');
     font-weight: normal;
     font-style: normal;
@@ -78,10 +93,10 @@
 
 #font() {
   .aleo() {
-    font-family: "Aleo";
+    font-family: "Aleo", serif;
   }
   .clear-sans() {
-    font-family: "Clear Sans";
+    font-family: "Clear Sans", sans-serif;;
   }
 }
 
@@ -330,25 +345,7 @@ th {
   }
 }
 
-//types: 2-1 and 1-2
-
-@grid_base: 568;
-@grid_first: 710;
-@grid_second: 852;
-@grid_third: 1260;
-
-@grid_padding: 36;
-
 .grid {
-
-  //debug
-  background-color: #EEF6E4;
-  &__column:nth-of-type(2n-1) {
-    background-color: #E8EFF8;
-  }
-  &__column:nth-of-type(2n) {
-    background-color: #F6E1E4;
-  }
 
   &--1-2,
   &--2-1 {
@@ -362,22 +359,22 @@ th {
   //grid default
   &--2-1 &__column,
   &--1-2 &__column {
-    padding-left: unit(@grid_padding/@base,rem);
-    padding-right: unit(@grid_padding/@base,rem);
+    padding-left: unit(@spacing_horizontal/@base,rem);
+    padding-right: unit(@spacing_horizontal/@base,rem);
   }
 
   //grid base
-  @media screen and (min-width: (unit(@grid_base/@base,rem))) {
+  @media screen and (min-width: (unit(@layout_base/@base,rem))) {
     &--1-2 &__column:nth-of-type(2n) {
       float: right;
-      max-width: unit(@grid_base/@base,rem);
+      max-width: unit(@layout_base/@base,rem);
     }
     &--2-1 &__column:nth-of-type(2n-1) {
       float: left;
-      max-width: unit(@grid_base/@base,rem);
+      max-width: unit(@layout_base/@base,rem);
     }
   }
-  @media screen and (min-width: (unit((@grid_base + @grid_padding)/@base,rem))) {
+  @media screen and (min-width: (unit((@layout_base + @spacing_horizontal)/@base,rem))) {
     &--1-2 &__column:nth-of-type(2n) {
       padding-left: 0;
     }
@@ -387,21 +384,21 @@ th {
   }
 
   //grid first
-  @media screen and (min-width: (unit(@grid_first/@base,rem))) {
+  @media screen and (min-width: (unit(@layout_transitional/@base,rem))) {
     &--1-2 &__column:nth-of-type(2n-1) {
-      float: left;
-      max-width: unit((@grid_second/6)/@base,rem);
+      max-width: unit((@layout_contained/6)/@base,rem);
       padding-right: 0;
+      position: fixed;
     }
     &--2-1 &__column:nth-of-type(2n) {
-      float: right;
-      max-width: unit((@grid_second/6)/@base,rem);
+      position: fixed;
+      max-width: unit((@layout_contained/6)/@base,rem);
       padding-left: 0;
     }
   }
 
   //grid second
-  @media screen and (min-width: (unit(@grid_second/@base,rem))) {
+  @media screen and (min-width: (unit(@layout_contained/@base,rem))) {
     &--1-2 &__column:nth-of-type(2n-1) {
       width: unit((1/7)*100,%);
       max-width: none;
@@ -413,13 +410,13 @@ th {
   }
 
   //grid third
-  @media screen and (min-width: (unit(@grid_third/@base,rem))) {
+  @media screen and (min-width: (unit(@layout_full/@base,rem))) {
     &--1-2, &--2-1 {
       margin: 0 auto;
-      max-width: unit(@grid_third/@base,rem);
+      max-width: unit(@layout_full/@base,rem);
     }
   }
-  @media screen and (min-width: (unit((@grid_third + @grid_padding) /@base,rem))) {
+  @media screen and (min-width: (unit((@layout_full + @spacing_horizontal) /@base,rem))) {
     &--1-2 &__column,
     &--2-1 &__column {
       padding-left: 0;
@@ -431,20 +428,8 @@ th {
 }
 
 .c_siteBody {
-    &__content {
-        .wrapper();
-        padding-top: unit(@spacing_horizontal/@base,rem);
-        padding-bottom: unit(@spacing_horizontal/@base,rem);
-    }
-}
-
-.c_siteHeader {
-    background-color: @darkgrey;
-    &__content {
-        .wrapper();
-        padding-top: unit(@spacing_horizontal/@base,rem);
-        padding-bottom: unit(@spacing_horizontal/@base,rem);
-    }
+    padding-top: unit(@spacing_horizontal/@base,rem);
+    padding-bottom: unit(@spacing_horizontal/@base,rem);
 }
 
 #m_cacheItem {
@@ -455,8 +440,8 @@ th {
 }
 
 .m_cacheItem {
-  &--diary {
-    #m_cacheItem > .background(@c_diary);
+  &--articles {
+    #m_cacheItem > .background(@c_articles);
   }
   &--gallery {
     #m_cacheItem > .background(@c_gallery);
@@ -470,8 +455,94 @@ th {
   column-count: 3;
 }
 
+.m_introduction {
+  #font > .clear-sans();
+  font-weight: 200;
+  color: @c_default;
+
+  font-size: unit(37/@base,rem);
+  font-size: unit(5,vw);
+  line-height: 54/37;
+  p {margin: 0 0 unit(3,vw) 0;}
+
+  @media screen and (min-width: (unit(@layout_transitional/@base,rem))) {
+    font-size: unit(37/@base,rem);
+    p {margin: 0 0 unit(@spacing_horizontal/@base,rem) 0;}
+  }
+
+
+
+  a {
+    #u_type > .a--underline();
+  }
+
+  a[href='/articles'] {
+    #u_type > .a--underline(@c_article);
+  }
+  a[href='/gallery'] {
+    #u_type > .a--underline(@c_gallery);
+  }
+  a[href='/notes'] {
+    #u_type > .a--underline(@c_notes);
+  }
+  a[href='/portfolio'] {
+    #u_type > .a--underline(@c_portfolio);
+  }
+
+}
+
 .m_navigation {
-    
+
+  &__items {
+    padding: 0;
+    margin: 0;
+  }
+  &__item {
+    list-style: none;
+    display: inline-block;
+    margin-right: unit(@spacing_horizontal/@base,rem);
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  &__link {
+    #font > .clear-sans();
+    font-weight: 300;
+    font-size: unit(18/@base,rem);
+    line-height: 22/18;
+    text-decoration: none;
+    color: @c_default;
+    display: block;
+  }
+  &__link--active {
+    color: @c_link;
+  }
+
+  //special colour coding:
+  &__item--articles &__link--active {
+    color: @c_article;
+  }
+  &__item--gallery &__link--active {
+    color: @c_gallery;
+  }
+  &__item--notes &__link--active {
+    color: @c_notes;
+  }
+
+  @media screen and (min-width: (unit((@layout_transitional + @spacing_horizontal)/@base,rem))) {
+    &--stacked &__item {
+      text-align: right;
+      margin-right: 0;
+      display: block;
+      margin-bottom: unit(@spacing_vertical/@base,rem);
+    }
+    &--stacked &__link {
+      border-left: 9px solid transparent;
+    }
+    &--stacked &__link--active {
+      border-color: inherit;
+    }
+  }
 }
 
 .m_pageTitle {
@@ -584,24 +655,15 @@ th {
     #u_space > .push(1);
   }
 
-  .a(@c:@blue) {
+  .a(@c:@c_link) {
     color: @c;
     text-decoration: none;
   }
-  .a--underline(@c:@blue,@bg:white) {
+  .a--underline(@c:@c_link,@bg:white) {
     #u_type > .a(@c);
-    text-shadow:
-      1px 0 0 @bg,-1px 0 0 @bg,0 1px 0 @bg,0 -1px 0 @bg;
-    position: relative;
-    &:before {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      background-color: @c;
-      bottom: 1px;
-      height: 1px;
-      z-index: -1;
+    border-bottom: 1px solid @lightgrey;
+    &:hover {
+      border-color: @medgrey;
     }
   }
 

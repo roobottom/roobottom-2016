@@ -1,7 +1,7 @@
 {% macro m_posts (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts|limitTo(limit) %}
-    {% if post.attributes.type == 'diary' %}
-      {{ m_postDiary (post,heading,link) }}
+    {% if post.attributes.type == 'articles' %}
+      {{ m_postarticles (post,heading,link) }}
     {% endif %}
     {% if post.attributes.type == 'gallery' %}
       {{ m_postGallery (post) }}
@@ -12,9 +12,9 @@
   {% endfor %}
 {% endmacro %}
 
-{% macro m_postDiarySummary (posts,heading="h2",link=true,limit=10) %}
-  {% for post in posts | filterByType('diary') | limitTo(limit) %}
-      {{ m_postDiary (post,heading,link,true) }}
+{% macro m_postarticlesSummary (posts,heading="h2",link=true,limit=10) %}
+  {% for post in posts | filterByType('articles') | limitTo(limit) %}
+      {{ m_postarticles (post,heading,link,true) }}
   {% endfor %}
 {% endmacro %}
 

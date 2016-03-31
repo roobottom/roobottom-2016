@@ -14,6 +14,14 @@
   {% endfor %}
 {% endmacro %}
 
+{% macro c_siteBody(content) %}
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
+    {% endfor %}
+  </main>
+{% endmacro %}
+
 {% macro c_itemRepeater(items,pattern,type='ol') %}
   <{{type}} class="c_itemRepeater">
   {% for item in items %}
@@ -24,25 +32,6 @@
   </{{type}}>
 {% endmacro %}
 
-{% macro c_siteBody(content) %}
-    <main class="c_siteBody">
-        <div class="c_siteBody__content">
-            {% for item in content %}
-                {{ item }}
-            {% endfor %}
-        </div>
-    </main>
-{% endmacro %}
-
-{% macro c_siteHeader(content) %}
-    <header class="c_siteHeader">
-        <div class="c_siteHeader__content">
-            {% for item in content %}
-                {{ item }}
-            {% endfor %}
-        </div>
-    </header>
-{% endmacro %}
 {% macro m_cacheItem(post) %}
   <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
     <h3>{{post.attributes.title}}</h3>
@@ -69,21 +58,18 @@
     </div>
 {% endmacro %}
 
-{% macro m_navigation(items) %}
-<nav class="m_navigation">
+{% macro m_introduction(markdownFile) %}
+  <div class="m_introduction">
+    {% markdown markdownFile %}
+  </div>
+{% endmacro %}
+
+{% macro m_navigation(items, active, modifier) %}
+<nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}">
     <ul class="m_navigation__items">
         {% for item in items %}
-        <li class="m_navigation__item{% if item.items %}--has-child{% endif %}">
-          <a href="{{item.url}}" class="m_navigation__link">{{item.name}}</a>
-          {% if item.items %}
-            <ul class="m_navigation__items--child">
-              {% for item in item.items %}
-                <li class="m_navigation__item--child">
-                  <a href="{{item.url}}" class="m_navigation__link--child">{{item.name}}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          {% endif %}
+        <li class="m_navigation__item m_navigation__item--{{item.name|lower|replace(' ','-')}}">
+          <a href="{{item.url}}" class="m_navigation__link{% if item.name|lower|replace(' ','-') == active %} m_navigation__link--active{% endif %}">{{item.name|capitalize}}</a>
         </li>
         {% endfor %}
     </ul>
@@ -94,17 +80,17 @@
 <h1 class="m_pageTitle">{{title}}</h1>
 {% endmacro %}
 
-{% macro m_postDiary(post,heading,link=true,trimPost=false) %}
-  <article class="m_postDiary">
+{% macro m_postarticles(post,heading,link=true,trimPost=false) %}
+  <article class="m_postarticles">
     <{{heading}}>
       {% if link %}
-        <a href="/diary/{{post.attributes.id}}">{{post.attributes.title}}</a>
+        <a href="/articles/{{post.attributes.id}}">{{post.attributes.title}}</a>
       {% else %}
         {{post.attributes.title}}
       {% endif %}
     </{{heading}}>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
-    <div class="m_postDiary__body u_type">
+    <div class="m_postarticles__body u_type">
       {% if trimPost %}
         {{post.html_body | safe | truncate(200) }}
       {% else %}
@@ -142,8 +128,8 @@
 
 {% macro m_posts (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts|limitTo(limit) %}
-    {% if post.attributes.type == 'diary' %}
-      {{ m_postDiary (post,heading,link) }}
+    {% if post.attributes.type == 'articles' %}
+      {{ m_postarticles (post,heading,link) }}
     {% endif %}
     {% if post.attributes.type == 'gallery' %}
       {{ m_postGallery (post) }}
@@ -154,9 +140,9 @@
   {% endfor %}
 {% endmacro %}
 
-{% macro m_postDiarySummary (posts,heading="h2",link=true,limit=10) %}
-  {% for post in posts | filterByType('diary') | limitTo(limit) %}
-      {{ m_postDiary (post,heading,link,true) }}
+{% macro m_postarticlesSummary (posts,heading="h2",link=true,limit=10) %}
+  {% for post in posts | filterByType('articles') | limitTo(limit) %}
+      {{ m_postarticles (post,heading,link,true) }}
   {% endfor %}
 {% endmacro %}
 

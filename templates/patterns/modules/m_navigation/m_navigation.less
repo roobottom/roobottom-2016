@@ -1,3 +1,53 @@
 .m_navigation {
-    
+
+  &__items {
+    padding: 0;
+    margin: 0;
+  }
+  &__item {
+    list-style: none;
+    display: inline-block;
+    margin-right: unit(@spacing_horizontal/@base,rem);
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  &__link {
+    #font > .clear-sans();
+    font-weight: 300;
+    font-size: unit(18/@base,rem);
+    line-height: 22/18;
+    text-decoration: none;
+    color: @c_default;
+    display: block;
+  }
+  &__link--active {
+    color: @c_link;
+  }
+
+  //special colour coding:
+  &__item--articles &__link--active {
+    color: @c_article;
+  }
+  &__item--gallery &__link--active {
+    color: @c_gallery;
+  }
+  &__item--notes &__link--active {
+    color: @c_notes;
+  }
+
+  @media screen and (min-width: (unit((@layout_transitional + @spacing_horizontal)/@base,rem))) {
+    &--stacked &__item {
+      text-align: right;
+      margin-right: 0;
+      display: block;
+      margin-bottom: unit(@spacing_vertical/@base,rem);
+    }
+    &--stacked &__link {
+      border-left: 9px solid transparent;
+    }
+    &--stacked &__link--active {
+      border-color: inherit;
+    }
+  }
 }

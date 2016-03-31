@@ -1,18 +1,9 @@
-{% macro m_navigation(items) %}
-<nav class="m_navigation">
+{% macro m_navigation(items, active, modifier) %}
+<nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}">
     <ul class="m_navigation__items">
         {% for item in items %}
-        <li class="m_navigation__item{% if item.items %}--has-child{% endif %}">
-          <a href="{{item.url}}" class="m_navigation__link">{{item.name}}</a>
-          {% if item.items %}
-            <ul class="m_navigation__items--child">
-              {% for item in item.items %}
-                <li class="m_navigation__item--child">
-                  <a href="{{item.url}}" class="m_navigation__link--child">{{item.name}}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          {% endif %}
+        <li class="m_navigation__item m_navigation__item--{{item.name|lower|replace(' ','-')}}">
+          <a href="{{item.url}}" class="m_navigation__link{% if item.name|lower|replace(' ','-') == active %} m_navigation__link--active{% endif %}">{{item.name|capitalize}}</a>
         </li>
         {% endfor %}
     </ul>

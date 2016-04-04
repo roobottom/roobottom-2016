@@ -8,7 +8,10 @@ var concat = require('gulp-concat'),
     cleancss = new LessPluginCleanCSS({ advanced: true }),
     LessPluginAutoPrefix = require('less-plugin-autoprefix'),
     autoprefix= new LessPluginAutoPrefix({ browsers: ["last 2 versions"] }),
-    fs = require('fs');
+    fs = require('fs'),
+    shell = require('gulp-shell'),
+    del = require('del'),
+    ghPages = require('gulp-gh-pages');
 
 // requirements for the build process:
 const nunjucks = require('gulp-nunjucks');
@@ -60,11 +63,21 @@ gulp.task('default', ['patterns','less','go']);
 
 
 //gulp build task
-gulp.task('build', () => {
-	gulp.src('./templates/pages/articles.html')
-    .pipe(data(function(file) {
-      return JSON.parse(fs.readFileSync('./posts/.cache/articles/1.json'));
-    }))
-    .pipe(nunjucks.compile())
-    .pipe(gulp.dest('_site/articles'));
+gulp.task('server', shell.task([
+  'node ./src/app.js'
+]))
+gulp.task('clean', function() {
+  return del([
+    './_site/**/*'
+  ])
+})
+gulp.task('scrape',shell.task([
+  'node ./src/static.js'
+]))
+
+gulp.task('deploy', function() {
+  return gulp.src('./_site/**/*')
+    .pipe(ghPages());
 });
+
+gulp.task('build',['clean','scrape'])

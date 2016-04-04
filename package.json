@@ -28,12 +28,15 @@
     "unfluff": "^0.11.0"
   },
   "devDependencies": {
+    "del": "^2.2.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-data": "^1.2.1",
+    "gulp-gh-pages": "^0.5.4",
     "gulp-less": "^3.0.5",
     "gulp-nodemon": "^2.0.6",
     "gulp-nunjucks": "^2.2.0",
+    "gulp-shell": "^0.5.2",
     "less-plugin-autoprefix": "^1.5.1",
     "less-plugin-clean-css": "^1.5.1",
     "nodemon": "^1.8.1"

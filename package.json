@@ -12,6 +12,7 @@
     "bluebird": "^3.3.3",
     "express": "^4.13.4",
     "front-matter": "^2.0.5",
+    "fs-extra": "^0.26.7",
     "githubhook": "^1.4.0",
     "kramed": "^0.5.6",
     "lodash": "^4.2.1",
@@ -29,8 +30,10 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
+    "gulp-data": "^1.2.1",
     "gulp-less": "^3.0.5",
     "gulp-nodemon": "^2.0.6",
+    "gulp-nunjucks": "^2.2.0",
     "less-plugin-autoprefix": "^1.5.1",
     "less-plugin-clean-css": "^1.5.1",
     "nodemon": "^1.8.1"

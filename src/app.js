@@ -55,8 +55,9 @@ app.get('/', function (req, res) {
     });
 });
 
-
+//update caches.
 app.get('/u',function(req,res) {
+  let allPosts;
   posts.processAllPosts()
   .then(function(posts){
     res.render('pages/u.html', {
@@ -136,6 +137,25 @@ app.get('/gallery', function(req,res) {
       res.sendStatus(404);
     });
 });
+app.get('/gallery/:id', function(req,res) {
+  if(/^\d+$/.test(req.params.id)) {//only process main req
+    posts.getPost('gallery',req.params.id)
+    .then(function(post){
+      res.render('pages/gallery_post.html', {
+        title: post.attributes.title,
+        active: 'gallery',
+        post: post,
+        site: settings
+      })
+    })
+    .catch(err => {
+      console.log('error: ', err);
+      res.sendStatus(404);
+    });
+  } else {
+    res.end();
+  };
+});
 
 //notes
 app.get('/notes', function(req,res) {
@@ -152,6 +172,43 @@ app.get('/notes', function(req,res) {
       console.log('error: ', err);
       res.sendStatus(404);
     });
+});
+app.get('/notes/:id', function(req,res) {
+  if(/^\d+$/.test(req.params.id)) {//only process main req
+    posts.getPost('notes',req.params.id)
+    .then(function(post){
+      res.render('pages/note.html', {
+        title: post.attributes.title,
+        active: 'notes',
+        post: post,
+        site: settings
+      })
+    })
+    .catch(err => {
+      console.log('error: ', err);
+      res.sendStatus(404);
+    });
+  } else {
+    res.end();
+  };
+});
+
+//portfolio
+app.get('/portfolio', function(req,res) {
+  res.render('pages/portfolio.html', {
+    title: 'Portfolio',
+    active: 'portfolio',
+    site: settings
+  })
+});
+
+//archives
+app.get('/archives', function(req,res) {
+  res.render('pages/archives.html', {
+    title: 'Archives',
+    active: 'archives',
+    site: settings
+  })
 });
 
 //patterns

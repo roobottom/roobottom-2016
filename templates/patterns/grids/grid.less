@@ -1,82 +1,71 @@
 .grid {
 
-  &--1-2,
-  &--2-1 {
-    .clearfix();
-  }
+  .clearfix();
 
   &__column {
     box-sizing: border-box;
-  }
-
-  //grid default
-  &--2-1 &__column,
-  &--1-2 &__column {
     padding-left: unit(@spacing_horizontal/@base,rem);
     padding-right: unit(@spacing_horizontal/@base,rem);
-  }
-
-  //grid base
-  @media screen and (min-width: (unit(@layout_base/@base,rem))) {
-    &--1-2 &__column:nth-of-type(2n) {
+    &:nth-of-type(2n) {
+      max-width: unit(@layout_base/@base,rem);
       float: right;
-      max-width: unit(@layout_base/@base,rem);
     }
-    &--2-1 &__column:nth-of-type(2n-1) {
+  }
+
+
+  //debug
+  // background-color: #EEF6E4;
+  // &__column:nth-of-type(2n-1) {
+  //   background-color: #E8EFF8;
+  // }
+  // &__column:nth-of-type(2n) {
+  //   background-color: #F6E1E4;
+  // }
+
+  #site > .r--alpha({
+    //alpha is covered by the fact that the rightColumn has
+    //a max width set on it by default.
+  });
+
+  #site > .r--beta({
+
+    @leftCol: (1/6)*100;
+    @leftColMin: @layout_beta/6;
+
+    @rightCol: (4/6)*100;
+    @rightColMin: @leftColMin * 4;
+    @rightColMax: (@layout_max/7) * 4;
+
+    &__column:nth-of-type(2n-1) {
       float: left;
-      max-width: unit(@layout_base/@base,rem);
+      min-width: unit(@leftColMin/@base,rem);
+      width: unit(@leftCol,%);
+      padding: 0;
     }
-  }
-  @media screen and (min-width: (unit((@layout_base + @spacing_horizontal)/@base,rem))) {
-    &--1-2 &__column:nth-of-type(2n) {
+    &__column:nth-of-type(2n) {
       padding-left: 0;
+      min-width: unit(@rightColMin/@base,rem);
+      max-width: unit(@rightColMax/@base,rem);
+      width: unit(@rightCol,%);
     }
-    &--2-1 &__column:nth-of-type(2n-1) {
-      padding-right: 0;
-    }
-  }
+  });
 
-  //grid first
-  @media screen and (min-width: (unit(@layout_transitional/@base,rem))) {
-    &--1-2 &__column:nth-of-type(2n-1) {
-      max-width: unit((@layout_contained/6)/@base,rem);
-      padding-right: 0;
-      position: fixed;
-    }
-    &--2-1 &__column:nth-of-type(2n) {
-      position: fixed;
-      max-width: unit((@layout_contained/6)/@base,rem);
-      padding-left: 0;
-    }
-  }
-
-  //grid second
-  @media screen and (min-width: (unit(@layout_contained/@base,rem))) {
-
-    &--1-2 &__column:nth-of-type(2n-1) {
-      width: unit((@layout_full/7)/@base,rem);
-      max-width: none;
-    }
-    &--1-2 &__column:nth-of-type(2n) {
-      width: unit((4/7)*100,%);
-      max-width: none;
-    }
-  }
-
-  //grid third
-  @media screen and (min-width: (unit(@layout_full/@base,rem))) {
-    &--1-2, &--2-1 {
+  #site > .r--max({
+    & {
+      max-width: unit(@layout_max/@base,rem);
       margin: 0 auto;
-      max-width: unit(@layout_full/@base,rem);
     }
-  }
-  @media screen and (min-width: (unit((@layout_full + @spacing_horizontal) /@base,rem))) {
-    &--1-2 &__column,
-    &--2-1 &__column {
-      padding-left: 0;
-      padding-right: 0;
+    @leftCol: @layout_max/7;
+    @rightCol: (4/7) * 100;
+    &__column:nth-of-type(2n-1) {
+      max-width: unit(@leftCol/@base,rem);
+      position: fixed;
     }
-  }
+    &__column:nth-of-type(2n) {
+      padding: 0;
+      max-width: unit(@rightCol,%);
+    }
+  })
 
 
 }

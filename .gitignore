@@ -4,3 +4,4 @@ www
 .tmp
 /assets/images
 /posts/.cache
+/_site

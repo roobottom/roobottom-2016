@@ -14,18 +14,24 @@
   </svg>
 {% endmacro %}
 
-{% macro c_block(items) %}
-  {% for item in items %}
-    {{item}}
-  {% endfor %}
+{% macro c_block(items,pattern) %}
+  {% if pattern %}
+    {% for item in items %}
+      {{ pattern(item) }}
+    {% endfor %}
+  {% else %}
+    {% for item in items %}
+      {{ item }}
+    {% endfor %}
+  {% endif %}
 {% endmacro %}
 
-{% macro c_menuBlock(items) %}
-  <div class="c_menuBlock">
+{% macro c_siteHeader(items) %}
+  <header class="c_siteHeader">
     {% for item in items %}
     {{item}}
     {% endfor %}
-  </div>
+  </header>
 {% endmacro %}
 
 {% macro c_siteBody(content) %}
@@ -34,19 +40,6 @@
         {{ item }}
     {% endfor %}
   </main>
-{% endmacro %}
-
-{% macro m_gallery(images,type) %}
-    <div class="m_gallery">
-        {% for i in images %}
-          <div class="m_gallery__image">
-            <img src="http://localhost:3003/r/600/auto/{{type}}/{{ i.image }}"/>
-            {% if i.caption %}
-            <figcaption>{{ i.caption }}</figcaption>
-            {% endif %}
-          </div>
-        {% endfor %}
-    </div>
 {% endmacro %}
 
 {% macro m_cacheItem(post) %}
@@ -60,6 +53,19 @@
       <em>Next: {{post.next.title}}, {{post.next.date|date}}, {{post.next.type}}, {{post.next.id}}</em>
     </p>{% endif %}
   </div>
+{% endmacro %}
+
+{% macro m_gallery(images,type) %}
+    <div class="m_gallery">
+        {% for i in images %}
+          <div class="m_gallery__image">
+            <img src="http://localhost:3003/r/600/auto/{{type}}/{{ i.image }}"/>
+            {% if i.caption %}
+            <figcaption>{{ i.caption }}</figcaption>
+            {% endif %}
+          </div>
+        {% endfor %}
+    </div>
 {% endmacro %}
 
 {% macro m_introduction(markdownFile) %}

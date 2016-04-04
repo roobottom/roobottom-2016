@@ -1,7 +1,0 @@
-{% macro c_menuBlock(items) %}
-  <div class="c_menuBlock">
-    {% for item in items %}
-    {{item}}
-    {% endfor %}
-  </div>
-{% endmacro %}

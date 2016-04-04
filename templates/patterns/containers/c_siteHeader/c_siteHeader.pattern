@@ -1,0 +1,7 @@
+{% macro c_siteHeader(items) %}
+  <header class="c_siteHeader">
+    {% for item in items %}
+    {{item}}
+    {% endfor %}
+  </header>
+{% endmacro %}

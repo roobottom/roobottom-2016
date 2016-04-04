@@ -1,24 +1,34 @@
 #u_type() {
 
   .h1() {
-    font-size: unit(80/@base,rem);
+    font-size: unit(80/@base,em);
     line-height: 84/80;
     #u_space > .push(1);
   }
   .h2() {
-    font-size: unit(35/@base,rem);
+    font-size: unit(35/@base,em);
     line-height: 39/35;
     #u_space > .push(1);
   }
   .p() {
-    font-size: unit(21/@base,rem);
+    font-size: unit(21/@base,em);
     line-height: @spacing_vertical/21;
     #u_space > .push(1);
   }
   .p--summary() {
     #font > .clear-sans();
-    font-size: unit(18/@base,rem);
+    font-size: unit(18/@base,em);
     line-height: 30/18;
+    #u_space > .push(1);
+  }
+  .p--leade() {
+
+  }
+  .p--introduction() {
+    #font > .clear-sans();
+    font-weight: 200;
+    font-size: unit(37/@base,em);
+    line-height: 54/37;
     #u_space > .push(1);
   }
 
@@ -26,17 +36,29 @@
     color: @c;
     text-decoration: none;
   }
-  .a--underline(@c:@c_link,@bg:white) {
+  .a--underline(@c:@c_link) {
     #u_type > .a(@c);
     border-bottom: 1px solid @lightgrey;
     &:hover {
       border-color: @medgrey;
     }
+    &[href='/articles'] {
+      #u_type > .a(@c_article);
+    }
+    &[href='/gallery'] {
+      #u_type > .a(@c_gallery);
+    }
+    &[href='/notes'] {
+      #u_type > .a(@c_notes);
+    }
+    &[href='/portfolio'] {
+      #u_type > .a(@c_portfolio);
+    }
   }
 
   .meta() {
     color: @medgrey;
-    font-size: unit(14/@base,rem);
+    font-size: unit(14/@base,em);
     line-height: 19/14;
     #u_space > .push(1);
     #font > .clear-sans();
@@ -73,6 +95,9 @@
   }
   .meta {
     #u_type > .meta();
+  }
+  .introduction {
+    #u_type > .p--introduction();
   }
 
   time {

@@ -1,7 +1,7 @@
 #m_navigation() {
-  .active(@bg) {
-    color: contrast(@bg);
-    background-color: @bg;
+  .active(@c) {
+    color: @c;
+    border-color: @c;
   }
 }
 
@@ -15,6 +15,7 @@
     list-style: none;
     display: inline-block;
     margin-right: unit(@spacing_horizontal/@base,rem);
+    margin-bottom: unit((@spacing_horizontal/2)/@base,rem);
     &:last-child {
       margin-right: 0;
     }
@@ -27,6 +28,11 @@
     text-decoration: none;
     color: @c_default;
     display: block;
+    border-bottom: 1px solid @lightgrey;
+
+    &:hover {
+
+    }
   }
 
   &__link--homepage-active {
@@ -52,14 +58,14 @@
   }
 
 
-  @media screen and (min-width: (unit((@layout_transitional + @spacing_horizontal)/@base,rem))) {
+  #site > .r--beta({
     &--stacked &__item {
       text-align: right;
       display: block;
-      margin-right: 0;
+      margin: 0;
     }
     &--stacked &__link {
       padding: unit((@spacing_vertical/2)/@base,rem);
     }
-  }
+  });
 }

@@ -1,35 +1,9 @@
 .m_introduction {
-  #font > .clear-sans();
-  font-weight: 200;
-  color: @c_default;
-
-  font-size: unit(37/@base,rem);
-  font-size: unit(5,vw);
-  line-height: 54/37;
-  p {margin: 0 0 unit(3,vw) 0;}
-
-  @media screen and (min-width: (unit(@layout_transitional/@base,rem))) {
-    font-size: unit(37/@base,rem);
-    p {margin: 0 0 unit(@spacing_horizontal/@base,rem) 0;}
+  p {
+    #u_type > .p--introduction();
+    #u_space > .push();
   }
-
-
-
   a {
     #u_type > .a--underline();
   }
-
-  a[href='/articles'] {
-    #u_type > .a--underline(@c_article);
-  }
-  a[href='/gallery'] {
-    #u_type > .a--underline(@c_gallery);
-  }
-  a[href='/notes'] {
-    #u_type > .a--underline(@c_notes);
-  }
-  a[href='/portfolio'] {
-    #u_type > .a--underline(@c_portfolio);
-  }
-
 }

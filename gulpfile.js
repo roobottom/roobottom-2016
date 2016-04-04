@@ -7,7 +7,12 @@ var concat = require('gulp-concat'),
     LessPluginCleanCSS = require('less-plugin-clean-css'),
     cleancss = new LessPluginCleanCSS({ advanced: true }),
     LessPluginAutoPrefix = require('less-plugin-autoprefix'),
-    autoprefix= new LessPluginAutoPrefix({ browsers: ["last 2 versions"] });
+    autoprefix= new LessPluginAutoPrefix({ browsers: ["last 2 versions"] }),
+    fs = require('fs');
+
+// requirements for the build process:
+const nunjucks = require('gulp-nunjucks');
+const data = require('gulp-data');
 
 //create the patterns file
 gulp.task('patterns' ,function() {
@@ -52,3 +57,14 @@ gulp.task('go:js', function () {
 })
 
 gulp.task('default', ['patterns','less','go']);
+
+
+//gulp build task
+gulp.task('build', () => {
+	gulp.src('./templates/pages/articles.html')
+    .pipe(data(function(file) {
+      return JSON.parse(fs.readFileSync('./posts/.cache/articles/1.json'));
+    }))
+    .pipe(nunjucks.compile())
+    .pipe(gulp.dest('_site/articles'));
+});

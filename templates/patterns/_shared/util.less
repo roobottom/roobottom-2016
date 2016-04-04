@@ -1,5 +1,3 @@
-.wrapper() {
-}
 .clearfix() {
   &:before, &:after {
     content: "";
@@ -8,4 +6,26 @@
   &:after {
     clear:both;
   }
+}
+
+#site() {
+  .spacing() {
+    margin-top: unit(@spacing_horizontal/@base,rem);
+  }
+  .r--alpha(@r) {
+    @media screen and (min-width: (unit(@layout_alpha/@base,rem))) {
+      @r();
+    }
+  }
+  .r--beta(@r) {
+    @media screen and (min-width: (unit(@layout_beta/@base,rem))) {
+      @r();
+    }
+  }
+  .r--max(@r) {
+    @media screen and (min-width: (unit(@layout_max/@base,rem))) {
+      @r();
+    }
+  }
+
 }

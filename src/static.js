@@ -22,17 +22,12 @@ let folderRoot = './_site',
       '/patterns/utilities'
     ];
 
+//run this from the cmd line `node static.js`
 createStaticPages()
-.then(() => {
-  createPosts()
-})
-.then(() => {
-  copyAssets()
-})
-.then(() => {
-  console.log('Site copied OK');
-})
-.catch((err) => console.log(err))
+.then(() => {createPosts()})
+.then(() => {copyAssets()})
+.then(() => {console.log('Site copied OK')})
+.catch((err) => console.log(err));
 
 function createStaticPages() {
   return new Promise((resolve,reject) => {

@@ -1,5 +1,0 @@
-{% macro icon(name) %}
-  <svg class="icon icon--{{name}}" aria-hidden="true">
-    <use xlink:href="/icons.svg#{{name}}"/>
-  </svg>
-{% endmacro %}

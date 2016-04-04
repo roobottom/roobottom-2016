@@ -1,6 +1,0 @@
-{% import "./icons/icon.pattern" as icon %}
-{% macro m_logo() %}
-  <a href="/" class="m_logo" aria-label="Website logo">
-    {{icon.icon('logo')}}
-  </a>
-{% endmacro %}

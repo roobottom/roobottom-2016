@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Jon Roobottom: Jekyll archives without plugins</title>
+    <link rel="stylesheet" type="text/css" href="/css/roobottom-com.css">
+</head>
+<body>
+  
+  
+  <div class="grid grid--1-2">
+  
+    <div class="grid__column">
+      
+  <header class="c_siteHeader">
+    
+    
+  <a href="/" class="m_logo" aria-label="Website logo">
+    
+  <svg class="icon icon--logo" aria-hidden="true">
+    <use xlink:href="/icons.svg#logo"/>
+  </svg>
+
+  </a>
+
+    
+    
+<nav class="m_navigation m_navigation--stacked">
+    <ul class="m_navigation__items">
+        
+        <li class="m_navigation__item">
+          <a href="/" class="m_navigation__link m_navigation__link--homepage">Homepage</a>
+        </li>
+        
+        <li class="m_navigation__item">
+          <a href="/articles" class="m_navigation__link m_navigation__link--articles-active">Articles</a>
+        </li>
+        
+        <li class="m_navigation__item">
+          <a href="/gallery" class="m_navigation__link m_navigation__link--gallery">Gallery</a>
+        </li>
+        
+        <li class="m_navigation__item">
+          <a href="/notes" class="m_navigation__link m_navigation__link--notes">Notes</a>
+        </li>
+        
+        <li class="m_navigation__item">
+          <a href="/archives" class="m_navigation__link m_navigation__link--archives">Archives</a>
+        </li>
+        
+        <li class="m_navigation__item">
+          <a href="/portfolio" class="m_navigation__link m_navigation__link--portfolio">Portfolio</a>
+        </li>
+        
+        <li class="m_navigation__item">
+          <a href="/patterns" class="m_navigation__link m_navigation__link--pattern-library">Pattern library</a>
+        </li>
+        
+    </ul>
+</nav>
+
+    
+  </header>
+
+    </div>
+  
+    <div class="grid__column">
+      
+  <main class="c_siteBody">
+    
+        
+  
+
+  <main class="c_siteBody">
+    
+        
+<h1 class="m_pageTitle">Jekyll archives without plugins</h1>
+
+    
+        
+  <article class="m_postarticles">
+    <h1>
+      
+        Jekyll archives without plugins
+      
+    </h1>
+    <time datetime="2015-08-28T00:00:00.000Z">August 28th 2015</time>
+    <div class="m_postarticles__body u_type">
+      
+        <p>I recently made the switch to <a href="http://jekyllrb.com">Jekyll</a> as my publishing tool for this website. I love it, not least as it lets me serve content directly from Github. Updating the site is as simple as pushing into my repository. I have no servers to maintain and no extra monthly costs. For a low traffic site it seems, for now at least, like the perfect solution.</p>
+<p>(figure set:artwork,class:&quot;pull-both&quot;)</p>
+<p>To me, one of the most interesting things about writing a blog is the ability to look back, to make old posts new again with an easily navigable archive section. A key part of that is the &#39;archives for year ...&#39; page. However, hosting with Github pages means that I can&#39;t use plugins for Jekyll that you&#39;d normally need to achieve this. Jekyll doesn&#39;t really offer much in the way of core functionality for archives, but with a bit of hacking you can create an archive page for every year in a way that doesn&#39;t suck.</p>
+<p>We can use the power of <a href="http://jekyllrb.com/docs/collections/">Jekyll collections</a> to <em>somewhat</em> automatically generate an archive page for each year your site has posts. There&#39;s three main parts to the setup:</p>
+<ol>
+<li>Configure a collection for archives.</li>
+<li>Create a post for each year for which you want an archive page.</li>
+<li>Create a layout for processing each archive post into <abbr title="Hyper Text Markup Language">HTML</abbr></li>
+</ol>
+<h2 id="configure-the-archives-collection">Configure the archives collection</h2>
+<p>First, we need to tell Jekyll about our new collection. In my site configuration file, (usually <code>_config.yml</code>) I added the following:</p>
+<pre><code>collections:
+  archives:
+    output: true
+    permalink: /archives/:path/
+</code></pre><p>This tells Jekyll that we want a collection called <strong>archives</strong>, that we want it to output an <code>index.html</code> for each item in the collection, and we want it to do so under the <code>/archives</code> url.</p>
+<h2 id="create-a-post-per-year">Create a post per year</h2>
+<p>Our new archives collection will read any markdown files in a folder named <code>_archives</code>, so we&#39;ll have to create a post for each year your site has posts in this folder. This is why I say that this method is only <em>somewhat</em> automatic, however we&#39;ll only every have to worry about updating this once per year.</p>
+<p>For example, if we want an archive page for 2015 at <code>archives/2015</code> we&#39;d create the post <code>_archives/2015.md</code>. The only thing that&#39;s really required here is YML front matter, here&#39;s a simplified version of my <code>2015.md</code>:</p>
+<pre><code>---
+title: Archives for 2015
+year: &quot;2015&quot;
+layout: archive-year
+---
+</code></pre><p>Don&#39;t forget the quotation marks, the reason for them will shortly become apparent.</p>
+<p>(figure set:folders,class:&quot;u-boxout pull-left&quot;,image_size:small)</p>
+<p>Here&#39;s a simplified view of my local folder setup showing all the markdown files for each year in the <code>_archives</code> collection.</p>
+<p>The <code>archives</code> folder contains the <code>index.html</code> file for the root of my archives section.</p>
+<h2 id="archive-page-layout">Archive page layout</h2>
+<p>Now we need to define a layout that Jekyll will use to output each archive page. I did this in a layout  <code>_layouts/archive-year.html</code>. Here&#39;s a simplified version of my file:</p>
+<pre><code>---
+layout: default
+---
+&lt;h1&gt;{{ page.title }}&lt;/h1&gt;
+&lt;ul&gt;
+{% for post in site.posts %}
+    {% capture post_year %}{{ post.date | date: &#39;%Y&#39; }}{% endcapture %}
+    {% if post_year == page.year %}
+            &lt;li&gt;&lt;a href=&quot;{{ site.baseurl }}{{ post.url }}&quot;&gt;{{ post.title }}&lt;/a&gt;&lt;/li&gt;       
+    {% endif %}
+{% endfor %}
+&lt;/ul&gt;
+</code></pre><p>Its all pretty simple really. We&#39;re looping though all the posts on the site, and only displaying them if they match the target year. By the way, those quotation marks from earlier are required for matching the <code>post_year</code> with <code>page.year</code>, which both have to be strings</p>
+<p>And that&#39;s it. A <em>sort-of</em> automatic way to generate an archive page-per-year.</p>
+
+      
+    </div>
+  </article>
+
+    
+  </main>
+
+
+  
+    
+  </main>
+
+    </div>
+  
+  </div>
+
+
+</body>
+</html>

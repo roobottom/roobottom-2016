@@ -19,6 +19,7 @@ var fs  = require('fs'),
       caches[folder] = require(cache);
     }
     catch(err) {
+      console.log(err,', so running post processing:');
       processAllPosts();
     }
   });

@@ -41,7 +41,7 @@ gulp.task('go', function () {
   nodemon({
     script: 'src/app.js'
   , ext: 'js html md less pattern example'
-  , ignore: ["templates/patterns/patterns.html","posts/posts.json"]
+  , ignore: ["templates/patterns/patterns.html","posts/posts.json","_site/"]
   , env: { 'NODE_ENV': 'development' }
   , watch: ["src", "templates"]
   , tasks: ['patterns','less']
@@ -53,7 +53,7 @@ gulp.task('go:js', function () {
   nodemon({
     script: 'src/app.js'
   , ext: 'js html md less pattern example'
-  , ignore: ["templates/patterns/patterns.html","posts/posts.json"]
+  , ignore: ["templates/patterns/patterns.html","posts/posts.json","_site/"]
   , env: { 'NODE_ENV': 'development' }
   , watch: ["src", "templates"]
   })

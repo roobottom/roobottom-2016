@@ -68,28 +68,28 @@
 /* Clear Sans licence: https://01.org/clear-sans */
 @font-face {
     font-family: "Clear Sans";
-    src: url("fonts/ClearSans-thin.woff") format('woff');
+    src: url("fonts/clearsans-thin.woff") format('woff');
     font-weight: 200;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Clear Sans";
-    src: url("fonts/ClearSans-light.woff") format('woff');
+    src: url("fonts/clearsans-light.woff") format('woff');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Clear Sans";
-    src: url("fonts/ClearSans-regular.woff") format('woff');
+    src: url("fonts/clearsans-regular.woff") format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Clear Sans";
-    src: url("fonts/ClearSans-bold.woff") format('woff');
+    src: url("fonts/clearsans-bold.woff") format('woff');
     font-weight: bold;
     font-style: normal;
 }
@@ -372,6 +372,14 @@ th {
 
 }
 
+.icon {
+  &--logo {
+    width: unit(57/@base,rem);
+    height: unit(84/@base,rem);
+    fill: @lightgrey;
+  }
+}
+
 .grid {
 
   .clearfix();
@@ -442,14 +450,6 @@ th {
   })
 
 
-}
-
-.icon {
-  &--logo {
-    width: unit(57/@base,rem);
-    height: unit(84/@base,rem);
-    fill: @lightgrey;
-  }
 }
 
 .c_siteBody {

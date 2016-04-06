@@ -1,3 +1,9 @@
+{% macro icon(name) %}
+  <svg class="icon icon--{{name}}" aria-hidden="true">
+    <use xlink:href="/icons.svg#{{name}}"/>
+  </svg>
+{% endmacro %}
+
 {% macro grid(columns,type) %}
   <div class="grid grid--{{type}}">
   {% for column in columns %}
@@ -6,12 +12,6 @@
     </div>
   {% endfor %}
   </div>
-{% endmacro %}
-
-{% macro icon(name) %}
-  <svg class="icon icon--{{name}}" aria-hidden="true">
-    <use xlink:href="/icons.svg#{{name}}"/>
-  </svg>
 {% endmacro %}
 
 {% macro c_block(items,pattern) %}

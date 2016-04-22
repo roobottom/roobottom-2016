@@ -13,23 +13,26 @@
   {% endblock %}
   {% endmacro %}
   {{
-    pattern.grid([
+    pattern.c_block([
       pattern.c_siteHeader([
-        pattern.m_logo(),
-        pattern.m_navigation([
-          {name:'Homepage',url:'/'},
-          {name:'Articles',url:'/articles'},
-          {name:'Gallery',url:'/gallery'},
-          {name:'Notes',url:'/notes'},
-          {name:'Archives',url:'/archives'},
-          {name:'Portfolio',url:'/portfolio'},
-          {name:'Pattern Library',url:'/patterns'}
-        ],active,'stacked')
-      ]),
+        pattern.grid([
+          pattern.m_navigation([
+            {name:'Homepage',url:'/'},
+            {name:'Articles',url:'/articles'},
+            {name:'Gallery',url:'/gallery'},
+            {name:'Notes',url:'/notes'},
+            {name:'Archives',url:'/archives'},
+            {name:'Portfolio',url:'/portfolio'},
+            {name:'Pattern Library',url:'/patterns'}
+          ],isMain=true,active=active)
+        ])
+      ],active),
       pattern.c_siteBody([
-        body()
+        pattern.grid([
+          body()
+        ])
       ])
-    ],'1-2')
+    ])
   }}
 
 </body>

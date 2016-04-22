@@ -1,17 +1,17 @@
-{% macro icon(name) %}
-  <svg class="icon icon--{{name}}" aria-hidden="true">
-    <use xlink:href="/icons.svg#{{name}}"/>
-  </svg>
-{% endmacro %}
-
-{% macro grid(columns,type) %}
-  <div class="grid grid--{{type}}">
+{% macro grid(columns,modifier,classes) %}
+  <div class="grid{% if modifier %} grid--{{modifier}}{% endif %}{% if classes %} {{classes}}{% endif %}">
   {% for column in columns %}
     <div class="grid__column">
       {{ column }}
     </div>
   {% endfor %}
   </div>
+{% endmacro %}
+
+{% macro icon(name) %}
+  <svg class="icon icon--{{name}}" aria-hidden="true">
+    <use xlink:href="/icons.svg#{{name}}"/>
+  </svg>
 {% endmacro %}
 
 {% macro c_block(items,pattern) %}
@@ -26,20 +26,20 @@
   {% endif %}
 {% endmacro %}
 
+{% macro c_siteHeader(items,active) %}
+  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
+    {% for item in items %}
+    {{item}}
+    {% endfor %}
+  </header>
+{% endmacro %}
+
 {% macro c_siteBody(content) %}
   <main class="c_siteBody">
     {% for item in content %}
         {{ item }}
     {% endfor %}
   </main>
-{% endmacro %}
-
-{% macro c_siteHeader(items) %}
-  <header class="c_siteHeader">
-    {% for item in items %}
-    {{item}}
-    {% endfor %}
-  </header>
 {% endmacro %}
 
 {% macro m_cacheItem(post) %}
@@ -59,7 +59,7 @@
     <div class="m_gallery">
         {% for i in images %}
           <div class="m_gallery__image">
-            <img src="http://localhost:3003/r/600/auto/{{type}}/{{ i.image }}"/>
+            <img src="http://images.roobottom.com/r/600/auto/{{type}}/{{ i.image }}"/>
             {% if i.caption %}
             <figcaption>{{ i.caption }}</figcaption>
             {% endif %}
@@ -74,6 +74,10 @@
   </div>
 {% endmacro %}
 
+{% macro m_libraryBlock(text) %}
+  <div class="m_libraryBlock">{{text}}</div>
+{% endmacro %}
+
 {% import "./icons/icon.pattern" as icon %}
 {% macro m_logo() %}
   <a href="/" class="m_logo" aria-label="Website logo">
@@ -81,14 +85,21 @@
   </a>
 {% endmacro %}
 
+{% import "./icons/icon.pattern" as icon %}
 {% macro m_navigation(items, active, modifier) %}
 <nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}">
     <ul class="m_navigation__items">
-        {% for item in items %}
+        {% for item in items -%}
         <li class="m_navigation__item">
-          <a href="{{item.url}}" class="m_navigation__link m_navigation__link--{{item.name|lower|replace(' ','-')}}{% if item.name|lower|replace(' ','-') == active %}-active{% endif %}">{{item.name|capitalize}}</a>
+          <a href="{{item.url}}" class="m_navigation__link m_navigation__link--{{item.name|lower|replace(' ','-')}}{% if item.name|lower|replace(' ','-') == active %} m_navigation__link--is-active{% endif %}">
+            {% if item.url == '/' -%}
+              {{icon.icon('logo')}}
+            {% else %}
+              {{item.name|capitalize}}</a>
+            {%- endif %}
+          </a>
         </li>
-        {% endfor %}
+        {%- endfor %}
     </ul>
 </nav>
 {% endmacro %}

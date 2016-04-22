@@ -1,0 +1,3 @@
+{% macro m_libraryBlock(text) %}
+  <div class="m_libraryBlock">{{text}}</div>
+{% endmacro %}

@@ -1,5 +1,5 @@
-{% macro grid(columns,type) %}
-  <div class="grid grid--{{type}}">
+{% macro grid(columns,modifier,classes) %}
+  <div class="grid{% if modifier %} grid--{{modifier}}{% endif %}{% if classes %} {{classes}}{% endif %}">
   {% for column in columns %}
     <div class="grid__column">
       {{ column }}

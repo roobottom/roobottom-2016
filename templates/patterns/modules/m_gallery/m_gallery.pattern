@@ -2,7 +2,7 @@
     <div class="m_gallery">
         {% for i in images %}
           <div class="m_gallery__image">
-            <img src="http://localhost:3003/r/600/auto/{{type}}/{{ i.image }}"/>
+            <img src="http://images.roobottom.com/r/600/auto/{{type}}/{{ i.image }}"/>
             {% if i.caption %}
             <figcaption>{{ i.caption }}</figcaption>
             {% endif %}

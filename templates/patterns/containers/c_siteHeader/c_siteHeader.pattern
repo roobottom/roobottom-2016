@@ -1,5 +1,5 @@
-{% macro c_siteHeader(items) %}
-  <header class="c_siteHeader">
+{% macro c_siteHeader(items,active) %}
+  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
     {% for item in items %}
     {{item}}
     {% endfor %}

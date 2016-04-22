@@ -1,71 +1,66 @@
-#m_navigation() {
-  .active(@c) {
-    color: @c;
-    border-color: @c;
-  }
-}
-
 .m_navigation {
 
   &__items {
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    #site > .r--max({
+      justify-content: space-between;
+    });
   }
   &__item {
     list-style: none;
-    display: inline-block;
-    margin-right: unit(@spacing_horizontal/@base,rem);
-    margin-bottom: unit((@spacing_horizontal/2)/@base,rem);
-    &:last-child {
-      margin-right: 0;
-    }
   }
   &__link {
-    #font > .clear-sans();
-    font-weight: 300;
+    #font > .ridley();
     font-size: unit(18/@base,rem);
     line-height: 22/18;
     text-decoration: none;
-    color: @c_default;
+    color: white;
     display: block;
-    border-bottom: 1px solid @lightgrey;
+    padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/4/@base,rem);
 
-    &:hover {
+    #site > .r--max({
+      font-size: unit(28/@base,rem);
+      line-height: 36/28;
+    });
 
+    svg {
+      width: unit(23/@base,rem);
+      height: unit(23/@base,rem);
+      #site > .r--max({
+        width: unit(50/@base,rem);
+        height: unit(50/@base,rem);
+      });
     }
   }
-
-  &__link--homepage-active {
-    #m_navigation > .active(@c_link);
-  }
-  &__link--articles-active {
-    #m_navigation > .active(@c_article);
-  }
-  &__link--gallery-active {
-    #m_navigation > .active(@c_gallery);
-  }
-  &__link--notes-active {
-    #m_navigation > .active(@c_notes);
-  }
-  &__link--archives-active {
-    #m_navigation > .active(@c_link);
-  }
-  &__link--portfolio-active {
-    #m_navigation > .active(@c_portfolio);
-  }
-  &__link--pattern-library-active {
-    #m_navigation > .active(@c_link);
+  &__link--homepage {
+    padding: 0;
   }
 
+  //active states.
+  &__link--is-active&__link--homepage {
+    #effect > .text-shadow-3d(5,darken(@c_default,10%));
+  }
+  &__link--is-active&__link--articles {
+    #effect > .text-shadow-3d(5,darken(@c_article,10%));
+  }
+  &__link--is-active&__link--gallery {
+    #effect > .text-shadow-3d(5,darken(@c_gallery,10%));
+  }
+  &__link--is-active&__link--notes {
+    #effect > .text-shadow-3d(5,darken(@c_notes,10%));
+  }
+  &__link--is-active&__link--archives {
+    #effect > .text-shadow-3d(5,darken(@c_default,10%));
+  }
+  &__link--is-active&__link--portfolio {
+    #effect > .text-shadow-3d(5,darken(@c_portfolio,10%));
+  }
+  &__link--is-active&__link--pattern-library {
+    #effect > .text-shadow-3d(5,darken(@c_default,10%));
+  }
 
-  #site > .r--beta({
-    &--stacked &__item {
-      text-align: right;
-      display: block;
-      margin: 0;
-    }
-    &--stacked &__link {
-      padding: unit((@spacing_vertical/2)/@base,rem);
-    }
-  });
 }

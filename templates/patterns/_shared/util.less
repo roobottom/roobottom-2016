@@ -27,5 +27,15 @@
       @r();
     }
   }
+}
+
+#effect() {
+  .text-shadow-3d(@distance,@c) {
+    #effect > .text-shadow-3d----loop(@distance,@c);
+  }
+  .text-shadow-3d----loop(@i,@c) when (@i >= 0) {
+    text-shadow+: unit(@i,px) unit(@i,px) @c;
+    #effect > .text-shadow-3d----loop(@i - 1,@c);
+  }
 
 }

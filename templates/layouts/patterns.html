@@ -8,7 +8,7 @@
 {% endset %}
 
 {% block body %}
-  {{pattern.m_navigation(items=navigationItems|jsonParse)}}
+  {{pattern.m_navigation(items=navigationItems|jsonParse,modifier='sub',classes='u_space__push')}}
   {{pattern.m_pageTitle(title)}}
   {% block content %}
   {% endblock %}

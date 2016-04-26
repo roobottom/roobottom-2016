@@ -23,3 +23,8 @@
     eg.m_libraryBlock('double column')
   ],modifier='1-2',classes='u_space__push')
 }}
+{{
+  pattern.grid([
+    eg.m_libraryBlock('prose')
+  ],modifier='prose',classes='u_space__push')
+}}

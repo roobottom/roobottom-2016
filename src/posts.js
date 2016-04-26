@@ -9,6 +9,16 @@ var fs  = require('fs'),
     mkdirp = require('mkdirp'),
     smart_tags = require('./smart_tags.js');
 
+    marked.setOptions({
+      gfm: true,
+      tables: true,
+      breaks: false,
+      pedantic: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: true
+    });
+
   let folders = ['articles','gallery','notes'];
   let postsRoot = './posts/';
   let cacheRoot = postsRoot + '.cache/';

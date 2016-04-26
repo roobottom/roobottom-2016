@@ -12,9 +12,9 @@
   {% endfor %}
 {% endmacro %}
 
-{% macro m_postarticlesSummary (posts,heading="h2",link=true,limit=10) %}
+{% macro m_postArticlesSummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('articles') | limitTo(limit) %}
-      {{ m_postarticles (post,heading,link,true) }}
+      {{ m_postArticles (post,heading,link,true) }}
   {% endfor %}
 {% endmacro %}
 

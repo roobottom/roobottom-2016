@@ -42,6 +42,14 @@
   </main>
 {% endmacro %}
 
+{% macro c_wrapper(modules) %}
+  <div class="c_wrapper">
+    {% for module in modules %}
+      {{ module }}
+    {% endfor %}
+  </div>
+{% endmacro %}
+
 {% macro m_cacheItem(post) %}
   <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
     <h3>{{post.attributes.title}}</h3>
@@ -86,16 +94,16 @@
 {% endmacro %}
 
 {% import "./icons/icon.pattern" as icon %}
-{% macro m_navigation(items, active, modifier) %}
-<nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}">
+{% macro m_navigation(items, active, modifier, classes) %}
+<nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}{%if classes %} {{classes}}{% endif %}">
     <ul class="m_navigation__items">
         {% for item in items -%}
-        <li class="m_navigation__item">
+        <li class="m_navigation__item{% if item.url == '/' %} m_navigation__item--homepage{% endif %}">
           <a href="{{item.url}}" class="m_navigation__link m_navigation__link--{{item.name|lower|replace(' ','-')}}{% if item.name|lower|replace(' ','-') == active %} m_navigation__link--is-active{% endif %}">
             {% if item.url == '/' -%}
               {{icon.icon('logo')}}
             {% else %}
-              {{item.name|capitalize}}</a>
+              {{item.name|capitalize}}
             {%- endif %}
           </a>
         </li>
@@ -108,8 +116,8 @@
 <h1 class="m_pageTitle">{{title}}</h1>
 {% endmacro %}
 
-{% macro m_postarticles(post,heading,link=true,trimPost=false) %}
-  <article class="m_postarticles">
+{% macro m_postArticles(post,heading,link=true,trimPost=false) %}
+  <article class="m_post m_post--article u_type">
     <{{heading}}>
       {% if link %}
         <a href="/articles/{{post.attributes.id}}">{{post.attributes.title}}</a>
@@ -168,9 +176,9 @@
   {% endfor %}
 {% endmacro %}
 
-{% macro m_postarticlesSummary (posts,heading="h2",link=true,limit=10) %}
+{% macro m_postArticlesSummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('articles') | limitTo(limit) %}
-      {{ m_postarticles (post,heading,link,true) }}
+      {{ m_postArticles (post,heading,link,true) }}
   {% endfor %}
 {% endmacro %}
 
@@ -186,10 +194,14 @@
   {% endfor %}
 {% endmacro %}
 
-{% macro m_teaser(type,title,url,summaryText,date,wordCount,imageCount,image,hLevel='2') %}
-  <article class="m_teaser m_teaser--{{type}}{% if not image %}-no-image{% endif %}">
-    {% if image %}
-    <img src="{{image}}" alt="{{title}}"/>
+{% macro m_teaser(type,title,url,summaryText,date,wordCount,imageCount,images,hLevel='2',classes) %}
+  <article class="m_teaser m_teaser--{{type}}{% if not image %}-no-image{% endif %}{% if classes %} {{classes}}{% endif %}">
+    {% if images | length > 0 %}
+      {% for image in images %}
+        {% if loop.first %}
+          <img src="http://images.roobottom.com/r/600/auto/{{type}}/{{image.image}}" alt="{{title}}" class="m_teaser__image"/>
+        {% endif %}
+      {% endfor %}
     {% endif %}
     <span class="m_teaser__type">{{type}}</span>
     <h{{hLevel}} class="m_teaser__title"><a href="{{url}}" class="m_teaser__link">{{title}}</a></h{{hLevel}}>
@@ -202,4 +214,32 @@
       {{summaryText}}
     </p>
   </article>
+{% endmacro %}
+
+{% macro m_teaserList(posts) %}
+  <div class="m_teaserList">
+  {% for post in posts | limitTo(10) %}
+
+    {% set postImage %}
+      {% if post.attributes.images %}
+        {% for image in post.attributes.images %}
+          {# {% if loop.first %}http://images.roobottom.com/600/auto/{{post.attributes.type}}/{{image.image}}{% endif %}#}
+        {% endfor %}
+      {% endif %}
+    {% endset %}
+
+    {{
+      m_teaser(
+        type=post.attributes.type,
+        title=post.attributes.title,
+        date=post.attributes.date,
+        classes='u_space--push',
+        images=post.attributes.images,
+        url='/'+post.attributes.type+'/'+post.attributes.id,
+        summaryText=post.html_body | safe | truncate(200)
+
+      )
+    }}
+  {% endfor %}
+  </div>
 {% endmacro %}

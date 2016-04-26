@@ -1,5 +1,5 @@
-{% macro m_postarticles(post,heading,link=true,trimPost=false) %}
-  <article class="m_postarticles">
+{% macro m_postArticles(post,heading,link=true,trimPost=false) %}
+  <article class="m_post m_post--article u_type">
     <{{heading}}>
       {% if link %}
         <a href="/articles/{{post.attributes.id}}">{{post.attributes.title}}</a>

@@ -1,0 +1,27 @@
+{% macro m_teaserList(posts) %}
+  <div class="m_teaserList">
+  {% for post in posts | limitTo(10) %}
+
+    {% set postImage %}
+      {% if post.attributes.images %}
+        {% for image in post.attributes.images %}
+          {# {% if loop.first %}http://images.roobottom.com/600/auto/{{post.attributes.type}}/{{image.image}}{% endif %}#}
+        {% endfor %}
+      {% endif %}
+    {% endset %}
+
+    {{
+      m_teaser(
+        type=post.attributes.type,
+        title=post.attributes.title,
+        date=post.attributes.date,
+        classes='u_space--push',
+        images=post.attributes.images,
+        url='/'+post.attributes.type+'/'+post.attributes.id,
+        summaryText=post.html_body | safe | truncate(200)
+
+      )
+    }}
+  {% endfor %}
+  </div>
+{% endmacro %}

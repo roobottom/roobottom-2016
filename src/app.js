@@ -33,6 +33,18 @@ let env = nunjucks.configure( __basename + 'templates/', {
 .addExtension('pattern', new nunjucks_renderPattern())
 .addGlobal('site',settings);
 
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: true
+});
+
+
 nunjucks_markdown.register(env, marked);
 
 //static files

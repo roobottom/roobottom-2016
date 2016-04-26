@@ -1,9 +1,9 @@
 {% extends 'layouts/default.html' %}
 {% block body %}
 {{
-  pattern.c_siteBody([
+  pattern.c_block([
     pattern.m_pageTitle(title),
-    pattern.m_postarticlesSummary(posts)
+    pattern.m_teaserList(posts)
   ])
 }}
 {% endblock %}

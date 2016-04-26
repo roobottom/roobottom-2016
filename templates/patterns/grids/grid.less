@@ -1,9 +1,5 @@
 .grid {
 
-  margin: 0 auto;
-  max-width: unit(@layout_max/@base,rem);
-
-
   &__column {
     flex: 1;
     margin: 0 unit(@spacing_horizontal/2/@base,rem);
@@ -19,6 +15,16 @@
   }
   &--1-2 &__column:nth-of-type(2n) {
     flex: 2;
+  }
+
+  &--prose {
+    justify-content: center;
+  }
+  &--prose &__column {
+    #site > .r--beta({
+      width: 75%;
+      flex:initial;
+    });
   }
 
 }

@@ -36,64 +36,36 @@
 @medgrey:                   #5E5E5E;
 @darkgrey:                  #333333;
 
-/* Aleo licence: http://www.fontfabric.com/aleo-free-font/ */
 @font-face {
-    font-family: "Aleo";
-    src: url("fonts/aleo-regular-webfont.woff") format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "Aleo";
-    src: url("fonts/aleo-italic-webfont.woff") format('woff');
-    font-weight: normal;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: "Aleo";
-    src: url("fonts/aleo-bold-webfont.woff") format('woff');
+    font-family: 'merriweather';
+    src: url('fonts/merriweather-bold.woff2') format('woff2'),
+         url('fonts/merriweather-bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
 }
-
 @font-face {
-    font-family: "Aleo";
-    src: url("fonts/aleo-bolditalic-webfont.woff") format('woff');
+    font-family: 'merriweather';
+    src: url('fonts/merriweather-boldit.woff2') format('woff2'),
+         url('fonts/merriweather-boldit.woff') format('woff');
     font-weight: bold;
     font-style: italic;
 }
-
-/* Clear Sans licence: https://01.org/clear-sans */
 @font-face {
-    font-family: "Clear Sans";
-    src: url("fonts/clearsans-thin.woff") format('woff');
-    font-weight: 200;
-    font-style: normal;
+    font-family: 'merriweather';
+    src: url('fonts/merriweather-italic.woff2') format('woff2'),
+         url('fonts/merriweather-italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+
 }
-
 @font-face {
-    font-family: "Clear Sans";
-    src: url("fonts/clearsans-light.woff") format('woff');
-    font-weight: 300;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "Clear Sans";
-    src: url("fonts/clearsans-regular.woff") format('woff');
+    font-family: 'merriweather';
+    src: url('fonts/merriweather-regular.woff2') format('woff2'),
+         url('fonts/merriweather-regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
 
-@font-face {
-    font-family: "Clear Sans";
-    src: url("fonts/clearsans-bold.woff") format('woff');
-    font-weight: bold;
-    font-style: normal;
 }
-
 /*
  * Webfont: RidleyGrotesk-Regular by Radomir Tinkov
  * URL: http://www.myfonts.com/fonts/radomir-tinkov/ridley-grotesk/regular/
@@ -107,12 +79,17 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Ridley Grotesk';
+  src: url('fonts/30DB26_5_0.woff2') format('woff2'),
+       url('fonts/30DB26_5_0.woff') format('woff');
+  font-style: normal;
+  font-weight: bold;
+}
+
 #font() {
-  .aleo() {
-    font-family: "Aleo", serif;
-  }
-  .clear-sans() {
-    font-family: "Clear Sans", sans-serif;;
+  .merriweather() {
+    font-family: "merriweather", serif;
   }
   .ridley() {
     font-family: 'Ridley Grotesk', sans-serif;
@@ -120,15 +97,16 @@
 }
 
 body {
-  #font > .aleo();
+  #font > .merriweather();
   background-color: #FBFBFB;
   font-size: 69%;
+  color: @darkgrey;
   #site .r--beta({font-size: 81%;});
   #site .r--max({font-size: 100%;})
 }
 h1,h2,h3,h4 {
   #font > .ridley();
-  font-weight: normal;
+  font-weight: bold;
   font-style: normal;
 }
 
@@ -401,10 +379,6 @@ th {
 
 .grid {
 
-  margin: 0 auto;
-  max-width: unit(@layout_max/@base,rem);
-
-
   &__column {
     flex: 1;
     margin: 0 unit(@spacing_horizontal/2/@base,rem);
@@ -420,6 +394,16 @@ th {
   }
   &--1-2 &__column:nth-of-type(2n) {
     flex: 2;
+  }
+
+  &--prose {
+    justify-content: center;
+  }
+  &--prose &__column {
+    #site > .r--beta({
+      width: 75%;
+      flex:initial;
+    });
   }
 
 }
@@ -462,6 +446,11 @@ th {
 
 .c_siteBody {
     #site > .spacing();
+}
+
+.c_wrapper {
+  margin: 0 auto;
+  max-width: unit(@layout_max/@base,rem);
 }
 
 #m_cacheItem {
@@ -522,15 +511,22 @@ th {
   &__items {
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+
+    #site > .r--alpha({
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    });
     #site > .r--max({
       justify-content: space-between;
     });
   }
   &__item {
     list-style: none;
+    display: inline-block;
+  }
+  &__item--homepage {
+    display: block;
   }
   &__link {
     #font > .ridley();
@@ -547,8 +543,8 @@ th {
     });
 
     svg {
-      width: unit(23/@base,rem);
-      height: unit(23/@base,rem);
+      width: unit(33/@base,rem);
+      height: unit(33/@base,rem);
       #site > .r--max({
         width: unit(50/@base,rem);
         height: unit(50/@base,rem);
@@ -556,7 +552,9 @@ th {
     }
   }
   &__link--homepage {
-    padding: 0;
+    #site > .r--alpha({
+      padding: 0;
+    });
   }
 
   //active states.
@@ -582,10 +580,48 @@ th {
     #effect > .text-shadow-3d(5,darken(@c_default,10%));
   }
 
+  //sub navigation
+  &--sub {
+    border-bottom: 1px solid @lightgrey;
+  }
+  &--sub &__link {
+    color: @c_default;
+  }
+
 }
 
 .m_pageTitle {
   #u_type > .h1();
+}
+
+.m_posts {
+  //todo
+}
+
+.m_post {
+  
+}
+
+.m_teaserList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  >* {
+    flex-basis: 30%;
+    margin-bottom: 5%;
+
+    &:nth-of-type(10n-9),
+    &:nth-of-type(10n-8) {
+      flex-basis: 47.5%;
+    }
+
+    &:nth-of-type(10n-4) {
+      flex-basis: 65%;
+    }
+
+  }
+
 }
 
 .m_teaser {
@@ -597,7 +633,7 @@ th {
   border: 1px solid @grey;
   position: relative;
 
-  &[class$=-no-image] {
+  &[class*=-no-image] {
     padding-top: unit(@spacing_vertical/@base,rem);
     background-image: linear-gradient(lighten(@lightgrey,2%) unit(@spacing_vertical*1.5/@base,rem), white unit(@spacing_vertical*1.5/@base,rem));
   }
@@ -610,7 +646,7 @@ th {
     border-radius: 2rem;
     background-color: @c_article;
     margin-bottom: unit(@spacing_vertical/2/@base,rem);
-    #font > .clear-sans();
+    #font > .ridley();
     display: inline-block;
   }
   &__title {
@@ -628,13 +664,17 @@ th {
     #u_type > .p--summary();
     #u_space > .push(0);
   }
+  &__image {
+    display: block;
+    max-width: 100%;
+  }
 
 
   //article specific
-  &[class*=article] &__link {
+  &[class*=articles] &__link {
     #u_type > .a(@c_article);
   }
-  &[class*=article] &__type {
+  &[class*=articles] &__type {
     background-color: @c_article;
   }
   //note specific
@@ -702,9 +742,8 @@ th {
     #u_space > .push(1);
   }
   .p--summary() {
-    #font > .clear-sans();
-    font-size: unit(18/@base,em);
-    line-height: 30/18;
+    font-size: unit(23/@base,em);
+    line-height: 42/23;
     #u_space > .push(1);
   }
   .p--leade() {
@@ -712,10 +751,17 @@ th {
   }
   .p--introduction() {
     #font > .ridley();
-    font-weight: 200;
-    font-size: unit(37/@base,em);
-    line-height: 54/37;
+    font-weight: bold;
     #u_space > .push(1);
+    font-size: unit(35/@base,rem);
+    line-height: 43/35;
+    #site > .r--alpha({
+      font-size: unit(69/@vw_base,vw);
+    });
+    #site > .r--max({
+      font-size: unit(69/@base,rem);
+      line-height: 81/69;
+    });
   }
 
   .a(@c:@c_link) {
@@ -725,20 +771,31 @@ th {
   .a--underline(@c:@c_link) {
     #u_type > .a(@c);
     border-bottom: 1px solid @lightgrey;
-    &:hover {
-      border-color: @medgrey;
+    transition: text-shadow 250ms ease-out;
+
+    .hover(@c) {
+      &:hover {
+        border: none;
+        #effect > .text-shadow-3d(3,darken(@c,20%));
+      }
     }
+    .hover(@c);
+
     &[href='/articles'] {
       #u_type > .a(@c_article);
+      .hover(@c_article);
     }
     &[href='/gallery'] {
       #u_type > .a(@c_gallery);
+      .hover(@c_gallery);
     }
     &[href='/notes'] {
       #u_type > .a(@c_notes);
+      .hover(@c_notes);
     }
     &[href='/portfolio'] {
       #u_type > .a(@c_portfolio);
+      .hover(@c_portfolio);
     }
   }
 
@@ -747,7 +804,7 @@ th {
     font-size: unit(14/@base,em);
     line-height: 19/14;
     #u_space > .push(1);
-    #font > .clear-sans();
+    #font > .ridley();
   }
 
   //general utilities
@@ -759,6 +816,11 @@ th {
   }
   .uppercase() {
     text-transform: uppercase;
+  }
+
+  .time() {
+    #u_type > .uppercase();
+    #u_type > .meta();
   }
 
 }
@@ -787,7 +849,7 @@ th {
   }
 
   time {
-    #u_type > .uppercase();
+    #u_type > .time();
   }
 
   //links

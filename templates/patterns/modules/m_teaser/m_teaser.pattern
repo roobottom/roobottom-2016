@@ -1,7 +1,11 @@
-{% macro m_teaser(type,title,url,summaryText,date,wordCount,imageCount,image,hLevel='2') %}
-  <article class="m_teaser m_teaser--{{type}}{% if not image %}-no-image{% endif %}">
-    {% if image %}
-    <img src="{{image}}" alt="{{title}}"/>
+{% macro m_teaser(type,title,url,summaryText,date,wordCount,imageCount,images,hLevel='2',classes) %}
+  <article class="m_teaser m_teaser--{{type}}{% if not image %}-no-image{% endif %}{% if classes %} {{classes}}{% endif %}">
+    {% if images | length > 0 %}
+      {% for image in images %}
+        {% if loop.first %}
+          <img src="http://images.roobottom.com/r/600/auto/{{type}}/{{image.image}}" alt="{{title}}" class="m_teaser__image"/>
+        {% endif %}
+      {% endfor %}
     {% endif %}
     <span class="m_teaser__type">{{type}}</span>
     <h{{hLevel}} class="m_teaser__title"><a href="{{url}}" class="m_teaser__link">{{title}}</a></h{{hLevel}}>

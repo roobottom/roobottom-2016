@@ -20,7 +20,7 @@ app.listen(3002, function () {
   console.log('Roobottom.com running at localhost:3002');
 });
 
-nunjucksDate.setDefaultFormat('MMMM Do YYYY');
+nunjucksDate.setDefaultFormat('dddd, Do MMMM YYYY');
 let env = nunjucks.configure( __basename + 'templates/', {
     autoescape: false,
     cache: false,
@@ -30,6 +30,7 @@ let env = nunjucks.configure( __basename + 'templates/', {
 .addFilter('limitTo', require('./filters/limitTo.filter.js'))
 .addFilter('filterByType', require('./filters/filterByType.filter.js'))
 .addFilter('jsonParse', require('./filters/jsonParse.filter.js'))
+.addFilter('stripPatterns', require('./filters/stripPatterns.filter.js'))
 .addExtension('pattern', new nunjucks_renderPattern())
 .addGlobal('site',settings);
 

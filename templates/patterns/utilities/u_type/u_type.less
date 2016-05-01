@@ -45,12 +45,12 @@
   .a--underline(@c:@c_link) {
     #u_type > .a(@c);
     border-bottom: 1px solid @lightgrey;
-    transition: text-shadow 250ms ease-out;
+    transition: background-color 250ms ease-out;
 
     .hover(@c) {
       &:hover {
         border: none;
-        #effect > .text-shadow-3d(3,darken(@c,20%));
+        background-color: fade(@c,15%);
       }
     }
     .hover(@c);
@@ -75,10 +75,7 @@
 
   .meta() {
     color: @medgrey;
-    font-size: unit(14/@base,em);
-    line-height: 19/14;
-    #u_space > .push(1);
-    #font > .ridley();
+    display: block;
   }
 
   //general utilities
@@ -93,7 +90,6 @@
   }
 
   .time() {
-    #u_type > .uppercase();
     #u_type > .meta();
   }
 
@@ -123,11 +119,23 @@
   }
 
   time {
+    #u_type > .p();
     #u_type > .time();
   }
 
   //links
-  a {
-    #u_type > .a--underline();
+  .links(@c:@c_link) {
+    a {
+      #u_type > .a(@c);
+    }
+    p>a,li>a {
+      #u_type > .a--underline(@c);
+    }
   }
+
+
+  &--articles {
+    .links(@c_article);
+  }
+
 }

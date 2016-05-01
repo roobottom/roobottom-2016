@@ -28,3 +28,17 @@
     eg.m_libraryBlock('prose')
   ],modifier='prose',classes='u_space__push')
 }}
+{{
+  pattern.grid([
+    eg.m_libraryBlock('brick'),
+    eg.m_libraryBlock('brick'),
+    eg.m_libraryBlock('brick'),
+    eg.m_libraryBlock('brick'),
+    eg.m_libraryBlock('brick'),
+    eg.m_libraryBlock('brick'),
+    eg.m_libraryBlock('brick'),
+    eg.m_libraryBlock('brick'),
+    eg.m_libraryBlock('brick'),
+    eg.m_libraryBlock('brick')
+  ],modifier='bricks',classes='u_space__push')
+}}

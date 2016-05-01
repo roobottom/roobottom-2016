@@ -26,6 +26,6 @@
 
 {% macro m_postGallerySummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('gallery') | limitTo(limit) %}
-      {{ m_postGallery (post,heading,link) }}
+      {{ m_postGallery (post) }}
   {% endfor %}
 {% endmacro %}

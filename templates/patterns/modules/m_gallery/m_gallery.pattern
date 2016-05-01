@@ -1,12 +1,12 @@
 {% macro m_gallery(images,type) %}
     <div class="m_gallery">
         {% for i in images %}
-          <div class="m_gallery__image">
-            <img src="http://images.roobottom.com/r/600/auto/{{type}}/{{ i.image }}"/>
+          <figure class="m_gallery__figure">
+            <img src="{{site.imageServer}}r/600/auto/{{type}}/{{ i.image }}" class="m_gallery__image"/>
             {% if i.caption %}
-            <figcaption>{{ i.caption }}</figcaption>
+            <figcaption class="m_gallery__caption">{{ i.caption }}</figcaption>
             {% endif %}
-          </div>
+          </figure>
         {% endfor %}
     </div>
 {% endmacro %}

@@ -1,5 +1,7 @@
-function limitTo(input, limit){
+function limitTo(input, limit, offset){
 	'use strict';
+
+	if(!offset) { var offset = 0; }
 	if(typeof limit !== 'number'){
 		return input;
 	}
@@ -14,7 +16,7 @@ function limitTo(input, limit){
 		limit = Math.min(limit, input.length);
     var returnArray;
 		if(limit >= 0){
-			return input.slice(0, limit);
+			return input.slice(offset, limit+offset);
 		} else {
 			return input.slice(input.length + limit, input.length);
 		}

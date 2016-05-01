@@ -1,11 +1,13 @@
 var _ = require('lodash'),
-    nunjucks = require('nunjucks');
+    nunjucks = require('nunjucks'),
+    settings = require('./settings.json');
 
 var __basename = _.trimEnd(__dirname,'src');
 var env = nunjucks.configure( __basename + 'templates/', {
     autoescape: false,
     cache: false
 })
+.addGlobal('site',settings);
 
 var tags = [
     'gallery'
@@ -41,8 +43,7 @@ function get_options(match) {
 //smart tag definitions, what to do with a smart tag once it's been matched?
 //Always defined as `smart_tag_[tag-name]`
 smart_tag_gallery = function (post,string,opts) {
-
-    var images_for_gallery = {"images":[]};
+    var images_for_gallery = {"images":[],"type":post.attributes.type};
 
     //loop through the available images for this post
     //and see if any are to be used by this gallery

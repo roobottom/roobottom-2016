@@ -3,7 +3,18 @@
 {{
   pattern.c_block([
     pattern.m_pageTitle(title),
-    pattern.m_teaserList(posts)
+    pattern.grid([
+      pattern.m_teaser(posts | limitTo(1,0)),
+      pattern.m_teaser(posts | limitTo(1,1)),
+      pattern.m_teaser(posts | limitTo(1,2)),
+      pattern.m_teaser(posts | limitTo(1,3)),
+      pattern.m_teaser(posts | limitTo(1,4)),
+      pattern.m_teaser(posts | limitTo(1,5)),
+      pattern.m_teaser(posts | limitTo(1,6)),
+      pattern.m_teaser(posts | limitTo(1,7)),
+      pattern.m_teaser(posts | limitTo(1,8)),
+      pattern.m_teaser(posts | limitTo(1,9))
+    ],'bricks')
   ])
 }}
 {% endblock %}

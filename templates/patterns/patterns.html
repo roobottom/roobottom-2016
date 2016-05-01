@@ -34,20 +34,20 @@
   </header>
 {% endmacro %}
 
-{% macro c_siteBody(content) %}
-  <main class="c_siteBody">
-    {% for item in content %}
-        {{ item }}
-    {% endfor %}
-  </main>
-{% endmacro %}
-
 {% macro c_wrapper(modules) %}
   <div class="c_wrapper">
     {% for module in modules %}
       {{ module }}
     {% endfor %}
   </div>
+{% endmacro %}
+
+{% macro c_siteBody(content) %}
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
+    {% endfor %}
+  </main>
 {% endmacro %}
 
 {% macro m_cacheItem(post) %}
@@ -66,12 +66,12 @@
 {% macro m_gallery(images,type) %}
     <div class="m_gallery">
         {% for i in images %}
-          <div class="m_gallery__image">
-            <img src="http://images.roobottom.com/r/600/auto/{{type}}/{{ i.image }}"/>
+          <figure class="m_gallery__figure">
+            <img src="{{site.imageServer}}r/600/auto/{{type}}/{{ i.image }}" class="m_gallery__image"/>
             {% if i.caption %}
-            <figcaption>{{ i.caption }}</figcaption>
+            <figcaption class="m_gallery__caption">{{ i.caption }}</figcaption>
             {% endif %}
-          </div>
+          </figure>
         {% endfor %}
     </div>
 {% endmacro %}
@@ -116,8 +116,8 @@
 <h1 class="m_pageTitle">{{title}}</h1>
 {% endmacro %}
 
-{% macro m_postArticles(post,heading,link=true,trimPost=false) %}
-  <article class="m_post m_post--article u_type">
+{% macro m_postArticle(post,heading,link,trimPost=false,active) %}
+  <article class="m_post m_post--article u_type{% if active %} u_type--{{active}}{% endif %}">
     <{{heading}}>
       {% if link %}
         <a href="/articles/{{post.attributes.id}}">{{post.attributes.title}}</a>
@@ -136,9 +136,9 @@
   </article>
 {% endmacro %}
 
-{% macro m_postGallery(post,site) %}
+{% macro m_postGallery(post) %}
   <article class="m_postGallery">
-    <h2>{{ post.attributes.title }} {{site}}</h2>
+    <h2>{{ post.attributes.title }} {{site|dump}} init</h2>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
     {{ m_gallery(post.attributes.images,'gallery') }}
     <div class="m_postGallery__body u_type">
@@ -190,56 +190,32 @@
 
 {% macro m_postGallerySummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('gallery') | limitTo(limit) %}
-      {{ m_postGallery (post,heading,link) }}
+      {{ m_postGallery (post) }}
   {% endfor %}
 {% endmacro %}
 
-{% macro m_teaser(type,title,url,summaryText,date,wordCount,imageCount,images,hLevel='2',classes) %}
-  <article class="m_teaser m_teaser--{{type}}{% if not image %}-no-image{% endif %}{% if classes %} {{classes}}{% endif %}">
-    {% if images | length > 0 %}
-      {% for image in images %}
+{% macro m_teaser(posts,hLevel='2',classes) %}
+  {% for post in posts %}
+  <article class="m_teaser m_teaser--{{post.attributes.type}}{% if classes %} {{classes}}{% endif %}">
+    {% if post.attributes.images %}
+      {% for image in post.attributes.images %}
         {% if loop.first %}
-          <img src="http://images.roobottom.com/r/600/auto/{{type}}/{{image.image}}" alt="{{title}}" class="m_teaser__image"/>
+          <a href="/{{post.attributes.type}}/{{post.attributes.id}}">
+            <img src="{{site.imageServer}}r/900/auto/{{post.attributes.type}}/{{image.image}}" alt="{{title}}" class="m_teaser__image"/>
+          </a>
         {% endif %}
       {% endfor %}
     {% endif %}
-    <span class="m_teaser__type">{{type}}</span>
-    <h{{hLevel}} class="m_teaser__title"><a href="{{url}}" class="m_teaser__link">{{title}}</a></h{{hLevel}}>
-    <p class="m_teaser__meta">
-      <time class="m_teaser__date" datetime="{{date}}">{{date|date}}</time>
-      {% if wordCount %}<span class="m_teaser__word-count"> / {{wordCount}} word{%if wordCount > 1%}s{%endif%}</span>{%endif%}
-      {% if imageCount %}<span class="m_teaser__image-count"> / {{imageCount}} image{%if imageCount > 1%}s{%endif%}</span>{%endif%}
-    </p>
-    <p class="m_teaser__summary">
-      {{summaryText}}
-    </p>
+    <div class="m_teaser__description m_teaser__description--{% if not post.attributes.images %}no-image{% else %}has-image{% endif %}">
+      <div class="m_teaser__type">{{post.attributes.type}}</div>
+      <div class="u_type u_type--{{post.attributes.type}}">
+        <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title}}</a></h{{hLevel}}>
+        <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
+        <div class="m_teaser__summary">
+          {{post.html_body  | stripPatterns}}
+        </div>
+      </div>
+    </div>
   </article>
-{% endmacro %}
-
-{% macro m_teaserList(posts) %}
-  <div class="m_teaserList">
-  {% for post in posts | limitTo(10) %}
-
-    {% set postImage %}
-      {% if post.attributes.images %}
-        {% for image in post.attributes.images %}
-          {# {% if loop.first %}http://images.roobottom.com/600/auto/{{post.attributes.type}}/{{image.image}}{% endif %}#}
-        {% endfor %}
-      {% endif %}
-    {% endset %}
-
-    {{
-      m_teaser(
-        type=post.attributes.type,
-        title=post.attributes.title,
-        date=post.attributes.date,
-        classes='u_space--push',
-        images=post.attributes.images,
-        url='/'+post.attributes.type+'/'+post.attributes.id,
-        summaryText=post.html_body | safe | truncate(200)
-
-      )
-    }}
   {% endfor %}
-  </div>
 {% endmacro %}

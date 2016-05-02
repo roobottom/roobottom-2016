@@ -7,7 +7,7 @@
         {{ m_gallery(post.attributes.images) }}
       </div>
     {% endif %}
-    <div class="m_postNote__body u_type">
+    <div class="m_postNote__body type">
       {{post.html_body}}
     </div>
   </article>

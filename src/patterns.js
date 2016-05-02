@@ -5,7 +5,7 @@ let Promise = require('bluebird'),
     _ = require('lodash'),
     recursiveReadDir = require('recursive-readdir');
 
-let patternTypes = ['containers','grids','icons','modules','utilities'];
+let patternTypes = ['containers','grids','typography','modules','utilities'];
 let patternsRoot = './templates/patterns/';
 
 

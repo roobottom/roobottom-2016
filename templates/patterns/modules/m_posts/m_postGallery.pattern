@@ -3,7 +3,7 @@
     <h2>{{ post.attributes.title }} {{site|dump}} init</h2>
     <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
     {{ m_gallery(post.attributes.images,'gallery') }}
-    <div class="m_postGallery__body u_type">
+    <div class="m_postGallery__body type">
       {{post.html_body}}
     </div>
   </article>

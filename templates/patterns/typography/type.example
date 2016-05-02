@@ -1,0 +1,12 @@
+{% import '../grids/grid.pattern' as grids %}
+{% macro example() %}
+<div class="type">
+{% markdown "./templates/static_content/patterns_typography.md" %}
+</div>
+{% endmacro %}
+
+{{
+  grids.grid([
+    example()
+  ],'prose')
+}}

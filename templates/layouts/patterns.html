@@ -8,8 +8,14 @@
 {% endset %}
 
 {% block body %}
-  {{pattern.m_navigation(items=navigationItems|jsonParse,modifier='sub',classes='u_space__push')}}
-  {{pattern.m_pageTitle(title)}}
-  {% block content %}
-  {% endblock %}
+  <div class="grid grid--1-2">
+    <div class="grid__column">
+      {{pattern.m_navigation(items=navigationItems|jsonParse,modifier='sub-stacked',classes='u_space__push',active=subActive)}}
+    </div>
+    <div class="grid__column">
+      {{pattern.m_pageTitle(title)}}
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
 {% endblock %}

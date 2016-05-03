@@ -1,22 +1,82 @@
 {% import "./grid.pattern" as pattern %}
 {% import "../modules/m_libraryBlock/m_libraryBlock.pattern" as eg %}
+
+<div class="type">
+{% markdown %}
+Grids do all the heavy lifting layout work. A grid pattern accepts _n_ patterns that are wrapped as columns, an optional classes string, and an optional modifier that describes the layout of the grid. On smaller screen, all grid columns are stacked, one on top of another.
+## Single Column Grid
+Passing a single pattern into a grid will result in a full width grid column.
+{% raw %}
+```
+pattern.grid([
+  pattern
+])
+```
+{% endraw %}
+{% endmarkdown %}
+</div>
 {{
   pattern.grid([
     eg.m_libraryBlock('single column')
   ],classes='u_space__push')
 }}
+
+<div class="type">
+{% markdown %}
+## Half Grid
+Passing two patterns into a grid will result in two equal width columns.
+{% raw %}
+```
+pattern.grid([
+  pattern,
+  pattern
+])
+```
+{% endraw %}
+{% endmarkdown %}
+</div>
 {{
   pattern.grid([
     eg.m_libraryBlock('half column'),
     eg.m_libraryBlock('half column')
   ],classes='u_space__push')
 }}
+
+<div class="type">
+{% markdown %}
+## 2-1 Grid
+A `2-1` modifier produces a grid twice as wide on the left, as it is on the right.
+{% raw %}
+```
+pattern.grid([
+  pattern,
+  pattern
+],'2-1')
+```
+{% endraw %}
+{% endmarkdown %}
+</div>
 {{
   pattern.grid([
     eg.m_libraryBlock('double column'),
     eg.m_libraryBlock('auto')
   ],modifier='2-1',classes='u_space__push')
 }}
+
+<div class="type">
+{% markdown %}
+## 1-2 Grid
+A `1-2` modifier produces a grid twice as wide on the right, as it is on the left.
+{% raw %}
+```
+pattern.grid([
+  pattern,
+  pattern
+],'1-2')
+```
+{% endraw %}
+{% endmarkdown %}
+</div>
 {{
   pattern.grid([
     eg.m_libraryBlock('auto'),

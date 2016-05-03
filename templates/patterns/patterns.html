@@ -34,20 +34,20 @@
   </main>
 {% endmacro %}
 
-{% macro c_siteHeader(items,active) %}
-  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
-    {% for item in items %}
-    {{item}}
-    {% endfor %}
-  </header>
-{% endmacro %}
-
 {% macro c_wrapper(modules) %}
   <div class="c_wrapper">
     {% for module in modules %}
       {{ module }}
     {% endfor %}
   </div>
+{% endmacro %}
+
+{% macro c_siteHeader(items,active) %}
+  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
+    {% for item in items %}
+    {{item}}
+    {% endfor %}
+  </header>
 {% endmacro %}
 
 {% macro m_cacheItem(post) %}
@@ -76,8 +76,15 @@
     </div>
 {% endmacro %}
 
-{% macro m_libraryBlock(text) %}
-  <div class="m_libraryBlock">{{text}}</div>
+{% import "./icons/icon.pattern" as icon %}
+{% macro m_logo() %}
+  <a href="/" class="m_logo" aria-label="Website logo">
+    {{icon.icon('logo')}}
+  </a>
+{% endmacro %}
+
+{% macro m_pageTitle(title) %}
+<h1 class="m_pageTitle">{{title|capitalize}}</h1>
 {% endmacro %}
 
 {% macro m_introduction(markdownFile) %}
@@ -86,11 +93,8 @@
   </div>
 {% endmacro %}
 
-{% import "./icons/icon.pattern" as icon %}
-{% macro m_logo() %}
-  <a href="/" class="m_logo" aria-label="Website logo">
-    {{icon.icon('logo')}}
-  </a>
+{% macro m_libraryBlock(text) %}
+  <div class="m_libraryBlock">{{text}}</div>
 {% endmacro %}
 
 {% import "./icons/icon.pattern" as icon %}
@@ -112,8 +116,30 @@
 </nav>
 {% endmacro %}
 
-{% macro m_pageTitle(title) %}
-<h1 class="m_pageTitle">{{title}}</h1>
+{% macro m_teaser(posts,hLevel='2',classes) %}
+  {% for post in posts %}
+  <article class="m_teaser m_teaser--{{post.attributes.type}}{% if classes %} {{classes}}{% endif %}">
+    {% if post.attributes.images %}
+      {% for image in post.attributes.images %}
+        {% if loop.first %}
+          <a href="/{{post.attributes.type}}/{{post.attributes.id}}">
+            <img src="{{site.imageServer}}r/900/auto/{{post.attributes.type}}/{{image.image}}" alt="{{title}}" class="m_teaser__image"/>
+          </a>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <div class="m_teaser__description m_teaser__description--{% if not post.attributes.images %}no-image{% else %}has-image{% endif %}">
+      <div class="m_teaser__type">{{post.attributes.type}}</div>
+      <div class="type type--{{post.attributes.type}}">
+        <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title}}</a></h{{hLevel}}>
+        <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
+        <div class="m_teaser__summary">
+          {{post.html_body  | stripPatterns}}
+        </div>
+      </div>
+    </div>
+  </article>
+  {% endfor %}
 {% endmacro %}
 
 {% macro m_postArticle(post,heading,link,trimPost=false,active) %}
@@ -191,31 +217,5 @@
 {% macro m_postGallerySummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('gallery') | limitTo(limit) %}
       {{ m_postGallery (post) }}
-  {% endfor %}
-{% endmacro %}
-
-{% macro m_teaser(posts,hLevel='2',classes) %}
-  {% for post in posts %}
-  <article class="m_teaser m_teaser--{{post.attributes.type}}{% if classes %} {{classes}}{% endif %}">
-    {% if post.attributes.images %}
-      {% for image in post.attributes.images %}
-        {% if loop.first %}
-          <a href="/{{post.attributes.type}}/{{post.attributes.id}}">
-            <img src="{{site.imageServer}}r/900/auto/{{post.attributes.type}}/{{image.image}}" alt="{{title}}" class="m_teaser__image"/>
-          </a>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-    <div class="m_teaser__description m_teaser__description--{% if not post.attributes.images %}no-image{% else %}has-image{% endif %}">
-      <div class="m_teaser__type">{{post.attributes.type}}</div>
-      <div class="type type--{{post.attributes.type}}">
-        <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title}}</a></h{{hLevel}}>
-        <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
-        <div class="m_teaser__summary">
-          {{post.html_body  | stripPatterns}}
-        </div>
-      </div>
-    </div>
-  </article>
   {% endfor %}
 {% endmacro %}

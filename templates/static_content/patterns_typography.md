@@ -1,6 +1,6 @@
 Typography styling is available via a wrapper class `.type`, which styles tags contained therein. It's also available via `#type()` mixins.
 
-The scope of text styling is limited to those tags available via Markdown.
+The scope of text styling is limited to those tags available via Markdown. This is a stylistic choice, as I don't really like mixing inline HTML tags with Markdown. There are a couple of exceptions to this, detailed below.
 
 All articles on this site are contained within `.grid--prose` which, when combined with `.type` styling, sets sensible line lengths.
 
@@ -53,7 +53,7 @@ A `hr` element can be used, much like a `h2` element, when there's a change in c
 
 ## Blockquotes
 
-The `blockquote` tag is used for quoting another source. I've chosen to quote any sources inline with the quote itself, without any further tags, simply separated with an `&emdash` character. This is due to there being no support for citations in Markdown.
+The `blockquote` tag is used for quoting another source. I've chosen to quote any sources inline with the quote itself, without any further tags, simply separated with an `emdash` character. This is due to there being no support for citations in Markdown.
 
 > Hokey religions and ancient weapons are no match for a good blaster at your side, kid. 
 > -- [Han Solo](http://www.imdb.com/character/ch0000002/quotes)
@@ -87,6 +87,16 @@ Text that requires _emphasis or italic_ styling uses the `em` tag. Similarly, an
 ### Strikethrough
 
 Text that's been corrected uses the `del` tag to denote a correction, and a `strong` tag to indicate the correct text, for example: ~~Ham Solo~~ **Han Solo**.
+
+### Abbreviations
+
+Currently not supported in Markdown, but useful enough to warrant inline HTML. The `abbr` tag with a `title` attribute is used to denote an abbreviations, for example:
+
+In the last few years, <abbr title="Light Emitting Diodes">LEDs</abbr> have become much cheaper and widely available, mainly because of better manufacturing techniques of blue-coloured LEDs.
+
+### Inline Code
+
+Any reference to text that's designed to be interpreted by a computer, such as `.classnames` or `{% raw %}{{ nunjucksTags }}{% endraw %}` can be styled with an inline `code` tag.
 
 ## Tabular Data
 

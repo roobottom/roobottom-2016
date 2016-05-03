@@ -230,6 +230,7 @@ app.get('/patterns',function(req,res) {
     res.render('pages/patterns_overview.html', {
       title: 'Pattern Library',
       active: 'pattern-library',
+      subActive: 'overview',
       patterns: patterns,
       site: settings
     })
@@ -239,8 +240,9 @@ app.get('/patterns',function(req,res) {
 app.get('/patterns/:category',function(req,res) {
   patterns.getPatternsList().then(patterns => {
     res.render('pages/patterns_category.html', {
-      title: 'Patterns / ' + req.params.category,
+      title: req.params.category,
       active: 'pattern-library',
+      subActive: req.params.category,
       site: settings,
       patterns: patterns,
       category: req.params.category

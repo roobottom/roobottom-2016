@@ -73,11 +73,23 @@
   }
 
   //sub navigation
-  &--sub {
+  &[class*=sub] {
     border-bottom: 1px solid @lightgrey;
   }
-  &--sub &__link {
+  &[class*=sub] &__link {
     color: @c_default;
+    &--is-active {
+      font-weight: bold;
+    }
+  }
+
+  //stacked sub navigation
+  &--sub-stacked &__items,
+  &--sub-stacked &__item,
+  &--sub-stacked &__link {
+    #site > .r--beta({
+      display: block;
+    });
   }
 
 }

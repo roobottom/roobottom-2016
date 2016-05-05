@@ -1,8 +1,12 @@
 {% extends 'layouts/default.html' %}
 {% block body %}
 {{
-  pattern.c_siteBody([
-    pattern.m_pageTitle(title)
-  ])
+  pattern.grid([
+    pattern.c_block([
+      pattern.m_pageTitle(title,post.attributes.date),
+      pattern.m_postNote(post)
+    ])
+  ],'prose')
+
 }}
 {% endblock %}

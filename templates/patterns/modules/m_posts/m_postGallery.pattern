@@ -1,10 +1,28 @@
+{% macro title() %}
+  <h1 class="m_postGallery__title">{{ post.attributes.title }}</h1>
+  <time datetime="{{post.attributes.date}}" class="m_postGallery__date">{{post.attributes.date | date}}</time>
+{% endmacro %}
+
+{% macro body() %}
+  <div class="m_postGallery__body type">
+    {{post.html_body}}
+  </div>
+{% endmacro %}
+
 {% macro m_postGallery(post) %}
   <article class="m_postGallery">
-    <h2>{{ post.attributes.title }} {{site|dump}} init</h2>
-    <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
+
+    {{
+      grid([
+        title()
+      ],'prose')
+    }}
     {{ m_gallery(post.attributes.images,'gallery') }}
-    <div class="m_postGallery__body type">
-      {{post.html_body}}
-    </div>
+    {{
+      grid([
+        body()
+      ],'prose')
+    }}
+
   </article>
 {% endmacro %}

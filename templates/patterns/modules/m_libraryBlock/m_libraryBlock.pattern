@@ -1,3 +1,11 @@
-{% macro m_libraryBlock(text) %}
-  <div class="m_libraryBlock">{{text}}</div>
+{% macro m_libraryBlock(text,markdown) %}
+  <div class="m_libraryBlock type{% if markdown %} m_libraryBlock--markdown{% endif %}">
+    {% if markdown %}
+      {% markdown %}
+      {{text}}
+      {% endmarkdown %}
+    {% else %}
+      {{text}}
+    {% endif %}
+  </div>
 {% endmacro %}

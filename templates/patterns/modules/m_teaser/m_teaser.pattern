@@ -12,12 +12,10 @@
     {% endif %}
     <div class="m_teaser__description m_teaser__description--{% if not post.attributes.images %}no-image{% else %}has-image{% endif %}">
       <div class="m_teaser__type">{{post.attributes.type}}</div>
-      <div class="type type--{{post.attributes.type}}">
-        <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title}}</a></h{{hLevel}}>
-        <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
-        <div class="m_teaser__summary">
-          {{post.html_body  | stripPatterns}}
-        </div>
+      <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title}}</a></h{{hLevel}}>
+      <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
+      <div class="m_teaser__summary type">
+        {{post.html_body  | stripPatterns}}
       </div>
     </div>
   </article>

@@ -1,10 +1,8 @@
 {% macro m_postNote(post) %}
   <article class="m_postNote">
-    <h2>{{ post.attributes.title }}</h2>
-    <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
     {% if post.attributes.images %}
       <div class="m_postNote__gallery">
-        {{ m_gallery(post.attributes.images) }}
+        {{ m_gallery(post.attributes.images,'notes') }}
       </div>
     {% endif %}
     <div class="m_postNote__body type">

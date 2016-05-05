@@ -1,0 +1,12 @@
+{% macro m_libraryDescription(text,markdown=true) %}
+  {{text|dump|e}}
+  {% if markdown == true %}
+    <div class="m_libraryDescription type">
+      {% markdown -%}{{text|e}}{%- endmarkdown %}
+    </div>
+  {% else %}
+    <div class="m_libraryDescription">
+      {{text}}
+    </div>
+  {% endif %}
+{% endmacro %}

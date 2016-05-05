@@ -22,13 +22,16 @@
   &--1-2 > &__column:nth-of-type(2n) {
     flex: 2;
   }
+  &--1-3 > &__column:nth-of-type(2n) {
+    flex: 3;
+  }
 
   &--prose {
     justify-content: center;
   }
   &--prose &__column {
     #site > .r--beta({
-      width: 62%;
+      max-width: unit(720/@base,rem);
       flex: initial;
     });
   }

@@ -40,6 +40,18 @@
     #font > .ridley();
     display: inline-block;
   }
+  &__title {
+    #type > .h2();
+    #u_space > .push();
+  }
+  &__link {
+    #type > .a();
+  }
+  &__date {
+    #type > .default();
+    #type > .time();
+    #u_space > .push();
+  }
 
   &__image {
     display: block;
@@ -51,14 +63,22 @@
   &[class*=articles] &__type {
     background-color: @c_article;
   }
+  &[class*=articles] &__link {
+    color: @c_article;
+  }
   //note specific
   &[class*=note] &__type {
     background-color: @c_notes;
   }
-
+  &[class*=note] &__link {
+    color: @c_notes;
+  }
   //gallery specific
   &[class*=gallery] &__type {
     background-color: @c_gallery;
+  }
+  &[class*=gallery] &__link {
+    color: @c_gallery;
   }
 
 }

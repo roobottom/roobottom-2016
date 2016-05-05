@@ -34,20 +34,20 @@
   </main>
 {% endmacro %}
 
-{% macro c_wrapper(modules) %}
-  <div class="c_wrapper">
-    {% for module in modules %}
-      {{ module }}
-    {% endfor %}
-  </div>
-{% endmacro %}
-
 {% macro c_siteHeader(items,active) %}
   <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
     {% for item in items %}
     {{item}}
     {% endfor %}
   </header>
+{% endmacro %}
+
+{% macro c_wrapper(modules) %}
+  <div class="c_wrapper">
+    {% for module in modules %}
+      {{ module }}
+    {% endfor %}
+  </div>
 {% endmacro %}
 
 {% macro m_cacheItem(post) %}
@@ -63,11 +63,17 @@
   </div>
 {% endmacro %}
 
+{% macro m_introduction(markdownFile) %}
+  <div class="m_introduction">
+    {% markdown markdownFile %}
+  </div>
+{% endmacro %}
+
 {% macro m_gallery(images,type) %}
     <div class="m_gallery">
         {% for i in images %}
           <figure class="m_gallery__figure">
-            <img src="{{site.imageServer}}r/600/auto/{{type}}/{{ i.image }}" class="m_gallery__image"/>
+            <img src="{{site.imageServer}}r/600/600/{{type}}/{{ i.image }}" class="m_gallery__image"/>
             {% if i.caption %}
             <figcaption class="m_gallery__caption">{{ i.caption }}</figcaption>
             {% endif %}
@@ -76,25 +82,36 @@
     </div>
 {% endmacro %}
 
+{% macro m_libraryBlock(text,markdown) %}
+  <div class="m_libraryBlock type{% if markdown %} m_libraryBlock--markdown{% endif %}">
+    {% if markdown %}
+      {% markdown %}
+      {{text}}
+      {% endmarkdown %}
+    {% else %}
+      {{text}}
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro m_libraryDescription(text,markdown=true) %}
+  {{text|dump|e}}
+  {% if markdown == true %}
+    <div class="m_libraryDescription type">
+      {% markdown -%}{{text|e}}{%- endmarkdown %}
+    </div>
+  {% else %}
+    <div class="m_libraryDescription">
+      {{text}}
+    </div>
+  {% endif %}
+{% endmacro %}
+
 {% import "./icons/icon.pattern" as icon %}
 {% macro m_logo() %}
   <a href="/" class="m_logo" aria-label="Website logo">
     {{icon.icon('logo')}}
   </a>
-{% endmacro %}
-
-{% macro m_pageTitle(title) %}
-<h1 class="m_pageTitle">{{title|capitalize}}</h1>
-{% endmacro %}
-
-{% macro m_introduction(markdownFile) %}
-  <div class="m_introduction">
-    {% markdown markdownFile %}
-  </div>
-{% endmacro %}
-
-{% macro m_libraryBlock(text) %}
-  <div class="m_libraryBlock">{{text}}</div>
 {% endmacro %}
 
 {% import "./icons/icon.pattern" as icon %}
@@ -116,30 +133,18 @@
 </nav>
 {% endmacro %}
 
-{% macro m_teaser(posts,hLevel='2',classes) %}
-  {% for post in posts %}
-  <article class="m_teaser m_teaser--{{post.attributes.type}}{% if classes %} {{classes}}{% endif %}">
-    {% if post.attributes.images %}
-      {% for image in post.attributes.images %}
-        {% if loop.first %}
-          <a href="/{{post.attributes.type}}/{{post.attributes.id}}">
-            <img src="{{site.imageServer}}r/900/auto/{{post.attributes.type}}/{{image.image}}" alt="{{title}}" class="m_teaser__image"/>
-          </a>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-    <div class="m_teaser__description m_teaser__description--{% if not post.attributes.images %}no-image{% else %}has-image{% endif %}">
-      <div class="m_teaser__type">{{post.attributes.type}}</div>
-      <div class="type type--{{post.attributes.type}}">
-        <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title}}</a></h{{hLevel}}>
-        <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
-        <div class="m_teaser__summary">
-          {{post.html_body  | stripPatterns}}
-        </div>
-      </div>
-    </div>
-  </article>
-  {% endfor %}
+{% macro m_pageTitle(title,date) %}
+<h1 class="m_pageTitle">{{title|capitalize}}</h1>
+{% if date %}
+<time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
+{% endif %}
+{% endmacro %}
+
+{% macro m_patternBlock(description,code) %}
+  <div class="m_patternBlock">
+    <div class="m_patternBlock__description">{{description}}</div>
+    <div class="m_patternBlock__code">{{code}}</div>
+  </div>
 {% endmacro %}
 
 {% macro m_postArticle(post,heading,link,trimPost=false,active) %}
@@ -162,24 +167,40 @@
   </article>
 {% endmacro %}
 
+{% macro title() %}
+  <h1 class="m_postGallery__title">{{ post.attributes.title }}</h1>
+  <time datetime="{{post.attributes.date}}" class="m_postGallery__date">{{post.attributes.date | date}}</time>
+{% endmacro %}
+
+{% macro body() %}
+  <div class="m_postGallery__body type">
+    {{post.html_body}}
+  </div>
+{% endmacro %}
+
 {% macro m_postGallery(post) %}
   <article class="m_postGallery">
-    <h2>{{ post.attributes.title }} {{site|dump}} init</h2>
-    <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
+
+    {{
+      grid([
+        title()
+      ],'prose')
+    }}
     {{ m_gallery(post.attributes.images,'gallery') }}
-    <div class="m_postGallery__body type">
-      {{post.html_body}}
-    </div>
+    {{
+      grid([
+        body()
+      ],'prose')
+    }}
+
   </article>
 {% endmacro %}
 
 {% macro m_postNote(post) %}
   <article class="m_postNote">
-    <h2>{{ post.attributes.title }}</h2>
-    <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
     {% if post.attributes.images %}
       <div class="m_postNote__gallery">
-        {{ m_gallery(post.attributes.images) }}
+        {{ m_gallery(post.attributes.images,'notes') }}
       </div>
     {% endif %}
     <div class="m_postNote__body type">
@@ -217,5 +238,29 @@
 {% macro m_postGallerySummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('gallery') | limitTo(limit) %}
       {{ m_postGallery (post) }}
+  {% endfor %}
+{% endmacro %}
+
+{% macro m_teaser(posts,hLevel='2',classes) %}
+  {% for post in posts %}
+  <article class="m_teaser m_teaser--{{post.attributes.type}}{% if classes %} {{classes}}{% endif %}">
+    {% if post.attributes.images %}
+      {% for image in post.attributes.images %}
+        {% if loop.first %}
+          <a href="/{{post.attributes.type}}/{{post.attributes.id}}">
+            <img src="{{site.imageServer}}r/900/auto/{{post.attributes.type}}/{{image.image}}" alt="{{title}}" class="m_teaser__image"/>
+          </a>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <div class="m_teaser__description m_teaser__description--{% if not post.attributes.images %}no-image{% else %}has-image{% endif %}">
+      <div class="m_teaser__type">{{post.attributes.type}}</div>
+      <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title}}</a></h{{hLevel}}>
+      <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
+      <div class="m_teaser__summary type">
+        {{post.html_body  | stripPatterns}}
+      </div>
+    </div>
+  </article>
   {% endfor %}
 {% endmacro %}

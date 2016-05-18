@@ -63,12 +63,6 @@
   </div>
 {% endmacro %}
 
-{% macro m_introduction(markdownFile) %}
-  <div class="m_introduction">
-    {% markdown markdownFile %}
-  </div>
-{% endmacro %}
-
 {% macro m_gallery(images,type) %}
     <div class="m_gallery">
         {% for i in images %}
@@ -80,6 +74,12 @@
           </figure>
         {% endfor %}
     </div>
+{% endmacro %}
+
+{% macro m_introduction(markdownFile) %}
+  <div class="m_introduction">
+    {% markdown markdownFile %}
+  </div>
 {% endmacro %}
 
 {% macro m_libraryBlock(text,markdown) %}
@@ -114,7 +114,6 @@
   </a>
 {% endmacro %}
 
-{% import "./icons/icon.pattern" as icon %}
 {% macro m_navigation(items, active, modifier, classes) %}
 <nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}{%if classes %} {{classes}}{% endif %}">
     <ul class="m_navigation__items">
@@ -122,7 +121,9 @@
         <li class="m_navigation__item{% if item.url == '/' %} m_navigation__item--homepage{% endif %}">
           <a href="{{item.url}}" class="m_navigation__link m_navigation__link--{{item.name|lower|replace(' ','-')}}{% if item.name|lower|replace(' ','-') == active %} m_navigation__link--is-active{% endif %}">
             {% if item.url == '/' -%}
-              {{icon.icon('logo')}}
+              <svg class="m_navigation__logo" aria-hidden="true">
+                <use xlink:href="/icons.svg#logo"/>
+              </svg>
             {% else %}
               {{item.name|capitalize}}
             {%- endif %}
@@ -141,28 +142,16 @@
 {% endmacro %}
 
 {% macro m_patternBlock(description,code) %}
-  <div class="m_patternBlock">
+  <div class="m_patternBlock m_patternBlock--note">
     <div class="m_patternBlock__description">{{description}}</div>
     <div class="m_patternBlock__code">{{code}}</div>
   </div>
 {% endmacro %}
 
-{% macro m_postArticle(post,heading,link,trimPost=false,active) %}
-  <article class="m_post m_post--article type{% if active %} type--{{active}}{% endif %}">
-    <{{heading}}>
-      {% if link %}
-        <a href="/articles/{{post.attributes.id}}">{{post.attributes.title}}</a>
-      {% else %}
-        {{post.attributes.title}}
-      {% endif %}
-    </{{heading}}>
-    <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
-    <div class="m_postarticles__body type">
-      {% if trimPost %}
-        {{post.html_body | safe | truncate(200) }}
-      {% else %}
+{% macro m_postArticle(post) %}
+  <article class="m_postArticle">
+    <div class="m_postArticle__body type">
         {{post.html_body | safe }}
-      {% endif %}
     </div>
   </article>
 {% endmacro %}
@@ -241,9 +230,32 @@
   {% endfor %}
 {% endmacro %}
 
+{% macro m_prevNext(post) %}
+<nav class="m_prevNext">
+  {% if post.prev %}
+    <div class="m_prevNext__item m_prevNext__item--prev">
+      <p class="m_prevNext__label">&lArr; Previous {{post.attributes.type}} post</p>
+      <a class="m_prevNext__link" href="/{{post.attributes.type}}/{{post.prev.id}}">{{post.prev.title}}</a>
+      <time class="m_prevNext__date" datetime="{{post.prev.date}}" >{{post.prev.date|date}}</time>
+    </div>
+  {% endif %}
+  {% if post.next %}
+    <div class="m_prevNext__item m_prevNext__item--next">
+      <p class="m_prevNext__label">Next {{post.attributes.type}} post &rArr;</p>
+      <a class="m_prevNext__link" href="/{{post.attributes.type}}/{{post.next.id}}">{{post.next.title}}</a>
+      <time class="m_prevNext__date" datetime="{{post.next.date}}" >{{post.next.date|date}}</time>
+    </div>
+  {% endif %}
+</nav>
+{% endmacro %}
+
 {% macro m_teaser(posts,hLevel='2',classes) %}
   {% for post in posts %}
   <article class="m_teaser m_teaser--{{post.attributes.type}}{% if classes %} {{classes}}{% endif %}">
+    <header class="m_teaser__header">
+      <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title}}</a></h{{hLevel}}>
+      <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
+    </header>
     {% if post.attributes.images %}
       {% for image in post.attributes.images %}
         {% if loop.first %}
@@ -253,12 +265,9 @@
         {% endif %}
       {% endfor %}
     {% endif %}
-    <div class="m_teaser__description m_teaser__description--{% if not post.attributes.images %}no-image{% else %}has-image{% endif %}">
-      <div class="m_teaser__type">{{post.attributes.type}}</div>
-      <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title}}</a></h{{hLevel}}>
-      <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
+    <div class="m_teaser__description">
       <div class="m_teaser__summary type">
-        {{post.html_body  | stripPatterns}}
+        {{post.html_body  | stripPatterns | truncate(200) }} <a href="/{{post.attributes.type}}/{{post.attributes.id}}">View the rest of this {{post.attributes.type}}</a>
       </div>
     </div>
   </article>

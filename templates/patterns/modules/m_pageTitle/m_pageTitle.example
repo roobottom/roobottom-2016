@@ -3,17 +3,22 @@
 
 {% set d %}
 {% markdown %}
-`m_pageTitle` renders the main page title `h1` with an optional `time` tag for dates. One one should be used per page. Passing only a title string will render a `h1`. The first letter is automatically capitalised.
+`m_pageTitle` renders the main page title `h1` with an optional `time` tag for dates. Only one should be used per page. Passing only a title string will render a `h1`. The first letter is automatically capitalised.
 {% endmarkdown %}
 {% endset %}
 
 {{ block.m_patternBlock(d,'pattern.m_pageTitle(\'jedi mind tricks\')') }}
+<div class="m_patternBlock m_patternBlock--eg">
 {{pattern.m_pageTitle('jedi mind tricks')}}
+</div>
+
 
 {% set d %}
 {% markdown %}
-`m_pageTitle` can also be passed an optional date attribute. A date should be passed in ISO format, this is then transcoded into a human readable date.
+`m_pageTitle` can also be passed an optional ISO format date attribute. Date are transcoded into a human readable format.
 {% endmarkdown %}
 {% endset %}
 {{ block.m_patternBlock(d, 'pattern.m_pageTitle(\'jedi mind tricks\',\'20160504\')')}}
+<div class="m_patternBlock m_patternBlock--eg">
 {{pattern.m_pageTitle('jedi mind tricks','20160504')}}
+</div>

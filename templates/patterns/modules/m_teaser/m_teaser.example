@@ -1,34 +1,11 @@
 {% import "./m_teaser.pattern" as pattern %}
+{% import "../m_patternBlock/m_patternBlock.pattern" as block %}
+{% set d %}
 {% markdown %}
-### m_teaser
-`m_teaser` is an article block for previewing post information.
-
-#### Article Example
+`m_teaser` renders a teaser article block. It accepts a `posts` object and optional `hLevel` and `classes` strings. Its designed to give a lead-in to an article.
 {% endmarkdown %}
-{{
-  pattern.m_teaser(
-    type='article',
-    title='Firefly Learning Conference 2015',
-    url='#',
-    summaryText='Besides BETT, the Firefly Learning Conference is our biggest UK event of the year. It’s a chance for our clients to get together and listen to some fantastic speakers from all areas of Education.',
-    date='2015-11-12T00:00:00.000Z',
-    wordCount=551,
-    imageCount=6
-  )
-}}
-
-
-{% markdown %}
-#### Note Example
-{% endmarkdown %}
-{{
-  pattern.m_teaser(
-    type='note',
-    title='All I want for Christmas is my two front teeth',
-    url='#',
-    summaryText='PRL came over for lunch and later we all decorated the tree. Baby Roo (seemingly recovered from the emergence of her first tooth) had a great time playing with all the baubles and lights.',
-    date='2015-11-12T00:00:00.000Z',
-    wordCount=34,
-    imageCount=2
-  )
-}}
+{% endset %}
+{{ block.m_patternBlock(d,'pattern.m_teaser(posts)') }}
+<div class="m_patternBlock m_patternBlock--eg">
+    {{pattern.m_teaser(posts=eg_article)}}
+</div>

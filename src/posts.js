@@ -118,8 +118,8 @@ function processAllPosts() {
 
 function calculatePostRelationships(posts) {
   for (let key in posts) {
-    let next = parseInt(key)+1;
-    let prev = parseInt(key)-1;
+    let next = parseInt(key)-1;
+    let prev = parseInt(key)+1;
     if(next in posts) {
       posts[key].next = {};
       posts[key].next.title = posts[next].attributes.title;

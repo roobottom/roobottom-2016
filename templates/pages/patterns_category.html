@@ -4,12 +4,18 @@
   {% for pattern in patterns -%}
     {% if pattern.type == category %}
       {% for item in pattern.list -%}
-        {% pattern name=item %}
+        <div class="type">
+          <h2>{{item.name}}</h2>
+        </div>
+        {% pattern name=item.file %}
       {%- endfor %}
     {% endif %}
   {%- endfor %}
 {% endmacro %}
 
 {% block content %}
+  <div class="type">
+    {% markdown "./patterns/_static_content/introduction_" + category + ".md" %}
+  </div>
   {{ptn()}}
 {% endblock %}

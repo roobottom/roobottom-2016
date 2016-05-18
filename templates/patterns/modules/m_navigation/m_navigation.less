@@ -9,9 +9,6 @@
       flex-wrap: wrap;
       align-items: center;
     });
-    #site > .r--max({
-      justify-content: space-between;
-    });
   }
   &__item {
     list-style: none;
@@ -21,20 +18,11 @@
     display: block;
   }
   &__link {
-    #font > .ridley();
-    font-size: unit(18/@base,rem);
-    line-height: 22/18;
-    text-decoration: none;
-    color: white;
+    //#font > .ridley();
     display: block;
     padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/4/@base,rem);
 
-    #site > .r--max({
-      font-size: unit(28/@base,rem);
-      line-height: 36/28;
-    });
-
-    svg {
+    .m_navigation__logo {
       width: unit(33/@base,rem);
       height: unit(33/@base,rem);
       #site > .r--max({
@@ -49,28 +37,6 @@
     });
   }
 
-  //active states.
-  &__link--is-active&__link--homepage {
-    #effect > .text-shadow-3d(5,darken(@c_default,10%));
-  }
-  &__link--is-active&__link--articles {
-    #effect > .text-shadow-3d(5,darken(@c_article,10%));
-  }
-  &__link--is-active&__link--gallery {
-    #effect > .text-shadow-3d(5,darken(@c_gallery,10%));
-  }
-  &__link--is-active&__link--notes {
-    #effect > .text-shadow-3d(5,darken(@c_notes,10%));
-  }
-  &__link--is-active&__link--archives {
-    #effect > .text-shadow-3d(5,darken(@c_default,10%));
-  }
-  &__link--is-active&__link--portfolio {
-    #effect > .text-shadow-3d(5,darken(@c_portfolio,10%));
-  }
-  &__link--is-active&__link--pattern-library {
-    #effect > .text-shadow-3d(5,darken(@c_default,10%));
-  }
 
   //sub navigation
   &[class*=sub] {

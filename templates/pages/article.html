@@ -1,8 +1,12 @@
 {% extends 'layouts/default.html' %}
 {% block body %}
+{{pattern.m_pageTitle(post.attributes.title,post.attributes.date)}}
 {{
   pattern.grid([
-    pattern.m_postArticle(post,'h1',false,active)
+    pattern.c_block([
+      pattern.m_postArticle(post),
+      pattern.m_prevNext(post)
+    ])
   ],'prose')
 }}
 {% endblock %}

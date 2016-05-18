@@ -11,9 +11,6 @@
 #site() {
   .spacing() {
     margin-top: unit(@spacing_horizontal/@base,rem);
-    #site > .r--max({
-      margin-top: unit(@spacing_horizontal*2/@base,rem);
-    });
   }
   .r--alpha(@r) {
     @media screen and (min-width: (unit(@layout_alpha/@base,rem))) {

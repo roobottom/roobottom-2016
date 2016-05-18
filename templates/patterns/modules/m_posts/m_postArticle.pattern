@@ -1,19 +1,7 @@
-{% macro m_postArticle(post,heading,link,trimPost=false,active) %}
-  <article class="m_post m_post--article type{% if active %} type--{{active}}{% endif %}">
-    <{{heading}}>
-      {% if link %}
-        <a href="/articles/{{post.attributes.id}}">{{post.attributes.title}}</a>
-      {% else %}
-        {{post.attributes.title}}
-      {% endif %}
-    </{{heading}}>
-    <time datetime="{{post.attributes.date}}">{{post.attributes.date | date}}</time>
-    <div class="m_postarticles__body type">
-      {% if trimPost %}
-        {{post.html_body | safe | truncate(200) }}
-      {% else %}
+{% macro m_postArticle(post) %}
+  <article class="m_postArticle">
+    <div class="m_postArticle__body type">
         {{post.html_body | safe }}
-      {% endif %}
     </div>
   </article>
 {% endmacro %}

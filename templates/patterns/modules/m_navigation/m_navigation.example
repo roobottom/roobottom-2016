@@ -1,0 +1,58 @@
+{% import "./m_navigation.pattern" as pattern %}
+{% import "../m_patternBlock/m_patternBlock.pattern" as block %}
+{% set d %}
+{% markdown %}
+`m_navigation` renders a navigation block. This defaults to the main navigation styling.
+
+* You must pass in `name` and `url` as an array objects.
+* Passing `/` as the `url` will render the roo logo.
+* This pattern also accepts optional `active`,`modifier` and `classes` strings.
+* `active` must be lowercase and use the dash character (-) in place of spaces.
+{% endmarkdown %}
+{% endset %}
+{{ block.m_patternBlock(d,'pattern.m_navigation([{name:\'Homepage\',url:\'/\'},{name:\'Articles\',url:\'/articles\'},{name:\'Gallery\',url:\'/gallery\'},{name:\'Notes\',url:\'/notes\'},{name:\'Archives\',url:\'/archives\'},{name:\'Portfolio\',url:\'/portfolio\'},{name:\'Pattern Library\',url:\'/patterns\'}],active=\'pattern-library\')') }}
+<div class="m_patternBlock m_patternBlock--eg-dark">
+  {{
+    pattern.m_navigation([
+      {name:'Homepage',url:'/'},
+      {name:'Articles',url:'/articles'},
+      {name:'Gallery',url:'/gallery'},
+      {name:'Notes',url:'/notes'},
+      {name:'Archives',url:'/archives'},
+      {name:'Portfolio',url:'/portfolio'},
+      {name:'Pattern Library',url:'/patterns'}
+    ],active='pattern-library')
+  }}
+</div>
+
+{% set d %}
+{% markdown %}
+`m_navigation` sub navigation example.
+{% endmarkdown %}
+{% endset %}
+{{ block.m_patternBlock(d,'pattern.m_navigation([{name:\'Jedi\',url:\'#\'},{name:\'Mind\',url:\'#\'},{name:\'Tricks\',url:\'#\'}],active=\'tricks\',modifier=\'sub\')') }}
+<div class="m_patternBlock m_patternBlock--eg">
+  {{
+    pattern.m_navigation([
+      {name:'Jedi',url:'#'},
+      {name:'Mind',url:'#'},
+      {name:'Tricks',url:'#'}
+    ],active='tricks',modifier='sub')
+  }}
+</div>
+
+{% set d %}
+{% markdown %}
+`m_navigation` sub stacked navigation example.
+{% endmarkdown %}
+{% endset %}
+{{ block.m_patternBlock(d,'pattern.m_navigation([{name:\'Jedi\',url:\'#\'},{name:\'Mind\',url:\'#\'},{name:\'Tricks\',url:\'#\'}],active=\'tricks\',modifier=\'sub-stacked\')') }}
+<div class="m_patternBlock m_patternBlock--eg">
+  {{
+    pattern.m_navigation([
+      {name:'Jedi',url:'#'},
+      {name:'Mind',url:'#'},
+      {name:'Tricks',url:'#'}
+    ],active='tricks',modifier='sub-stacked')
+  }}
+</div>

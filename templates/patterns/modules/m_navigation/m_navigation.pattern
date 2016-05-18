@@ -1,4 +1,3 @@
-{% import "./icons/icon.pattern" as icon %}
 {% macro m_navigation(items, active, modifier, classes) %}
 <nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}{%if classes %} {{classes}}{% endif %}">
     <ul class="m_navigation__items">
@@ -6,7 +5,9 @@
         <li class="m_navigation__item{% if item.url == '/' %} m_navigation__item--homepage{% endif %}">
           <a href="{{item.url}}" class="m_navigation__link m_navigation__link--{{item.name|lower|replace(' ','-')}}{% if item.name|lower|replace(' ','-') == active %} m_navigation__link--is-active{% endif %}">
             {% if item.url == '/' -%}
-              {{icon.icon('logo')}}
+              <svg class="m_navigation__logo" aria-hidden="true">
+                <use xlink:href="/icons.svg#logo"/>
+              </svg>
             {% else %}
               {{item.name|capitalize}}
             {%- endif %}

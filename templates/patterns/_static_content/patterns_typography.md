@@ -1,9 +1,3 @@
-Typography styling is available via a wrapper class `.type`, which styles tags contained therein. It's also available via `#type()` mixins.
-
-The scope of text styling is limited to those tags available via Markdown. This is a stylistic choice, as I don't really like mixing inline HTML tags with Markdown. There are a couple of exceptions to this, detailed below.
-
-All articles on this site are contained within `.grid--prose` which, when combined with `.type` styling, sets sensible line lengths.
-
 # Heading 1
 `.type h1` or `#type > .h1()` is used to give an element heading-1 styling. A `h1` tag should only ever be used once per page. I've made an exception here for the purposes of demonstration.
 
@@ -30,7 +24,7 @@ Unordered lists are contained within `ul` and `li` tags. These can be nested wit
   - R2-D2
 	- Non Humanoid
 	- Astromech Droid
-	
+
 ## Ordered lists
 
 Ordered lists are contained within `ol` and `li` tags. These can be nested with multiple levels receiving different indents and bullet styling, for example:
@@ -44,7 +38,7 @@ Ordered lists are contained within `ol` and `li` tags. These can be nested with 
   	1. Part I
   	2. Part II
   	3. Part III
-  	
+
 ## Horizontal Rule
 
 A `hr` element can be used, much like a `h2` element, when there's a change in concept or thematic change within an article.
@@ -55,7 +49,7 @@ A `hr` element can be used, much like a `h2` element, when there's a change in c
 
 The `blockquote` tag is used for quoting another source. I've chosen to quote any sources inline with the quote itself, without any further tags, simply separated with an `emdash` character. This is due to there being no support for citations in Markdown.
 
-> Hokey religions and ancient weapons are no match for a good blaster at your side, kid. 
+> Hokey religions and ancient weapons are no match for a good blaster at your side, kid.
 > -- [Han Solo](http://www.imdb.com/character/ch0000002/quotes)
 
 ## Code Blocks

@@ -32,7 +32,7 @@ let env = nunjucks.configure( __basename + 'templates/', {
 .addFilter('jsonParse', require('./filters/jsonParse.filter.js'))
 .addFilter('stripPatterns', require('./filters/stripPatterns.filter.js'))
 .addExtension('pattern', new nunjucks_renderPattern())
-.addGlobal('site',settings);
+.addGlobal('site',settings)
 
 marked.setOptions({
   renderer: new marked.Renderer(),

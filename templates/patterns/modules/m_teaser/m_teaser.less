@@ -1,11 +1,26 @@
 .m_teaser {
 
+  margin-bottom: unit(@spacing_vertical*3/@base,rem);
+
   &__title {
     #type > .h2();
+    margin: 0;
+  }
+
+  &__date {
+    #type > .time();
+    margin-bottom: unit(@spacing_vertical/@base,rem);
+  }
+
+  &__imageLink {
+    #u_space > .pull();
+    display: block;
   }
 
   &__image {
     max-width: 100%;
+    display: block;
+    margin: 0 auto unit(@spacing_vertical/@base,rem) auto;
   }
 
 }

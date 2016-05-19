@@ -1,5 +1,7 @@
 .m_navigation {
 
+  font-size: unit(23/@base,em);
+
   &__items {
     padding: 0;
     margin: 0;
@@ -9,6 +11,9 @@
       flex-wrap: wrap;
       align-items: center;
     });
+    #site > .r--max({
+        justify-content: space-between;
+    })
   }
   &__item {
     list-style: none;
@@ -21,6 +26,10 @@
     //#font > .ridley();
     display: block;
     padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/4/@base,rem);
+
+    &--is-active {
+      background-color: yellow;
+    }
 
     .m_navigation__logo {
       width: unit(33/@base,rem);

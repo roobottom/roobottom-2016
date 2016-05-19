@@ -31,6 +31,8 @@ let env = nunjucks.configure( __basename + 'templates/', {
 .addFilter('filterByType', require('./filters/filterByType.filter.js'))
 .addFilter('jsonParse', require('./filters/jsonParse.filter.js'))
 .addFilter('stripPatterns', require('./filters/stripPatterns.filter.js'))
+.addFilter('singular', require('./filters/singular.filter.js'))
+.addFilter('fixOrphans', require('./filters/fixOrphans.filter.js'))
 .addExtension('pattern', new nunjucks_renderPattern())
 .addGlobal('site',settings)
 
@@ -93,7 +95,8 @@ app.get('/articles', function(req,res) {
         title: 'Articles',
         active: 'articles',
         posts: posts,
-        site: settings
+        site: settings,
+        page: 1
       })
     })
     .catch(err => {
@@ -101,6 +104,42 @@ app.get('/articles', function(req,res) {
       res.sendStatus(404);
     });
 });
+
+//articles pagination default page
+app.get('/articles/page', function(req,res) {
+    posts.getPosts(['articles'])
+    .then(function(posts){
+      res.render('pages/articles.html', {
+        title: 'Articles',
+        active: 'articles',
+        posts: posts,
+        site: settings,
+        page: 1
+      })
+    })
+    .catch(err => {
+      console.log('error: ', err);
+      res.sendStatus(404);
+    });
+});
+//articles pagination
+app.get('/articles/page/:num', function(req,res) {
+    posts.getPosts(['articles'])
+    .then(function(posts){
+      res.render('pages/articles.html', {
+        title: 'Articles',
+        active: 'articles',
+        posts: posts,
+        site: settings,
+        page: req.params.num
+      })
+    })
+    .catch(err => {
+      console.log('error: ', err);
+      res.sendStatus(404);
+    });
+});
+
 
 //articles post
 app.get('/articles/:id', function(req,res) {

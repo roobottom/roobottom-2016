@@ -135,7 +135,7 @@
 {% endmacro %}
 
 {% macro m_pageTitle(title,date) %}
-<h1 class="m_pageTitle">{{title|capitalize}}</h1>
+<h1 class="m_pageTitle">{{title|capitalize|fixOrphans}}</h1>
 {% if date %}
 <time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
 {% endif %}
@@ -251,23 +251,24 @@
 
 {% macro m_teaser(posts,hLevel='2',classes) %}
   {% for post in posts %}
-  <article class="m_teaser m_teaser--{{post.attributes.type}}{% if classes %} {{classes}}{% endif %}">
+  <article class="m_teaser m_teaser--{{post.attributes.type|singular}}{% if classes %} {{classes}}{% endif %}">
     <header class="m_teaser__header">
-      <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title}}</a></h{{hLevel}}>
+      <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title|fixOrphans}}</a></h{{hLevel}}>
       <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
     </header>
     {% if post.attributes.images %}
       {% for image in post.attributes.images %}
         {% if loop.first %}
-          <a href="/{{post.attributes.type}}/{{post.attributes.id}}">
-            <img src="{{site.imageServer}}r/900/auto/{{post.attributes.type}}/{{image.image}}" alt="{{title}}" class="m_teaser__image"/>
+          <a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__imageLink">
+            <img src="{{site.imageServer}}r/900/auto/{{post.attributes.type}}/{{image.image}}" alt="{{post.attributes.title}}" class="m_teaser__image"/>
           </a>
         {% endif %}
       {% endfor %}
     {% endif %}
     <div class="m_teaser__description">
       <div class="m_teaser__summary type">
-        {{post.html_body  | stripPatterns | truncate(200) }} <a href="/{{post.attributes.type}}/{{post.attributes.id}}">View the rest of this {{post.attributes.type}}</a>
+        <p>{{post.html_body  | striptags | truncate(200) }} <a href="/{{post.attributes.type}}/{{post.attributes.id}}">See the rest of this {{post.attributes.type|singular}}</a></p>
+        <hr/>
       </div>
     </div>
   </article>

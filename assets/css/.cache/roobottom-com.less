@@ -110,6 +110,14 @@ h1,h2,h3,h4 {
   font-weight: bold;
 }
 
+a {
+  color: blue;
+  text-decoration: none;
+  &:active {
+    background-color: yellow;
+  }
+}
+
 html {
   font-family: sans-serif; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
@@ -479,8 +487,8 @@ th {
     #u_space > .push(1);
   }
   .h2() {
-    font-size: unit(35/@base,em);
-    line-height: 39/35;
+    font-size: unit(47/@base,em);
+    line-height: 59/47;
     #u_space > .push(1,2);
   }
   .h3() {
@@ -595,10 +603,16 @@ th {
   }
 
   .hr() {
-    border-top: 1px dashed @grey;
-    border-bottom: none;
+    border: none;
     clear: both;
-    #u_space > .push();
+    &:before {
+      font-size: unit(40/@base,rem);
+      color: @grey;
+      content: "\0000B7\0000a0\0000B7\0000a0\0000B7";
+      text-align: center;
+      display: block;
+      #u_space > .push();
+    }
   }
 
   .pre() {
@@ -689,25 +703,6 @@ th {
     #type > .hr();
   }
 
-  //links
-  .links(@c:@c_link) {
-    a {
-      #type > .a(@c);
-    }
-    p>a,li>a {
-      #type > .a--underline(@c);
-    }
-  }
-  .links(@c_link);
-  &--articles {
-    .links(@c_article);
-  }
-  &--gallery {
-    .links(@c_gallery);
-  }
-  &--notes {
-    .links(@c_notes);
-  }
 
   ///MOVE THIS CODE TO MIXINS
 
@@ -832,6 +827,8 @@ th {
 
 .m_navigation {
 
+  font-size: unit(23/@base,em);
+
   &__items {
     padding: 0;
     margin: 0;
@@ -841,6 +838,9 @@ th {
       flex-wrap: wrap;
       align-items: center;
     });
+    #site > .r--max({
+        justify-content: space-between;
+    })
   }
   &__item {
     list-style: none;
@@ -853,6 +853,10 @@ th {
     //#font > .ridley();
     display: block;
     padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/4/@base,rem);
+
+    &--is-active {
+      background-color: yellow;
+    }
 
     .m_navigation__logo {
       width: unit(33/@base,rem);
@@ -1005,12 +1009,27 @@ th {
 
 .m_teaser {
 
+  margin-bottom: unit(@spacing_vertical*3/@base,rem);
+
   &__title {
     #type > .h2();
+    margin: 0;
+  }
+
+  &__date {
+    #type > .time();
+    margin-bottom: unit(@spacing_vertical/@base,rem);
+  }
+
+  &__imageLink {
+    #u_space > .pull();
+    display: block;
   }
 
   &__image {
     max-width: 100%;
+    display: block;
+    margin: 0 auto unit(@spacing_vertical/@base,rem) auto;
   }
 
 }
@@ -1021,9 +1040,9 @@ th {
     margin-top: unit((@spacing_vertical*@top)/@base,rem);
   }
 
-  .pull(@v: @layout_pull) {
+  .pull() {
     #site > .r--max({
-      margin-left: unit(-1 * (@v * 100),%);
+      margin-left: -9%;
     });
   }
 }

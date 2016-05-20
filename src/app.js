@@ -107,7 +107,8 @@ app.get('/articles', function(req,res) {
         active: 'articles',
         posts: posts,
         site: settings,
-        page: 1
+        pagination: calculatePagination(posts.length,1),
+        currentPage: 1
       })
     })
     .catch(err => {

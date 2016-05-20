@@ -14,14 +14,6 @@
   </svg>
 {% endmacro %}
 
-{% macro c_siteBody(content) %}
-  <main class="c_siteBody">
-    {% for item in content %}
-        {{ item }}
-    {% endfor %}
-  </main>
-{% endmacro %}
-
 {% macro c_block(items,pattern) %}
   {% if pattern %}
     {% for item in items %}
@@ -32,6 +24,14 @@
       {{ item }}
     {% endfor %}
   {% endif %}
+{% endmacro %}
+
+{% macro c_siteBody(content) %}
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
+    {% endfor %}
+  </main>
 {% endmacro %}
 
 {% macro c_siteHeader(items,active) %}
@@ -134,13 +134,6 @@
 </nav>
 {% endmacro %}
 
-{% macro m_pageTitle(title,date) %}
-<h1 class="m_pageTitle">{{title|capitalize|fixOrphans}}</h1>
-{% if date %}
-<time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
-{% endif %}
-{% endmacro %}
-
 {% macro m_pagination(baseUrl,pagination) %}
   <ol class="m_pagination">
     {% for page in pagination %}
@@ -149,6 +142,13 @@
     </li>
     {% endfor %}
   </ol>
+{% endmacro %}
+
+{% macro m_pageTitle(title,date) %}
+<h1 class="m_pageTitle">{{title|capitalize|fixOrphans}}</h1>
+{% if date %}
+<time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
+{% endif %}
 {% endmacro %}
 
 {% macro m_patternBlock(description,code) %}

@@ -2,7 +2,6 @@
 {% block body %}
 {{
   pattern.c_block([
-    pattern.m_pageTitle(title),
     pattern.grid([
       pattern.m_teaser(posts=posts | limitTo(10))
     ],'prose')

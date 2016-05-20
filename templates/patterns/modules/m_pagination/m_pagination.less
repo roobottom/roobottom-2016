@@ -1,0 +1,21 @@
+.m_pagination {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  &__item {
+    list-style: none;
+    margin: unit(@spacing_horizontal/2/@base,rem);
+  }
+  &__link {
+    display: block;
+    padding: unit(@spacing_vertical/2/@base,rem) unit(@spacing_horizontal/2/@base,rem);
+    border: 1px solid @grey;
+  }
+  &__link--current {
+    border-color: @c_link;
+    background-color: @c_link;
+    color: contrast(@c_link);
+  }
+}

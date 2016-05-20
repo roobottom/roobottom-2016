@@ -16,9 +16,9 @@
 @vw_base:                   @layout_max/100;
 
 //colours
-@blue:                      #008EEF;
+@blue:                      #0D44E1;//base on the 2010 Dr WHO? Tardis
 @red:                       #ff0033;
-@yellow:                    #ECB538;
+@yellow:                    yellow;
 @green:                     #00BDA5;
 @turquoise:                 #60C5D6;
 
@@ -27,7 +27,7 @@
 @c_gallery:                 @red;
 @c_notes:                   @yellow;
 @c_portfolio:               @green;
-@c_link:                    @turquoise;
+@c_link:                    @blue;
 
 @c_default:                 @darkgrey;
 
@@ -111,10 +111,10 @@ h1,h2,h3,h4 {
 }
 
 a {
-  color: blue;
+  color: @blue;
   text-decoration: none;
   &:active {
-    background-color: yellow;
+    background-color: @yellow;
   }
 }
 
@@ -359,7 +359,7 @@ th {
 
 #site() {
   .spacing() {
-    margin-top: unit(@spacing_horizontal/@base,rem);
+    margin: unit(@spacing_horizontal/@base,rem) 0;
   }
   .r--alpha(@r) {
     @media screen and (min-width: (unit(@layout_alpha/@base,rem))) {
@@ -906,6 +906,28 @@ th {
     #type > .time();
     #u_space > .push();
     text-align: center;
+  }
+}
+
+.m_pagination {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  &__item {
+    list-style: none;
+    margin: unit(@spacing_horizontal/2/@base,rem);
+  }
+  &__link {
+    display: block;
+    padding: unit(@spacing_vertical/2/@base,rem) unit(@spacing_horizontal/2/@base,rem);
+    border: 1px solid @grey;
+  }
+  &__link--current {
+    border-color: @c_link;
+    background-color: @c_link;
+    color: contrast(@c_link);
   }
 }
 

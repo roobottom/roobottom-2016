@@ -11,7 +11,7 @@
 {% endmarkdown %}
 {% endset %}
 {{ block.m_patternBlock(d,'pattern.m_navigation([{name:\'Homepage\',url:\'/\'},{name:\'Articles\',url:\'/articles\'},{name:\'Gallery\',url:\'/gallery\'},{name:\'Notes\',url:\'/notes\'},{name:\'Archives\',url:\'/archives\'},{name:\'Portfolio\',url:\'/portfolio\'},{name:\'Pattern Library\',url:\'/patterns\'}],active=\'pattern-library\')') }}
-<div class="m_patternBlock m_patternBlock--eg-dark">
+<div class="m_patternBlock m_patternBlock--eg">
   {{
     pattern.m_navigation([
       {name:'Homepage',url:'/'},

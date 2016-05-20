@@ -1,0 +1,26 @@
+{% import "./m_pagination.pattern" as pattern %}
+{% import "../m_patternBlock/m_patternBlock.pattern" as block %}
+{% set d %}
+{% markdown %}
+`m_pagination` renders a pagination block. It accepts:
+
+* A `baseUrl` string
+* A `pagination` object:
+
+```
+[{title:'1',url:1,current:false},
+{title:'2',url:2,current:true},
+{title:'3',url:3,current:false}]
+```
+{% endmarkdown %}
+{% endset %}
+{{ block.m_patternBlock(d,'m_pagination(baseUrl=\'#\',pagination=paginationObject)') }}
+<div class="m_patternBlock m_patternBlock--eg">
+  {{
+    pattern.m_pagination('#',[
+      {title:'1',url:1,current:false},
+      {title:'2',url:2,current:true},
+      {title:'3',url:3,current:false}
+    ])
+  }}
+</div>

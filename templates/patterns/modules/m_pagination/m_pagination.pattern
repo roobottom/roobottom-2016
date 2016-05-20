@@ -2,7 +2,7 @@
   <ol class="m_pagination">
     {% for page in pagination %}
     <li class="m_pagination__item">
-      <a href="{{baseUrl}}{{page.url}}" class="m_pagination__link{% if page.current==true %} m_pagingation__link--current{% endif %}">{{page.title}}</a>
+      <a href="{{baseUrl}}{{page.url}}" class="m_pagination__link{% if page.current==true %} m_pagination__link--current{% endif %}">{{page.title}}</a>
     </li>
     {% endfor %}
   </ol>

@@ -3,8 +3,9 @@
 {{
   pattern.c_block([
     pattern.grid([
-      pattern.m_teaser(posts=posts | limitTo(10,10*(page-1)))
-    ],'prose')
+      pattern.m_teaser(posts=posts | limitTo(site.postsPerPage,site.postsPerPage*(currentPage-1)))
+    ],'prose'),
+    pattern.m_pagination('/articles/page/',pagination)
   ])
 }}
 {% endblock %}

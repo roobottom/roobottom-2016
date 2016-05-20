@@ -53,6 +53,17 @@ nunjucks_markdown.register(env, marked);
 //static files
 app.use(express.static('assets'));
 
+function calculatePagination(totalItems,currentPage) {
+  let pages = Math.ceil(totalItems/settings.postsPerPage);
+  let obj = [];
+  for(let i=1; i<=pages; i++) {
+    let isCurrent = false;
+    if(i == currentPage) { isCurrent = true; }
+    obj.push({title: i, current: isCurrent, url: i});
+  };
+  return obj;
+};
+
 //homepage
 app.get('/', function (req, res) {
     posts.getPosts(['articles','gallery','notes'])
@@ -114,7 +125,8 @@ app.get('/articles/page', function(req,res) {
         active: 'articles',
         posts: posts,
         site: settings,
-        page: 1
+        pagination: calculatePagination(posts.length,1),
+        currentPage: 1
       })
     })
     .catch(err => {
@@ -131,7 +143,8 @@ app.get('/articles/page/:num', function(req,res) {
         active: 'articles',
         posts: posts,
         site: settings,
-        page: req.params.num
+        pagination: calculatePagination(posts.length,req.params.num),
+        currentPage: req.params.num
       })
     })
     .catch(err => {

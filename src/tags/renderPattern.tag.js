@@ -20,6 +20,8 @@ module.exports = function () {
   .addFilter('date', require('nunjucks-date'))
   .addFilter('limitTo', require('../filters/limitTo.filter.js'))
   .addFilter('stripPatterns', require('../filters/stripPatterns.filter.js'))
+  .addFilter('singular', require('../filters/singular.filter.js'))
+  .addFilter('fixOrphans', require('../filters/fixOrphans.filter.js'))
   .addGlobal('eg_article',eg_article)
   .addGlobal('site',settings)
 

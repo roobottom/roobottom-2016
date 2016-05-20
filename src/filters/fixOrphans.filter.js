@@ -1,10 +1,14 @@
 function fixOrphans(str){
   'use strict';
-  let words = str.split(/\W+/);
+  let words = str.split(/\u0020/);
   let newStr = '';
-  let len = words.length - 1;
+  let len = words.length - 1;//zero based words in this string
+  console.log(str,len)
   for(let i in words){
-    if(len == i) {
+    if(len == 0) {
+      newStr = words[i];
+    }
+    else if(len == i) {
       newStr += '&nbsp;' + words[i];
     }
     else{

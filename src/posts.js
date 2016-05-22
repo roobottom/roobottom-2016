@@ -39,6 +39,7 @@ function getPosts(folders) {
   return new Promise((resolve,reject) => {
     Promise.map(folders,folder => {
       try {
+        //change this to fs.readFile && JSON.parse to enable updating via /u
         let posts = require('.' + cacheRoot + folder + '/' + 'posts.json');
         all_posts = all_posts.concat(posts);
       }
@@ -55,13 +56,10 @@ function getPosts(folders) {
 
 function getPost(folder,id) {
   return new Promise((resolve,reject) => {
-    try {
-      let post = require('.' + cacheRoot + folder + '/' + id + '.json');
-      resolve(post);
-    }
-    catch(err) {
-      reject(err);
-    }
+    fs.readFile(cacheRoot + folder + '/' + id + '.json', 'utf8', function(err,post) {
+      if(!err) { resolve(JSON.parse(post)); }
+      else { reject(err); }
+    });
   });
 }
 

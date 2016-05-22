@@ -34,20 +34,20 @@
   </main>
 {% endmacro %}
 
-{% macro c_siteHeader(items,active) %}
-  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
-    {% for item in items %}
-    {{item}}
-    {% endfor %}
-  </header>
-{% endmacro %}
-
 {% macro c_wrapper(modules) %}
   <div class="c_wrapper">
     {% for module in modules %}
       {{ module }}
     {% endfor %}
   </div>
+{% endmacro %}
+
+{% macro c_siteHeader(items,active) %}
+  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
+    {% for item in items %}
+    {{item}}
+    {% endfor %}
+  </header>
 {% endmacro %}
 
 {% macro m_cacheItem(post) %}
@@ -66,7 +66,14 @@
 {% macro m_figure(images,type) %}
   <figure class="m_figure{% if images|length > 1 %} m_figure--gallery{% endif %}">
     {% for i in images %}
-      <img src="{{site.imageServer}}r/800/auto/{{type}}/{{i.image}}" class="m_figure__image" alt="{{i.caption}}"/>
+      {% if images|length == 1 or (i.width and i.height) %}
+        {% set w = '800' %}
+        {% set h = 'auto' %}
+      {% else %}
+        {% set w = '600' %}
+        {% set h = '600' %}
+      {% endif %}
+      <img src="{{site.imageServer}}r/{{w}}/{{h}}/{{type}}/{{i.image}}" class="m_figure__image" alt="{{i.caption}}" {% if i.width %}data-width="{{i.width}}"{% endif %} {% if i.height %}data-height="{{i.height}}"{% endif %}/>
       {% if i.caption and loop.last %}
       <figcaption class="m_figure__caption">{{i.caption}}</figcaption>
       {% endif %}

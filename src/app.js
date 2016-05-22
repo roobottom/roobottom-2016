@@ -147,6 +147,7 @@ app.get('/articles/:id', function(req,res) {
   if(/^\d+$/.test(req.params.id)) {//only process main req
     posts.getPost('articles',req.params.id)
     .then(function(post){
+      console.log('render-call');
       res.render('pages/article.html', {
         title: post.attributes.title,
         active: 'articles',

@@ -5,7 +5,7 @@
     pattern.grid([
       pattern.m_teaser(posts=posts | limitTo(site.postsPerPage,site.postsPerPage*(currentPage-1)))
     ],'prose'),
-    pattern.m_pagination('/articles/page/',pagination)
+    pattern.m_pagination('/articles/',pagination)
   ])
 }}
 {% endblock %}

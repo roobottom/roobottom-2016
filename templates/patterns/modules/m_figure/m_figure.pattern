@@ -1,0 +1,8 @@
+{% macro m_figure(image,caption,type) %}
+  <figure class="m_figure">
+    <img src="{{site.imageServer}}r/800/auto/{{type}}/{{image}}" class="m_figure__image" alt="{{caption}}"/>
+    {% if caption %}
+    <figcaption class="m_figure__caption">{{caption}}</figcaption>
+    {% endif %}
+  </figure>
+{% endmacro %}

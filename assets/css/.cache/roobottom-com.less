@@ -773,6 +773,24 @@ th {
   }
 }
 
+.m_figure {
+  margin-bottom: unit(@spacing_vertical/@base,rem);
+  #u_space > .pull();
+
+  &__image {
+    display: block;
+    max-width: 100%;
+  }
+
+  &__caption {
+    #type > .default();
+    #type > .small();
+    #type > .meta();
+    border-bottom: 1px solid @grey;
+  }
+
+}
+
 .m_gallery {
   display: flex;
   flex-wrap: wrap;

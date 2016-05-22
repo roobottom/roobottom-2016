@@ -10,23 +10,22 @@ var env = nunjucks.configure( __basename + 'templates/', {
 .addGlobal('site',settings);
 
 var tags = [
-    'gallery'
+    'gallery',
+    'figure'
 ];
 
 function find_tags(post) {
-    for(var i in tags) {
-        var regexp = new RegExp('<p>\\s*\\(' + tags[i] + '([^\\)]+)?\\)\\s*<\\/p>','igm');
-        //var match;
-        while(match = regexp.exec(post.html_body)) {
-            //call the custom function for this tag.
-            var compiled_tag = global['smart_tag_' + tags[i]](post,match[0],get_options(match[1]));
-            //replace this occurance of the tag with the compiled_tag
-            post.html_body = post.html_body.replace(match[0],compiled_tag);
-        }
-
-        return post.html_body;
-
-    }
+  for(var i in tags) {
+      var regexp = new RegExp('<p>\\s*\\(' + tags[i] + '([^\\)]+)?\\)\\s*<\\/p>','igm');
+      //var match;
+      while(match = regexp.exec(post.html_body)) {
+          //call the custom function for this tag.
+          var compiled_tag = global['smart_tag_' + tags[i]](post,match[0],get_options(match[1]));
+          //replace this occurance of the tag with the compiled_tag
+          post.html_body = post.html_body.replace(match[0],compiled_tag);
+      }
+  }
+  return post.html_body;
 };
 
 function get_options(match) {
@@ -55,6 +54,18 @@ smart_tag_gallery = function (post,string,opts) {
     gallery_rendered = env.render('patterns/modules/m_gallery/m_gallery.smartTag',images_for_gallery);
     return gallery_rendered;
 
-}
+};
+
+smart_tag_figure = function (post,string,opts) {
+  var figure_object;
+  for(var i in post.attributes.images) {
+    if(post.attributes.images[i].set === opts.set) {
+      figure_object = post.attributes.images[i];
+      figure_object.type = post.attributes.type;
+    }
+  }
+  var figure_rendered = env.render('patterns/modules/m_figure/m_figure.smartTag',figure_object);
+  return figure_rendered;
+};
 
 module.exports.find_tags = find_tags;

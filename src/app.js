@@ -59,7 +59,7 @@ function calculatePagination(totalItems,currentPage) {
   for(let i=1; i<=pages; i++) {
     let isCurrent = false;
     if(i == currentPage) { isCurrent = true; }
-    obj.push({title: i, current: isCurrent, url: i});
+    obj.push({title: i, current: isCurrent, url: 'page-'+i});
   };
   return obj;
 };
@@ -97,6 +97,9 @@ app.get('/u',function(req,res) {
   });
 });
 
+//------------------------------------------//
+// articles
+//------------------------------------------//
 
 //articles homepage
 app.get('/articles', function(req,res) {
@@ -116,31 +119,17 @@ app.get('/articles', function(req,res) {
       res.sendStatus(404);
     });
 });
-
-//articles pagination default page
-app.get('/articles/page', function(req,res) {
-    posts.getPosts(['articles'])
-    .then(function(posts){
-      res.render('pages/articles.html', {
-        title: 'Articles',
-        active: 'articles',
-        posts: posts,
-        site: settings,
-        pagination: calculatePagination(posts.length,1),
-        currentPage: 1
-      })
-    })
-    .catch(err => {
-      console.log('error: ', err);
-      res.sendStatus(404);
-    });
+//articles page-1: has same content as /articles, so redirect there:
+app.get('/articles/page-1', function(req,res) {
+    res.writeHead(301, {'Location':'/articles'});
+    res.end();
 });
 //articles pagination
-app.get('/articles/page/:num', function(req,res) {
+app.get('/articles/page-:num', function(req,res) {
     posts.getPosts(['articles'])
     .then(function(posts){
       res.render('pages/articles.html', {
-        title: 'Articles',
+        title: 'Articles, page ' + req.params.num,
         active: 'articles',
         posts: posts,
         site: settings,
@@ -153,8 +142,6 @@ app.get('/articles/page/:num', function(req,res) {
       res.sendStatus(404);
     });
 });
-
-
 //articles post
 app.get('/articles/:id', function(req,res) {
   if(/^\d+$/.test(req.params.id)) {//only process main req
@@ -175,7 +162,6 @@ app.get('/articles/:id', function(req,res) {
     res.end();
   };
 });
-
 //articles redirection from old /diary url:
 app.get('/diary', function(req,res) {
   res.writeHead(301, {'Location':'/articles'});

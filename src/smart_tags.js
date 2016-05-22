@@ -57,11 +57,10 @@ smart_tag_gallery = function (post,string,opts) {
 };
 
 smart_tag_figure = function (post,string,opts) {
-  var figure_object;
+  var figure_object = {"images":[],"type":post.attributes.type};
   for(var i in post.attributes.images) {
     if(post.attributes.images[i].set === opts.set) {
-      figure_object = post.attributes.images[i];
-      figure_object.type = post.attributes.type;
+      figure_object["images"].push(post.attributes.images[i]);
     }
   }
   var figure_rendered = env.render('patterns/modules/m_figure/m_figure.smartTag',figure_object);

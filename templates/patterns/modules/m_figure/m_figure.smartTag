@@ -1,2 +1,2 @@
 {% import "./m_figure.pattern" as pattern %}
-{{ pattern.m_figure(image,caption,type) }}
+{{ pattern.m_figure(images,type) }}

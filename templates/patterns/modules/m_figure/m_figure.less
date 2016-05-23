@@ -12,11 +12,14 @@
   }
 
   &__caption {
-    #type > .default();
-    #type > .small();
-    #type > .meta();
-    border-bottom: 1px solid @lightgrey;
     display: block;
+    flex-basis: 100%;
+    box-sizing: border-box;
+    border-bottom: 1px solid lighten(@grey,10%);
+    #type > .default();
+    #type > .x-small();
+    #type > .meta();
+    #u_space > .pull-back();
     #site > .r--alpha({
       margin-top: unit(@spacing_vertical/2/@base,rem);
     });
@@ -36,9 +39,14 @@
         //2-up
         &:nth-last-of-type(2):first-child,
         &:nth-last-of-type(2):first-child ~ .m_figure__image {
-          width: 48%;
+          width: unit((100-2)/2,%);
         }
-        
+        //3-up
+        &:nth-last-of-type(3):first-child,
+        &:nth-last-of-type(3):first-child ~ .m_figure__image {
+          width: unit((100-4)/3,%);;
+        }
+
       }
     }
   });

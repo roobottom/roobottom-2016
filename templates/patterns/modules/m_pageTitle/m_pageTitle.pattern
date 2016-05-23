@@ -1,5 +1,5 @@
 {% macro m_pageTitle(title,date) %}
-<h1 class="m_pageTitle">{{title|capitalize|fixOrphans}}</h1>
+<h1 class="m_pageTitle">{{title|capitalize}}</h1>
 {% if date %}
 <time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
 {% endif %}

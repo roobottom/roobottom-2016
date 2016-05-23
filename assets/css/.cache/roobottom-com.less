@@ -99,9 +99,9 @@
 body {
   #font > .merriweather();
   background-color: #FBFBFB;
-  font-size: 69%;
+  font-size: 76%;
   color: @darkgrey;
-  #site .r--beta({font-size: 81%;});
+  #site .r--alpha({font-size: 88%;});
   #site .r--max({font-size: 100%;})
 }
 h1,h2,h3,h4 {
@@ -480,6 +480,10 @@ th {
     font-size: unit(18/@base,em);
     line-height: @spacing_vertical/18;
   }
+  .x-small() {
+    font-size: unit(14/@base,em);
+    line-height: @spacing_vertical/14;
+  }
 
   .h1() {
     font-size: unit(80/@base,em);
@@ -741,17 +745,17 @@ th {
     #site > .spacing();
 }
 
+.c_siteHeader {
+  padding: unit(@spacing_vertical/2/@base,rem) 0;
+  border-bottom: 1px solid @lightgrey;
+}
+
 .c_wrapper {
   margin: 0 unit(@spacing_horizontal/@base,rem);
   max-width: unit(@layout_max/@base,rem);
   #site .r--max({
     margin: 0 auto;
   });
-}
-
-.c_siteHeader {
-  padding: unit(@spacing_vertical/2/@base,rem) 0;
-  border-bottom: 1px solid @lightgrey;
 }
 
 #m_cacheItem {
@@ -787,11 +791,14 @@ th {
   }
 
   &__caption {
-    #type > .default();
-    #type > .small();
-    #type > .meta();
-    border-bottom: 1px solid @lightgrey;
     display: block;
+    flex-basis: 100%;
+    box-sizing: border-box;
+    border-bottom: 1px solid lighten(@grey,10%);
+    #type > .default();
+    #type > .x-small();
+    #type > .meta();
+    #u_space > .pull-back();
     #site > .r--alpha({
       margin-top: unit(@spacing_vertical/2/@base,rem);
     });
@@ -811,9 +818,14 @@ th {
         //2-up
         &:nth-last-of-type(2):first-child,
         &:nth-last-of-type(2):first-child ~ .m_figure__image {
-          width: 48%;
+          width: unit((100-2)/2,%);
         }
-        
+        //3-up
+        &:nth-last-of-type(3):first-child,
+        &:nth-last-of-type(3):first-child ~ .m_figure__image {
+          width: unit((100-4)/3,%);;
+        }
+
       }
     }
   });
@@ -1115,9 +1127,15 @@ th {
     margin-top: unit((@spacing_vertical*@top)/@base,rem);
   }
 
-  .pull() {
+  .pull(@i: 9) {
     #site > .r--max({
-      margin-left: -9%;
+      margin-left: unit(-1 * @i,%);
+    });
+  }
+  //indents items inside a .pull class back inline with the parent wrapper:
+  .pull-back(@i: 9) {
+    #site > .r--max({
+      margin-left: unit((@i/(100 + @i)) * 100,%);
     });
   }
 }

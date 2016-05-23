@@ -4,9 +4,15 @@
     margin-top: unit((@spacing_vertical*@top)/@base,rem);
   }
 
-  .pull() {
+  .pull(@i: 9) {
     #site > .r--max({
-      margin-left: -9%;
+      margin-left: unit(-1 * @i,%);
+    });
+  }
+  //indents items inside a .pull class back inline with the parent wrapper:
+  .pull-back(@i: 9) {
+    #site > .r--max({
+      margin-left: unit((@i/(100 + @i)) * 100,%);
     });
   }
 }

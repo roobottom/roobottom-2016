@@ -34,20 +34,20 @@
   </main>
 {% endmacro %}
 
-{% macro c_wrapper(modules) %}
-  <div class="c_wrapper">
-    {% for module in modules %}
-      {{ module }}
-    {% endfor %}
-  </div>
-{% endmacro %}
-
 {% macro c_siteHeader(items,active) %}
   <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
     {% for item in items %}
     {{item}}
     {% endfor %}
   </header>
+{% endmacro %}
+
+{% macro c_wrapper(modules) %}
+  <div class="c_wrapper">
+    {% for module in modules %}
+      {{ module }}
+    {% endfor %}
+  </div>
 {% endmacro %}
 
 {% macro m_cacheItem(post) %}
@@ -153,7 +153,7 @@
 {% endmacro %}
 
 {% macro m_pageTitle(title,date) %}
-<h1 class="m_pageTitle">{{title|capitalize|fixOrphans}}</h1>
+<h1 class="m_pageTitle">{{title|capitalize}}</h1>
 {% if date %}
 <time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
 {% endif %}

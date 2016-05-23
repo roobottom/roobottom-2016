@@ -33,6 +33,7 @@ let env = nunjucks.configure( __basename + 'templates/', {
 .addFilter('stripPatterns', require('./filters/stripPatterns.filter.js'))
 .addFilter('singular', require('./filters/singular.filter.js'))
 .addFilter('fixOrphans', require('./filters/fixOrphans.filter.js'))
+.addFilter('arrayPush', require('./filters/arrayPush.filter.js'))
 .addExtension('pattern', new nunjucks_renderPattern())
 .addGlobal('site',settings)
 

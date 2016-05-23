@@ -148,7 +148,6 @@ app.get('/articles/:id', function(req,res) {
   if(/^\d+$/.test(req.params.id)) {//only process main req
     posts.getPost('articles',req.params.id)
     .then(function(post){
-      console.log('render-call');
       res.render('pages/article.html', {
         title: post.attributes.title,
         active: 'articles',
@@ -175,11 +174,13 @@ app.get('/diary/:id', function(req,res) {
   res.end();
 });
 
-//Galleries
+//------------------------------------------//
+// galleries
+//------------------------------------------//
 app.get('/gallery', function(req,res) {
     posts.getPosts(['gallery'])
     .then(function(posts){
-      res.render('pages/gallery.html', {
+      res.render('pages/galleries.html', {
         title: 'Gallery',
         active: 'gallery',
         posts: posts,
@@ -195,7 +196,7 @@ app.get('/gallery/:id', function(req,res) {
   if(/^\d+$/.test(req.params.id)) {//only process main req
     posts.getPost('gallery',req.params.id)
     .then(function(post){
-      res.render('pages/gallery_post.html', {
+      res.render('pages/gallery.html', {
         title: post.attributes.title,
         active: 'gallery',
         post: post,

@@ -1,0 +1,10 @@
+{% extends 'layouts/default.html' %}
+{% block body %}
+{{
+  pattern.c_block([
+    pattern.grid([
+      pattern.m_teaser(posts=posts | limitTo(10))
+    ],'prose')
+  ])
+}}
+{% endblock %}

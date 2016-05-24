@@ -67,7 +67,7 @@ function calculatePagination(totalItems,currentPage) {
 
 //homepage
 app.get('/', function (req, res) {
-    posts.getPosts(['articles','gallery','notes'])
+    posts.getPosts('')
     .then(function(posts){
       res.render('pages/home.html', {
         title: 'Homepage',
@@ -104,7 +104,7 @@ app.get('/u',function(req,res) {
 
 //articles homepage
 app.get('/articles', function(req,res) {
-    posts.getPosts(['articles'])
+    posts.getPosts('articles')
     .then(function(posts){
       res.render('pages/articles.html', {
         title: 'Articles',
@@ -127,7 +127,7 @@ app.get('/articles/page-1', function(req,res) {
 });
 //articles pagination
 app.get('/articles/page-:num', function(req,res) {
-    posts.getPosts(['articles'])
+    posts.getPosts('articles')
     .then(function(posts){
       res.render('pages/articles.html', {
         title: 'Articles, page ' + req.params.num,
@@ -178,7 +178,7 @@ app.get('/diary/:id', function(req,res) {
 // galleries
 //------------------------------------------//
 app.get('/gallery', function(req,res) {
-    posts.getPosts(['gallery'])
+    posts.getPosts('gallery')
     .then(function(posts){
       res.render('pages/galleries.html', {
         title: 'Gallery',
@@ -212,15 +212,43 @@ app.get('/gallery/:id', function(req,res) {
   };
 });
 
-//notes
+
+//------------------------------------------//
+// notes
+//------------------------------------------//
 app.get('/notes', function(req,res) {
-    posts.getPosts(['notes'])
+    posts.getPosts('notes')
     .then(function(posts){
       res.render('pages/notes.html', {
         title: 'Notes',
         active: 'notes',
         posts: posts,
-        site: settings
+        site: settings,
+        pagination: calculatePagination(posts.length,req.params.num),
+        currentPage: 1
+      })
+    })
+    .catch(err => {
+      console.log('error: ', err);
+      res.sendStatus(404);
+    });
+});
+//notes page-1: has same content as /notes, so redirect there:
+app.get('/notes/page-1', function(req,res) {
+    res.writeHead(301, {'Location':'/notes'});
+    res.end();
+});
+//notes pagination
+app.get('/notes/page-:num', function(req,res) {
+    posts.getPosts('notes')
+    .then(function(posts){
+      res.render('pages/notes.html', {
+        title: 'Notes, page ' + req.params.num,
+        active: 'notes',
+        posts: posts,
+        site: settings,
+        pagination: calculatePagination(posts.length,req.params.num),
+        currentPage: req.params.num
       })
     })
     .catch(err => {
@@ -248,7 +276,10 @@ app.get('/notes/:id', function(req,res) {
   };
 });
 
-//portfolio
+
+//------------------------------------------//
+// portfolio
+//------------------------------------------//
 app.get('/portfolio', function(req,res) {
   res.render('pages/portfolio.html', {
     title: 'Portfolio',
@@ -257,7 +288,9 @@ app.get('/portfolio', function(req,res) {
   })
 });
 
-//archives
+//------------------------------------------//
+// archives
+//------------------------------------------//
 app.get('/archives', function(req,res) {
   res.render('pages/archives.html', {
     title: 'Archives',
@@ -266,7 +299,9 @@ app.get('/archives', function(req,res) {
   })
 });
 
-//patterns
+//------------------------------------------//
+// pattern library
+//------------------------------------------//
 app.get('/patterns',function(req,res) {
   patterns.getPatternsList().then(patterns => {
     res.render('pages/patterns_overview.html', {

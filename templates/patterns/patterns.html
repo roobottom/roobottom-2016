@@ -85,10 +85,7 @@
     <div class="m_gallery">
         {% for i in images %}
           <figure class="m_gallery__figure">
-            <img src="{{site.imageServer}}r/600/600/{{type}}/{{ i.image }}" class="m_gallery__image"/>
-            {% if i.caption %}
-            <figcaption class="m_gallery__caption">{{ i.caption }}</figcaption>
-            {% endif %}
+            <img src="{{site.imageServer}}r/600/auto/{{type}}/{{ i.image }}" class="m_gallery__image" {% if i.width %}data-width="{{i.width}}"{% endif %} {% if i.height %}data-height="{{i.height}}"{% endif %}/>
           </figure>
         {% endfor %}
     </div>
@@ -132,6 +129,13 @@
   </a>
 {% endmacro %}
 
+{% macro m_pageTitle(title,date) %}
+<h1 class="m_pageTitle">{{title|capitalize}}</h1>
+{% if date %}
+<time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
+{% endif %}
+{% endmacro %}
+
 {% macro m_navigation(items, active, modifier, classes) %}
 <nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}{%if classes %} {{classes}}{% endif %}">
     <ul class="m_navigation__items">
@@ -152,13 +156,6 @@
 </nav>
 {% endmacro %}
 
-{% macro m_pageTitle(title,date) %}
-<h1 class="m_pageTitle">{{title|capitalize}}</h1>
-{% if date %}
-<time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
-{% endif %}
-{% endmacro %}
-
 {% macro m_pagination(baseUrl,pagination) %}
   <ol class="m_pagination">
     {% for page in pagination %}
@@ -177,50 +174,34 @@
 {% endmacro %}
 
 {% macro m_postArticle(post) %}
-  <article class="m_postArticle">
-    <div class="m_postArticle__body type">
+  <article class="m_post m_post--article">
+    <div class="m_post__body type">
         {{post.html_body | safe }}
     </div>
   </article>
 {% endmacro %}
 
-{% macro title() %}
-  <h1 class="m_postGallery__title">{{ post.attributes.title }}</h1>
-  <time datetime="{{post.attributes.date}}" class="m_postGallery__date">{{post.attributes.date | date}}</time>
-{% endmacro %}
-
-{% macro body() %}
-  <div class="m_postGallery__body type">
-    {{post.html_body}}
-  </div>
-{% endmacro %}
-
 {% macro m_postGallery(post) %}
-  <article class="m_postGallery">
-
-    {{
-      grid([
-        title()
-      ],'prose')
-    }}
-    {{ m_gallery(post.attributes.images,'gallery') }}
-    {{
-      grid([
-        body()
-      ],'prose')
-    }}
-
+  <article class="m_post m_post--gallery">
+    <div class="m_post__gallery">
+      {{ m_gallery(post.attributes.images,'gallery') }}
+    </div>
+    <div class="m_post__body type">
+      {{post.html_body}}
+    </div>
   </article>
 {% endmacro %}
 
 {% macro m_postNote(post) %}
-  <article class="m_postNote">
+  <article class="m_post m_post--note">
     {% if post.attributes.images %}
-      <div class="m_postNote__gallery">
-        {{ m_gallery(post.attributes.images,'notes') }}
+      <div class="m_post__gallery">
+        {% for image in post.attributes.images %}
+          {{ m_figure([image],'notes')}}
+        {% endfor %}
       </div>
     {% endif %}
-    <div class="m_postNote__body type">
+    <div class="m_post__body type">
       {{post.html_body}}
     </div>
   </article>
@@ -282,7 +263,11 @@
   <article class="m_teaser m_teaser--{{post.attributes.type|singular}}{% if classes %} {{classes}}{% endif %}">
     <header class="m_teaser__header">
       <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title|fixOrphans}}</a></h{{hLevel}}>
-      <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
+      <p class="m_teaser__meta">
+        <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
+        &mdash; <span class="m_teaser__word-count">{{post.html_body|wordcount}} words</span>
+        {% if post.attributes.images|length > 0 %} and <span class="m_teaser__image-count">{{post.attributes.images|length}} image{% if post.attributes.images|length > 1 %}s{% endif %}</span>{% endif %}
+      </p>
     </header>
     {% if post.attributes.images %}
       {% for image in post.attributes.images %}

@@ -32,7 +32,7 @@
 @c_default:                 @darkgrey;
 
 @grey:                      #cccccc;
-@lightgrey:                 #f1f1f1;
+@lightgrey:                 #E4E4E4;
 @medgrey:                   #5E5E5E;
 @darkgrey:                  #333333;
 
@@ -505,18 +505,8 @@ th {
   }
 
   .p--introduction() {
-    #font > .ridley();
-    font-weight: bold;
-    #u_space > .push(1);
-    font-size: unit(35/@base,rem);
-    line-height: 43/35;
-    #site > .r--alpha({
-      font-size: unit(69/@vw_base,vw);
-    });
-    #site > .r--max({
-      font-size: unit(69/@base,rem);
-      line-height: 81/69;
-    });
+    font-size: unit(25/@base,em);
+    line-height: 41/25;
   }
 
   .a(@c:@c_link) {
@@ -531,7 +521,7 @@ th {
     .hover(@c) {
       &:hover {
         border: none;
-        background-color: fade(@c,15%);
+        background-color: @yellow;
       }
     }
     .hover(@c);
@@ -680,6 +670,10 @@ th {
         list-style: lower-latin;
       }
     }
+  }
+
+  a {
+    #type > .a--underline();
   }
 
   time {
@@ -850,6 +844,9 @@ th {
 }
 
 .m_introduction {
+  #u_space > .pull();
+  #u_space > .push();
+  border-bottom: 1px solid @lightgrey;
   p {
     #type > .p--introduction();
     #u_space > .push();
@@ -884,6 +881,22 @@ th {
 
 }
 
+.m_pageTitle {
+  #type > .h1();
+  &__date {
+    #type > .time();
+    #u_space > .push();
+    #site > .r--alpha({
+      text-align: center;
+    });
+  }
+
+  #site > .r--alpha({
+    text-align: center;
+  });
+
+}
+
 .m_navigation {
 
   font-size: unit(23/@base,em);
@@ -897,9 +910,9 @@ th {
       flex-wrap: wrap;
       align-items: center;
     });
-    #site > .r--max({
+    @media screen and (min-width: 800px){
         justify-content: space-between;
-    })
+    };
   }
   &__item {
     list-style: none;
@@ -955,22 +968,6 @@ th {
       display: block;
     });
   }
-
-}
-
-.m_pageTitle {
-  #type > .h1();
-  &__date {
-    #type > .time();
-    #u_space > .push();
-    #site > .r--alpha({
-      text-align: center;
-    });
-  }
-
-  #site > .r--alpha({
-    text-align: center;
-  });
 
 }
 
@@ -1082,15 +1079,10 @@ th {
 }
 
 .m_post {
-
-}
-
-.m_postGallery {
-  &__title {
-    #type > .h1();
-  }
-  &__date {
-    #type > .time();
+  &__body {
+    p:first-of-type {
+      #type > .p--introduction();
+    }
   }
 }
 
@@ -1103,7 +1095,7 @@ th {
     margin: 0;
   }
 
-  &__date {
+  &__meta {
     #type > .time();
     margin-bottom: unit(@spacing_vertical/@base,rem);
   }

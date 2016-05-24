@@ -2,10 +2,10 @@
 {% block body %}
 {{
   pattern.c_block([
-    pattern.m_pageTitle(title),
     pattern.grid([
-      pattern.m_teaser(posts=posts | limitTo(10))
-    ],'prose')
+      pattern.m_teaser(posts=posts | limitTo(site.postsPerPage,site.postsPerPage*(currentPage-1)))
+    ],'prose'),
+    pattern.m_pagination('/notes/',pagination)
   ])
 }}
 {% endblock %}

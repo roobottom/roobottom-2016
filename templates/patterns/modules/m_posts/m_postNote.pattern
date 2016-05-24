@@ -1,11 +1,13 @@
 {% macro m_postNote(post) %}
-  <article class="m_postNote">
+  <article class="m_post m_post--note">
     {% if post.attributes.images %}
-      <div class="m_postNote__gallery">
-        {{ m_gallery(post.attributes.images,'notes') }}
+      <div class="m_post__gallery">
+        {% for image in post.attributes.images %}
+          {{ m_figure([image],'notes')}}
+        {% endfor %}
       </div>
     {% endif %}
-    <div class="m_postNote__body type">
+    <div class="m_post__body type">
       {{post.html_body}}
     </div>
   </article>

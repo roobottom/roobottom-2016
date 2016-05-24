@@ -3,14 +3,9 @@
 }
 
 .m_post {
-
-}
-
-.m_postGallery {
-  &__title {
-    #type > .h1();
-  }
-  &__date {
-    #type > .time();
+  &__body {
+    p:first-of-type {
+      #type > .p--introduction();
+    }
   }
 }

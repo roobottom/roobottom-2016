@@ -1,4 +1,11 @@
 {% extends 'layouts/default.html' %}
 {% block body %}
-  {{pattern.m_introduction('./static_content/introduction.md')}}
+  {{
+    pattern.grid([
+      pattern.c_block([
+        pattern.m_introduction('./static_content/introduction.md'),
+        pattern.m_teaser(posts=posts | limitTo(10))
+      ])
+    ],'prose')
+  }}
 {% endblock %}

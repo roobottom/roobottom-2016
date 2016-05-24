@@ -3,7 +3,11 @@
   <article class="m_teaser m_teaser--{{post.attributes.type|singular}}{% if classes %} {{classes}}{% endif %}">
     <header class="m_teaser__header">
       <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title|fixOrphans}}</a></h{{hLevel}}>
-      <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
+      <p class="m_teaser__meta">
+        <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
+        &mdash; <span class="m_teaser__word-count">{{post.html_body|wordcount}} words</span>
+        {% if post.attributes.images|length > 0 %} and <span class="m_teaser__image-count">{{post.attributes.images|length}} image{% if post.attributes.images|length > 1 %}s{% endif %}</span>{% endif %}
+      </p>
     </header>
     {% if post.attributes.images %}
       {% for image in post.attributes.images %}

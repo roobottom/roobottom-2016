@@ -35,18 +35,8 @@
   }
 
   .p--introduction() {
-    #font > .ridley();
-    font-weight: bold;
-    #u_space > .push(1);
-    font-size: unit(35/@base,rem);
-    line-height: 43/35;
-    #site > .r--alpha({
-      font-size: unit(69/@vw_base,vw);
-    });
-    #site > .r--max({
-      font-size: unit(69/@base,rem);
-      line-height: 81/69;
-    });
+    font-size: unit(25/@base,em);
+    line-height: 41/25;
   }
 
   .a(@c:@c_link) {
@@ -61,7 +51,7 @@
     .hover(@c) {
       &:hover {
         border: none;
-        background-color: fade(@c,15%);
+        background-color: @yellow;
       }
     }
     .hover(@c);
@@ -210,6 +200,10 @@
         list-style: lower-latin;
       }
     }
+  }
+
+  a {
+    #type > .a--underline();
   }
 
   time {

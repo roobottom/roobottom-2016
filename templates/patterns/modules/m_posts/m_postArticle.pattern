@@ -1,6 +1,6 @@
 {% macro m_postArticle(post) %}
-  <article class="m_postArticle">
-    <div class="m_postArticle__body type">
+  <article class="m_post m_post--article">
+    <div class="m_post__body type">
         {{post.html_body | safe }}
     </div>
   </article>

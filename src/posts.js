@@ -34,24 +34,18 @@ var fs  = require('fs'),
     }
   });
 
-function getPosts(folders) {
+function getPosts(folder) {
   let all_posts = [];
   return new Promise((resolve,reject) => {
-    Promise.map(folders,folder => {
-      try {
-        //change this to fs.readFile && JSON.parse to enable updating via /u
-        let posts = require('.' + cacheRoot + folder + '/' + 'posts.json');
-        all_posts = all_posts.concat(posts);
+    fs.readFile(cacheRoot + folder + '/' + 'posts.json', 'utf8', function(err,posts) {
+      if(!err) {
+        resolve(JSON.parse(posts));
       }
-      catch(err) {
+      else {
         reject(err);
       }
-    })
-    .then(() => {
-      sortPosts(all_posts);
-      resolve(all_posts);
     });
-  })
+  });
 }
 
 function getPost(folder,id) {
@@ -103,10 +97,10 @@ function processAllPosts() {
 
     })
     .then(function() {
+      sortPosts(all_posts);
       return writeFile(cacheRoot,'posts.json',JSON.stringify(all_posts)).then(function() {return});
     })
     .then(function() {
-      sortPosts(all_posts);
       resolve(all_posts);
     })
     .catch(err => console.log('error: ', err));

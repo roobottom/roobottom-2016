@@ -26,12 +26,12 @@
   {% endif %}
 {% endmacro %}
 
-{% macro c_siteBody(content) %}
-  <main class="c_siteBody">
-    {% for item in content %}
-        {{ item }}
+{% macro c_wrapper(modules) %}
+  <div class="c_wrapper">
+    {% for module in modules %}
+      {{ module }}
     {% endfor %}
-  </main>
+  </div>
 {% endmacro %}
 
 {% macro c_siteHeader(items,active) %}
@@ -42,12 +42,12 @@
   </header>
 {% endmacro %}
 
-{% macro c_wrapper(modules) %}
-  <div class="c_wrapper">
-    {% for module in modules %}
-      {{ module }}
+{% macro c_siteBody(content) %}
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
     {% endfor %}
-  </div>
+  </main>
 {% endmacro %}
 
 {% macro m_cacheItem(post) %}
@@ -129,13 +129,6 @@
   </a>
 {% endmacro %}
 
-{% macro m_pageTitle(title,date) %}
-<h1 class="m_pageTitle">{{title|capitalize}}</h1>
-{% if date %}
-<time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
-{% endif %}
-{% endmacro %}
-
 {% macro m_navigation(items, active, modifier, classes) %}
 <nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}{%if classes %} {{classes}}{% endif %}">
     <ul class="m_navigation__items">
@@ -156,6 +149,13 @@
 </nav>
 {% endmacro %}
 
+{% macro m_pageTitle(title,date) %}
+<h1 class="m_pageTitle">{{title}}</h1>
+{% if date %}
+<time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
+{% endif %}
+{% endmacro %}
+
 {% macro m_pagination(baseUrl,pagination) %}
   <ol class="m_pagination">
     {% for page in pagination %}
@@ -171,6 +171,55 @@
     <div class="m_patternBlock__description">{{description}}</div>
     <div class="m_patternBlock__code">{{code}}</div>
   </div>
+{% endmacro %}
+
+{% macro m_prevNext(post) %}
+<nav class="m_prevNext">
+  {% if post.prev %}
+    <div class="m_prevNext__item m_prevNext__item--prev">
+      <p class="m_prevNext__label">&lArr; Previous {{post.attributes.type|singular}}</p>
+      <a class="m_prevNext__link" href="/{{post.attributes.type}}/{{post.prev.id}}">{{post.prev.title}}</a>
+      <time class="m_prevNext__date" datetime="{{post.prev.date}}" >{{post.prev.date|date}}</time>
+    </div>
+  {% endif %}
+  {% if post.next %}
+    <div class="m_prevNext__item m_prevNext__item--next">
+      <p class="m_prevNext__label">Next {{post.attributes.type|singular}} &rArr;</p>
+      <a class="m_prevNext__link" href="/{{post.attributes.type}}/{{post.next.id}}">{{post.next.title}}</a>
+      <time class="m_prevNext__date" datetime="{{post.next.date}}" >{{post.next.date|date}}</time>
+    </div>
+  {% endif %}
+</nav>
+{% endmacro %}
+
+{% macro m_teaser(posts,hLevel='2',classes) %}
+  {% for post in posts %}
+  <article class="m_teaser m_teaser--{{post.attributes.type|singular}}{% if classes %} {{classes}}{% endif %}">
+    <header class="m_teaser__header">
+      <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title|fixOrphans}}</a></h{{hLevel}}>
+      <p class="m_teaser__meta">
+        <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
+        &mdash; <span class="m_teaser__word-count">{{post.html_body|wordcount}} words</span>
+        {% if post.attributes.images|length > 0 %} and <span class="m_teaser__image-count">{{post.attributes.images|length}} image{% if post.attributes.images|length > 1 %}s{% endif %}</span>{% endif %}
+      </p>
+    </header>
+    {% if post.attributes.images %}
+      {% for image in post.attributes.images %}
+        {% if loop.first %}
+          <a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__imageLink">
+            <img src="{{site.imageServer}}r/900/auto/{{post.attributes.type}}/{{image.image}}" alt="{{post.attributes.title}}" class="m_teaser__image"/>
+          </a>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <div class="m_teaser__description">
+      <div class="m_teaser__summary type">
+        <p>{{post.html_body  | striptags | truncate(200) }} <a href="/{{post.attributes.type}}/{{post.attributes.id}}">See the rest of this {{post.attributes.type|singular}}</a></p>
+        <hr/>
+      </div>
+    </div>
+  </article>
+  {% endfor %}
 {% endmacro %}
 
 {% macro m_postArticle(post) %}
@@ -236,54 +285,5 @@
 {% macro m_postGallerySummary (posts,heading="h2",link=true,limit=10) %}
   {% for post in posts | filterByType('gallery') | limitTo(limit) %}
       {{ m_postGallery (post) }}
-  {% endfor %}
-{% endmacro %}
-
-{% macro m_prevNext(post) %}
-<nav class="m_prevNext">
-  {% if post.prev %}
-    <div class="m_prevNext__item m_prevNext__item--prev">
-      <p class="m_prevNext__label">&lArr; Previous {{post.attributes.type|singular}}</p>
-      <a class="m_prevNext__link" href="/{{post.attributes.type}}/{{post.prev.id}}">{{post.prev.title}}</a>
-      <time class="m_prevNext__date" datetime="{{post.prev.date}}" >{{post.prev.date|date}}</time>
-    </div>
-  {% endif %}
-  {% if post.next %}
-    <div class="m_prevNext__item m_prevNext__item--next">
-      <p class="m_prevNext__label">Next {{post.attributes.type|singular}} &rArr;</p>
-      <a class="m_prevNext__link" href="/{{post.attributes.type}}/{{post.next.id}}">{{post.next.title}}</a>
-      <time class="m_prevNext__date" datetime="{{post.next.date}}" >{{post.next.date|date}}</time>
-    </div>
-  {% endif %}
-</nav>
-{% endmacro %}
-
-{% macro m_teaser(posts,hLevel='2',classes) %}
-  {% for post in posts %}
-  <article class="m_teaser m_teaser--{{post.attributes.type|singular}}{% if classes %} {{classes}}{% endif %}">
-    <header class="m_teaser__header">
-      <h{{hLevel}} class="m_teaser__title"><a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__link">{{post.attributes.title|fixOrphans}}</a></h{{hLevel}}>
-      <p class="m_teaser__meta">
-        <time class="m_teaser__date" datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time>
-        &mdash; <span class="m_teaser__word-count">{{post.html_body|wordcount}} words</span>
-        {% if post.attributes.images|length > 0 %} and <span class="m_teaser__image-count">{{post.attributes.images|length}} image{% if post.attributes.images|length > 1 %}s{% endif %}</span>{% endif %}
-      </p>
-    </header>
-    {% if post.attributes.images %}
-      {% for image in post.attributes.images %}
-        {% if loop.first %}
-          <a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_teaser__imageLink">
-            <img src="{{site.imageServer}}r/900/auto/{{post.attributes.type}}/{{image.image}}" alt="{{post.attributes.title}}" class="m_teaser__image"/>
-          </a>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-    <div class="m_teaser__description">
-      <div class="m_teaser__summary type">
-        <p>{{post.html_body  | striptags | truncate(200) }} <a href="/{{post.attributes.type}}/{{post.attributes.id}}">See the rest of this {{post.attributes.type|singular}}</a></p>
-        <hr/>
-      </div>
-    </div>
-  </article>
   {% endfor %}
 {% endmacro %}

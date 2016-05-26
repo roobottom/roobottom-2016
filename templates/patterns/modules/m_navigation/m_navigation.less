@@ -25,10 +25,10 @@
   &__link {
     //#font > .ridley();
     display: block;
-    padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/4/@base,rem);
-
+    padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/2/@base,rem);
+    
     &--is-active {
-      background-color: yellow;
+      font-weight: bold;
     }
 
     .m_navigation__logo {
@@ -56,9 +56,6 @@
   }
   &[class*=sub] &__link {
     color: @c_default;
-    &--is-active {
-      font-weight: bold;
-    }
   }
 
   //stacked sub navigation

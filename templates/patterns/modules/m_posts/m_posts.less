@@ -4,8 +4,15 @@
 
 .m_post {
   &__body {
-    p:first-of-type {
+    p:first-of-type:not(:only-of-type) {
       #type > .p--introduction();
+      &::first-letter {
+        #type > .p--introduction-dropcap();
+      }
     }
+    &+p {
+      clear: left;
+    }
+
   }
 }

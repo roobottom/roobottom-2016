@@ -38,6 +38,18 @@
     font-size: unit(25/@base,em);
     line-height: 41/25;
   }
+  .p--introduction-dropcap() {
+    font-size: unit((31.25)/25,em);
+    float: left;
+    padding: unit((10)/(31.25),em) unit((20)/(31.25),em);
+    background-color: @darkgrey;
+    color: contrast(@darkgrey);
+    border-radius: unit(5/@base,rem);
+    margin-right: 0.1em;
+    #effect > .text-shadow-3d(40,black);
+    overflow: hidden;
+    text-overflow: clip;
+  }
 
   .a(@c:@c_link) {
     color: @c;
@@ -46,12 +58,11 @@
   .a--underline(@c:@c_link) {
     #type > .a(@c);
     border-bottom: 1px solid @lightgrey;
-    transition: background-color 250ms ease-out;
+    transition: border 250ms ease-out;
 
     .hover(@c) {
       &:hover {
-        border: none;
-        background-color: @yellow;
+        border-color: @grey;
       }
     }
     .hover(@c);

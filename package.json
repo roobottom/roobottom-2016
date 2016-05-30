@@ -11,6 +11,7 @@
   "dependencies": {
     "bluebird": "^3.3.3",
     "express": "^4.13.4",
+    "flickrapi": "^0.4.2",
     "front-matter": "^2.0.5",
     "fs-extra": "^0.26.7",
     "githubhook": "^1.4.0",

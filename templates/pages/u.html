@@ -1,8 +1,22 @@
 {% extends 'layouts/default.html' %}
+{% macro summary(posts) %}
+  {% set articles = 0 %}
+  {% set gallery = 0 %}
+  {% set notes = 0 %}
+  {% for post in posts %}
+    {% if post.attributes.type == 'articles' %}{% set articles = articles + 1 %}{% endif %}
+    {% if post.attributes.type == 'gallery' %}{% set gallery = gallery + 1 %}{% endif %}
+    {% if post.attributes.type == 'notes' %}{% set notes = notes + 1 %}{% endif %}
+  {% endfor %}
+  <div class="type">
+    <p>Articles: {{articles}}, Galleries: {{gallery}}, Notes: {{notes}}.</p>
+  </div>
+{% endmacro %}
 {% block body %}
 {{
   pattern.c_siteBody([
     pattern.m_pageTitle(title),
+    summary(posts),
     pattern.c_block(posts,pattern.m_cacheItem)
   ])
 }}

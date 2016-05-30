@@ -5,4 +5,5 @@ www
 /assets/images
 /posts/.cache
 /_site
+/data
 .publish/

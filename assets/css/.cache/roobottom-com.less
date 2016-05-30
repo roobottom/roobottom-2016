@@ -483,14 +483,22 @@ th {
   }
 
   .h1() {
-    font-size: unit(80/@base,em);
-    line-height: 84/80;
+    font-size: unit(56/@base,em);
+    line-height: 60/56;
     #u_space > .push(1);
+    #site .r--alpha({
+      font-size: unit(80/@base,em);
+      line-height: 84/80;
+    });
   }
   .h2() {
-    font-size: unit(47/@base,em);
-    line-height: 59/47;
+    font-size: unit(34/@base,em);
+    line-height: 39/34;
     #u_space > .push(1,2);
+    #site .r--alpha({
+      font-size: unit(47/@base,em);
+      line-height: 59/47;
+    });
   }
   .h3() {
     font-size: unit(24/@base,em);
@@ -506,14 +514,14 @@ th {
     line-height: 41/25;
   }
   .p--introduction-dropcap() {
-    font-size: unit((31.25)/25,em);
+    font-size: unit(40/25,em);
     float: left;
-    padding: unit((10)/(31.25),em) unit((20)/(31.25),em);
+    padding: unit((8)/40,em) unit((20)/40,em);
     background-color: @darkgrey;
     color: contrast(@darkgrey);
     border-radius: unit(5/@base,rem);
-    margin-right: 0.1em;
-    #effect > .text-shadow-3d(40,black);
+    margin-right: 0.2em;
+    #effect > .text-shadow-3d(6,black);
     overflow: hidden;
     text-overflow: clip;
   }
@@ -743,17 +751,17 @@ th {
 
 }
 
+.c_siteHeader {
+  padding: unit(@spacing_vertical/2/@base,rem) 0;
+  border-bottom: 1px solid @lightgrey;
+}
+
 .c_wrapper {
   margin: 0 unit(@spacing_horizontal/@base,rem);
   max-width: unit(@layout_max/@base,rem);
   #site .r--max({
     margin: 0 auto;
   });
-}
-
-.c_siteHeader {
-  padding: unit(@spacing_vertical/2/@base,rem) 0;
-  border-bottom: 1px solid @lightgrey;
 }
 
 .c_siteBody {
@@ -796,7 +804,7 @@ th {
     display: block;
     flex-basis: 100%;
     box-sizing: border-box;
-    border-bottom: 1px solid lighten(@grey,10%);
+    font-style: italic;
     #type > .default();
     #type > .x-small();
     #type > .meta();
@@ -1084,6 +1092,25 @@ th {
 
 }
 
+.m_posts {
+  //todo
+}
+
+.m_post {
+  &__body {
+    p:first-of-type:not(:only-of-type) {
+      #type > .p--introduction();
+      &::first-letter {
+        #type > .p--introduction-dropcap();
+      }
+    }
+    &+p {
+      clear: left;
+    }
+
+  }
+}
+
 .m_teaser {
 
   margin-bottom: unit(@spacing_vertical*3/@base,rem);
@@ -1109,25 +1136,6 @@ th {
     margin: 0 auto unit(@spacing_vertical/@base,rem) auto;
   }
 
-}
-
-.m_posts {
-  //todo
-}
-
-.m_post {
-  &__body {
-    p:first-of-type:not(:only-of-type) {
-      #type > .p--introduction();
-      &::first-letter {
-        #type > .p--introduction-dropcap();
-      }
-    }
-    &+p {
-      clear: left;
-    }
-
-  }
 }
 
 #u_space() {

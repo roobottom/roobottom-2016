@@ -1,0 +1,15 @@
+{% macro m_filmstrip(posts) %}
+  <div class="m_filmstrip">
+  {% for post in posts %}
+      {% if post.attributes.images %}
+        {% for image in post.attributes.images %}
+          {% if loop.first %}
+            <a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_filmstrip__link" title="{{post.attributes.title}}">
+              <img src="{{site.imageServer}}r/80/80/{{post.attributes.type}}/{{image.image}}" alt="{{post.attributes.title}}" class="m_filmstrip__images"/>
+            </a>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+  {% endfor %}
+  </div>
+{% endmacro %}

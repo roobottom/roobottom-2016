@@ -1,0 +1,36 @@
+.m_prevNext {
+  #site > .r--beta({
+    display: flex;
+    justify-content: space-between;
+    &__item--next {
+      margin-left: unit(@spacing_horizontal/@base,rem);
+    }
+  });
+
+  border-top: 1px solid @lightgrey;
+  border-bottom: 1px solid @lightgrey;
+  padding: unit(@spacing_vertical/2/@base,rem) 0;
+
+  &__link,
+  &__label,
+  &__date {
+    display: block;
+    #type > .default();
+  }
+
+  &__label {
+    #type > .small();
+  }
+
+  &__link {
+    #type > .a();
+  }
+
+  &__date {
+    #type > .time();
+  }
+
+  &__item--next {
+    text-align: right;
+  }
+}

@@ -1,5 +1,12 @@
 {% extends 'layouts/default.html' %}
 {% block body %}
 {{pattern.m_pageTitle(post.attributes.title,post.attributes.date)}}
-{{pattern.m_postGallery(post)}}
+{{
+  pattern.grid([
+    pattern.c_block([
+      pattern.m_postGallery(post),
+      pattern.m_prevNext(post)
+    ])
+  ],'prose')
+}}
 {% endblock %}

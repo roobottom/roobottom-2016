@@ -1,10 +1,7 @@
 .m_prevNext {
-  #site > .r--beta({
+  #site > .r--alpha({
     display: flex;
     justify-content: space-between;
-    &__item--next {
-      margin-left: unit(@spacing_horizontal/@base,rem);
-    }
   });
 
   border-top: 1px solid @lightgrey;
@@ -20,17 +17,27 @@
 
   &__label {
     #type > .small();
+    #site > .r--max({
+      #type > .x-small();
+    });
   }
 
   &__link {
     #type > .a();
+    #type > .small();
   }
 
   &__date {
     #type > .time();
+    #type > .small();
   }
 
   &__item--next {
+    margin-top: unit(@spacing_vertical/@base,rem);
     text-align: right;
+    #site > .r--alpha({
+      margin-top: 0;
+      margin-left: unit(@spacing_horizontal/@base,rem);
+    });
   }
 }

@@ -26,20 +26,20 @@
   {% endif %}
 {% endmacro %}
 
-{% macro c_siteHeader(items,active) %}
-  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
-    {% for item in items %}
-    {{item}}
-    {% endfor %}
-  </header>
-{% endmacro %}
-
 {% macro c_siteBody(content) %}
   <main class="c_siteBody">
     {% for item in content %}
         {{ item }}
     {% endfor %}
   </main>
+{% endmacro %}
+
+{% macro c_siteHeader(items,active) %}
+  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
+    {% for item in items %}
+    {{item}}
+    {% endfor %}
+  </header>
 {% endmacro %}
 
 {% macro c_wrapper(modules) %}

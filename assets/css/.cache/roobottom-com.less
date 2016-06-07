@@ -36,6 +36,8 @@
 @medgrey:                   #5E5E5E;
 @darkgrey:                  #333333;
 
+@import url(https://fonts.googleapis.com/css?family=Monoton);
+
 @font-face {
     font-family: 'merriweather';
     src: url('fonts/merriweather-bold.woff2') format('woff2'),
@@ -93,6 +95,11 @@
   }
   .ridley() {
     font-family: 'Ridley Grotesk', sans-serif;
+  }
+  .dropcap() {
+    font-family: 'Monoton', cursive;
+    font-style: normal;
+    font-weight: normal;
   }
 }
 
@@ -524,6 +531,7 @@ th {
     #effect > .text-shadow-3d(6,black);
     overflow: hidden;
     text-overflow: clip;
+    #font > .dropcap();
   }
 
   .a(@c:@c_link) {
@@ -751,9 +759,8 @@ th {
 
 }
 
-.c_siteHeader {
-  padding: unit(@spacing_vertical/2/@base,rem) 0;
-  border-bottom: 1px solid @lightgrey;
+.c_siteBody {
+    #site > .spacing();
 }
 
 .c_wrapper {
@@ -764,27 +771,9 @@ th {
   });
 }
 
-.c_siteBody {
-    #site > .spacing();
-}
-
-#m_cacheItem {
-  .background(@c) {
-    background-color: @c;
-    color: contrast(@c);
-  }
-}
-
-.m_cacheItem {
-  &--articles {
-    #m_cacheItem > .background(@c_articles);
-  }
-  &--gallery {
-    #m_cacheItem > .background(@c_gallery);
-  }
-  &--notes {
-    #m_cacheItem > .background(@c_notes);
-  }
+.c_siteHeader {
+  padding: unit(@spacing_vertical/2/@base,rem) 0;
+  border-bottom: 1px solid @lightgrey;
 }
 
 .m_figure {
@@ -845,6 +834,25 @@ th {
     }
   });
 
+}
+
+#m_cacheItem {
+  .background(@c) {
+    background-color: @c;
+    color: contrast(@c);
+  }
+}
+
+.m_cacheItem {
+  &--articles {
+    #m_cacheItem > .background(@c_articles);
+  }
+  &--gallery {
+    #m_cacheItem > .background(@c_gallery);
+  }
+  &--notes {
+    #m_cacheItem > .background(@c_notes);
+  }
 }
 
 .m_gallery {

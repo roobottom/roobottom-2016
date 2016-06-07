@@ -59,7 +59,12 @@ gulp.task('go:js', function () {
   })
 })
 
-gulp.task('default', ['patterns','less','go']);
+//images server
+gulp.task('images', shell.task([
+  'node ./src/images.js'
+]))
+
+gulp.task('default', ['patterns','less','go','images']);
 
 
 //gulp build task

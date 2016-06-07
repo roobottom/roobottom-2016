@@ -1,21 +1,20 @@
 'use strict';
 
 /*
-get full list of photosets from flickr
-  compare that list to a local copy
-  call any that are new or have changed.
-  save photosets.json file.
+get a list of photosets
+ieterate over these sets, and grab the set data
+download any photos missing locally.
+translate this data into full json data for all galleries
 
-Call photoset from flickr
-  check if we have a local copy of the photoset
-  if not, save it
-  save [photoset-id].json file
+Organise the json data by date
+translate the flickr format into roo formart
+write out an md file for each set
 */
 
 const Settings = require("./flickr.settings.json");
 const fs = require('fs-extra');
 const path = require('path');
-const cacheFile = '../cache/_data/photosets.json';
+const cacheFile = './posts/_flickr/photosets.json';
 const request = require('request');
 
 const Flickr = require("flickrapi"),
@@ -25,41 +24,36 @@ const Flickr = require("flickrapi"),
   };
 
 //process flow:
-// try {
-//   const cache = require(cacheFile);
-//   let photosets = cache.photoset;
-//   let photosetsIdList = [];
-//   photosets.map(photoset => {
-//     photosetsIdList.push(photoset.id);
-//   });
-//   console.log(photosetsIdList);
-//   photosetsIdList.map(id => {
-//     getPhotoset(id, function(result, err) {
-//       if(!err) {
-//         writeJSON('../cache/'+id+'.json',result,function(err) {
-//           if(err) { console.log(err); }
-//           console.log(result);
-//         });
-//       }
-//       else {
-//         console.log(err);
-//       }
-//     })
-//   });
-// }
-// catch(e) {
-//   console.log('error:',e);
-// }
+try {
+  const cache = require('.'+cacheFile);
+  let photosets = cache.photoset;
+  let photosetsIdList = [];
+  photosets.map(photoset => {
+    photosetsIdList.push(photoset.id);
+  });
+  photosetsIdList.map(id => {
+    getPhotoset(id, function(result, err) {
+      if(!err) {
+        writeJSON(path.dirname(cacheFile)+'/'+id+'.json',result,function(err) {
+          if(err) { console.log(err); }
+          console.log(result);
+        });
+      }
+      else {
+        console.log(err);
+      }
+    })
+  });
+}
+catch(e) {
+  console.log('error:',e);
+}
 
 // createCache(function(e) {
 //   if(e) { m(e); }
 //   else { m('cache created OK'); }
 // })
 
-writeJSON('../cache/test.json','{"result":"yeah"}',function(err) {
-  if(!err) { console.log("OK"); }
-  else { console.log(err); }
-});
 
 
 /*

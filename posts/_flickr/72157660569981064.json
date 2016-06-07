@@ -1,0 +1,34 @@
+{
+  "photoset": {
+    "id": "72157660569981064",
+    "primary": "23924852152",
+    "owner": "29556254@N00",
+    "ownername": "roobottom",
+    "photo": [
+      {
+        "id": "23924852152",
+        "secret": "34e370f7c0",
+        "server": "5817",
+        "farm": 6,
+        "title": "Christmas 2015 Littlehampton",
+        "isprimary": "1",
+        "ispublic": 1,
+        "isfriend": 0,
+        "isfamily": 0,
+        "url_o": "https://farm6.staticflickr.com/5817/23924852152_4522f52d3f_o.jpg",
+        "height_o": "3648",
+        "width_o": "5472",
+        "url_s": "https://farm6.staticflickr.com/5817/23924852152_34e370f7c0_m.jpg",
+        "height_s": "160",
+        "width_s": "240"
+      }
+    ],
+    "page": "1",
+    "per_page": 500,
+    "perpage": 500,
+    "pages": 1,
+    "total": "1",
+    "title": "Christmas 2015 Littlehampton"
+  },
+  "stat": "ok"
+}

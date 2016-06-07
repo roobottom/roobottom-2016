@@ -4,7 +4,7 @@
     <div class="m_prevNext__item m_prevNext__item--prev">
       <p class="m_prevNext__label">&lArr; Previous {{post.attributes.type|singular}}</p>
       <a class="m_prevNext__link" href="/{{post.attributes.type}}/{{post.prev.id}}">{{post.prev.title}}</a>
-      <time class="m_prevNext__date" datetime="{{post.prev.date}}" >{{post.prev.date|date('dddd, MMMM Do YYYY, h:mm:ss a')}}</time>
+      <time class="m_prevNext__date" datetime="{{post.prev.date}}" >{{ post.prev.date|date('X')|fuzzyDate(post.attributes.date|date('X')) }} days ago</time>
     </div>
   {% endif %}
   {% if post.next %}

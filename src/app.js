@@ -34,6 +34,7 @@ let env = nunjucks.configure( __basename + 'templates/', {
 .addFilter('singular', require('./filters/singular.filter.js'))
 .addFilter('fixOrphans', require('./filters/fixOrphans.filter.js'))
 .addFilter('arrayPush', require('./filters/arrayPush.filter.js'))
+.addFilter('fuzzyDate', require('./filters/fuzzyDate.filter.js'))
 .addExtension('pattern', new nunjucks_renderPattern())
 .addGlobal('site',settings)
 
@@ -82,7 +83,9 @@ app.get('/', function (req, res) {
     });
 });
 
-//update caches.
+//------------------------------------------//
+// caches
+//------------------------------------------//
 app.get('/u',function(req,res) {
   let allPosts;
   posts.processAllPosts()
@@ -97,6 +100,7 @@ app.get('/u',function(req,res) {
     res.sendStatus(404);
   });
 });
+
 
 //------------------------------------------//
 // articles

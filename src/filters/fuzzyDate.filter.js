@@ -1,8 +1,26 @@
+/*
+convert diff in dates to hours
+if days => 365
+	yearDiff = round(days / 365)
+	yearRemainder = round((days % 365) /30)
+
+	if yearRemainder != 0
+
+	else
+		::
+
+*/
+
+var moment = require('moment');
+
 function fuzzyDate(date,comparison){
-	d1 = new Date(date*1000);
-	d2 = new Date(comparison*1000);
-	console.log(d1,d2);
-  return 'test';
+
+	//calculate diff
+	var a = moment(date);
+	var b = moment(comparison);
+	var diff = a.from(b,true);
+
+  return diff;
 }
 
 module.exports = fuzzyDate;

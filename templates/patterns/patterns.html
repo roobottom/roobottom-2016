@@ -14,18 +14,6 @@
   </svg>
 {% endmacro %}
 
-{% macro c_block(items,pattern) %}
-  {% if pattern %}
-    {% for item in items %}
-      {{ pattern(item) }}
-    {% endfor %}
-  {% else %}
-    {% for item in items %}
-      {{ item }}
-    {% endfor %}
-  {% endif %}
-{% endmacro %}
-
 {% macro c_siteBody(content) %}
   <main class="c_siteBody">
     {% for item in content %}
@@ -40,6 +28,18 @@
     {{item}}
     {% endfor %}
   </header>
+{% endmacro %}
+
+{% macro c_block(items,pattern) %}
+  {% if pattern %}
+    {% for item in items %}
+      {{ pattern(item) }}
+    {% endfor %}
+  {% else %}
+    {% for item in items %}
+      {{ item }}
+    {% endfor %}
+  {% endif %}
 {% endmacro %}
 
 {% macro c_wrapper(modules) %}
@@ -75,6 +75,16 @@
   </figure>
 {% endmacro %}
 
+{% macro m_gallery(images,type) %}
+    <div class="m_gallery">
+        {% for i in images %}
+          <figure class="m_gallery__figure">
+            <img src="{{site.imageServer}}r/600/auto/{{type}}/{{ i.image }}" class="m_gallery__image" {% if i.width %}data-width="{{i.width}}"{% endif %} {% if i.height %}data-height="{{i.height}}"{% endif %}/>
+          </figure>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
 {% macro m_filmstrip(posts) %}
   <div class="m_filmstrip">
   {% for post in posts %}
@@ -89,16 +99,6 @@
       {% endif %}
   {% endfor %}
   </div>
-{% endmacro %}
-
-{% macro m_gallery(images,type) %}
-    <div class="m_gallery">
-        {% for i in images %}
-          <figure class="m_gallery__figure">
-            <img src="{{site.imageServer}}r/600/auto/{{type}}/{{ i.image }}" class="m_gallery__image" {% if i.width %}data-width="{{i.width}}"{% endif %} {% if i.height %}data-height="{{i.height}}"{% endif %}/>
-          </figure>
-        {% endfor %}
-    </div>
 {% endmacro %}
 
 {% macro m_introduction(markdownFile) %}
@@ -132,13 +132,6 @@
   {% endif %}
 {% endmacro %}
 
-{% import "./icons/icon.pattern" as icon %}
-{% macro m_logo() %}
-  <a href="/" class="m_logo" aria-label="Website logo">
-    {{icon.icon('logo')}}
-  </a>
-{% endmacro %}
-
 {% macro m_navigation(items, active, modifier, classes) %}
 <nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}{%if classes %} {{classes}}{% endif %}">
     <ul class="m_navigation__items">
@@ -159,6 +152,13 @@
 </nav>
 {% endmacro %}
 
+{% import "./icons/icon.pattern" as icon %}
+{% macro m_logo() %}
+  <a href="/" class="m_logo" aria-label="Website logo">
+    {{icon.icon('logo')}}
+  </a>
+{% endmacro %}
+
 {% macro m_pageTitle(title,date) %}
 <h1 class="m_pageTitle">{{title}}</h1>
 {% if date %}
@@ -174,13 +174,6 @@
     </li>
     {% endfor %}
   </ol>
-{% endmacro %}
-
-{% macro m_patternBlock(description,code) %}
-  <div class="m_patternBlock m_patternBlock--note">
-    <div class="m_patternBlock__description">{{description}}</div>
-    <div class="m_patternBlock__code">{{code}}</div>
-  </div>
 {% endmacro %}
 
 {% macro m_postArticle(post) %}
@@ -247,6 +240,13 @@
   {% for post in posts | filterByType('gallery') | limitTo(limit) %}
       {{ m_postGallery (post) }}
   {% endfor %}
+{% endmacro %}
+
+{% macro m_patternBlock(description,code) %}
+  <div class="m_patternBlock m_patternBlock--note">
+    <div class="m_patternBlock__description">{{description}}</div>
+    <div class="m_patternBlock__code">{{code}}</div>
+  </div>
 {% endmacro %}
 
 {% macro m_prevNext(post) %}

@@ -7,7 +7,8 @@ var fs  = require('fs'),
     frontmatter = require('front-matter'),
     marked = require('marked'),
     mkdirp = require('mkdirp'),
-    smart_tags = require('./smart_tags.js');
+    smart_tags = require('./smart_tags.js'),
+    sizeOf  = require('image-size');
 
     marked.setOptions({
       gfm: true,
@@ -19,9 +20,11 @@ var fs  = require('fs'),
       smartypants: true
     });
 
+  let __basename = _.trimEnd(__dirname,'src');
   let folders = ['articles','gallery','notes'];
   let postsRoot = './posts/';
   let cacheRoot = postsRoot + '.cache/';
+  let imagesRoot = __basename+'images/';
   let caches = {};
   folders.map(folder => {
     let cache = '.' + cacheRoot + folder + '/' + 'posts.json';
@@ -161,6 +164,14 @@ function processPostData(data,folder) {
     post.attributes.id = data.id;
     post.html_body = marked(post.body);
     post.html_body = smart_tags.find_tags(post);
+    if(post.attributes.images) {
+      let images = post.attributes.images;
+      images.map(image => {
+        let size = sizeOf(imagesRoot+folder+'/'+image.image);
+        image.width = size.width;
+        image.height = size.height;
+      })
+    }
     resolve(post);
   });
 };

@@ -30,13 +30,14 @@
 @c_link:                    @blue;
 
 @c_default:                 @darkgrey;
+@c_bg:                      #FBFBFB;
 
 @grey:                      #cccccc;
 @lightgrey:                 #E4E4E4;
 @medgrey:                   #5E5E5E;
 @darkgrey:                  #333333;
 
-@import url(https://fonts.googleapis.com/css?family=Monoton);
+@import url(https://fonts.googleapis.com/css?family=Ewert);
 
 @font-face {
     font-family: 'merriweather';
@@ -97,7 +98,7 @@
     font-family: 'Ridley Grotesk', sans-serif;
   }
   .dropcap() {
-    font-family: 'Monoton', cursive;
+    font-family: 'Ewert', cursive;
     font-style: normal;
     font-weight: normal;
   }
@@ -105,7 +106,7 @@
 
 body {
   #font > .merriweather();
-  background-color: #FBFBFB;
+  background-color: @c_bg;
   font-size: 76%;
   color: @darkgrey;
   #site .r--alpha({font-size: 88%;});
@@ -759,13 +760,13 @@ th {
 
 }
 
-.c_siteBody {
-    #site > .spacing();
-}
-
 .c_siteHeader {
   padding: unit(@spacing_vertical/2/@base,rem) 0;
   border-bottom: 1px solid @lightgrey;
+}
+
+.c_siteBody {
+    #site > .spacing();
 }
 
 .c_wrapper {
@@ -859,17 +860,37 @@ th {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-bottom: unit(@spacing_vertical/@base,rem);
 
-  &__figure {
-    margin-bottom: 5%;
-    flex-basis: 30%;
+  &__link {
+    height: 100%;
+    display: block;
   }
 
   &__image {
     display: block;
-    max-width: 100%;
+    width: 100%;
+    outline: 6px solid @c_bg;
   }
 
+}
+
+.m_filmstrip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: unit(@spacing_vertical/@base,rem);
+
+  &__link {
+    height: 100%;
+    display: block;
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    outline: 6px solid @c_bg;
+  }
 }
 
 .m_introduction {

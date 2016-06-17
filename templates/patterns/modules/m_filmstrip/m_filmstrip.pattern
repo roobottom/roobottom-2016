@@ -1,15 +1,17 @@
-{% macro m_filmstrip(posts) %}
-  <div class="m_filmstrip">
-  {% for post in posts %}
-      {% if post.attributes.images %}
-        {% for image in post.attributes.images %}
-          {% if loop.first %}
-            <a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_filmstrip__link" title="{{post.attributes.title}}">
-              <img src="{{site.imageServer}}r/80/80/{{post.attributes.type}}/{{image.image}}" alt="{{post.attributes.title}}" class="m_filmstrip__images"/>
-            </a>
-          {% endif %}
-        {% endfor %}
+{% macro m_filmstrip(posts,groups,type='gallery',limit=5) %}
+  <div class="m_filmstrip js_gallery" {% if groups %}data-groups="{{groups}}"{% endif %}>
+    {% for post in posts | limitTo(limit) %}
+      {% if post.attributes.type == type %}
+        {% if post.attributes.images %}
+          {% for image in post.attributes.images %}
+            {% if loop.first %}
+              <a href="/{{post.attributes.type}}/{{post.attributes.id}}" class="m_filmstrip__link js_gallery__item" title="{{post.attributes.title}}" data-width="{{image.width}}" data-height="{{image.height}}">
+                <img src="{{site.imageServer}}r/450/auto/{{post.attributes.type}}/{{image.image}}" alt="{{post.attributes.title}}" class="m_filmstrip__image"/>
+              </a>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
       {% endif %}
-  {% endfor %}
+    {% endfor %}
   </div>
 {% endmacro %}

@@ -163,7 +163,6 @@ function processPostData(data,folder) {
     post.attributes.type = folder;
     post.attributes.id = data.id;
     post.html_body = marked(post.body);
-    post.html_body = smart_tags.find_tags(post);
     if(post.attributes.images) {
       let images = post.attributes.images;
       images.map(image => {
@@ -171,7 +170,8 @@ function processPostData(data,folder) {
         image.width = size.width;
         image.height = size.height;
       })
-    }
+    };
+    post.html_body = smart_tags.find_tags(post);
     resolve(post);
   });
 };

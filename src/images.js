@@ -74,7 +74,7 @@ function calculateResize(file,w,h) {
     }
     //no crop
     else {
-      return {w:w,h:h,cropW:0,cropH:0}
+      return {w:w,h:h}
     }
 };
 
@@ -83,14 +83,26 @@ function calculateResize(file,w,h) {
 
 
 function resize(orriginal,target,size,cb) {
-  gm(orriginal)
-  .resize(size.w,size.h)
-  .crop(size.cropW,size.cropH)
-  .noProfile()
-  .write(target,function(err) {
-    if (!err) {cb(null);}
-    else {cb(err);}
-  });
+  if(size.cropW && size.cropH) {
+    gm(orriginal)
+    .resize(size.w,size.h)
+    .crop(size.cropW,size.cropH)
+    .noProfile()
+    .write(target,function(err) {
+      if (!err) {cb(null);}
+      else {cb(err);}
+    });
+  }
+  else {
+    gm(orriginal)
+    .resize(size.w,size.h)
+    .noProfile()
+    .write(target,function(err) {
+      if (!err) {cb(null);}
+      else {cb(err);}
+    });
+  }
+
 }
 
 function go(type,file,w,h,cb) {

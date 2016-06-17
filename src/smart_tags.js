@@ -38,35 +38,6 @@ function get_options(match) {
     return _.fromPairs(terms);
 };
 
-function ratioFactory(images) {
-    var ratios = [];
-    var ratioSum = 0;
-    var returnObject = [];
-
-    //first loop, calculate ratios:
-    for(var i in images) {
-      //put these values in settings:
-      var width = 600,
-          height = 600;
-      if(images[i].width) { width = images[i].width; }
-      if(images[i].height) { height = images[i].height; }
-      ratios.push(width/height);
-      ratioSum += ratios[ratios.length - 1];
-    };
-    //now calculate ration average:
-    var ratioAverage = ratioSum / images.length;
-
-    //sectond loop, build object:
-    for(var i in images) {
-      var adjustedWidth = (((ratios[i] / ratioAverage ) * (1 / images.length)) * 100) - (images.length - 1);
-      returnObject.push({"width": adjustedWidth + '%', "image": images[i].image});
-    }
-
-    return returnObject;
-
-};
-
-
 //smart tag definitions, what to do with a smart tag once it's been matched?
 //Always defined as `smart_tag_[tag-name]`
 smart_tag_gallery = function (post,string,opts) {

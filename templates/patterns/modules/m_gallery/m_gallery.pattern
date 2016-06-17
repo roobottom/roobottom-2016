@@ -1,9 +1,9 @@
-{% macro m_gallery(images,type) %}
-    <div class="m_gallery">
+{% macro m_gallery(images,type,modifier) %}
+    <div class="m_gallery js_gallery{% if modifier %} m_gallery--{{ modifier }}{% endif %}">
         {% for i in images %}
-          <figure class="m_gallery__figure">
-            <img src="{{site.imageServer}}r/600/auto/{{type}}/{{ i.image }}" class="m_gallery__image" {% if i.width %}data-width="{{i.width}}"{% endif %} {% if i.height %}data-height="{{i.height}}"{% endif %}/>
-          </figure>
+          <a href="{{site.imageServer}}r/1024/auto/{{type}}/{{ i.image }}" class="m_gallery__link js_gallery__item" data-width="{{i.width}}"data-height="{{i.height}}">
+            <img src="{{site.imageServer}}r/450/auto/{{type}}/{{ i.image }}" class="m_gallery__image" />
+          </a>
         {% endfor %}
     </div>
 {% endmacro %}

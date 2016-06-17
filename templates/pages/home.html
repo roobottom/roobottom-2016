@@ -1,11 +1,11 @@
 {% extends 'layouts/default.html' %}
 {% block body %}
   {{
-    pattern.grid([
-      pattern.c_block([
-        pattern.m_introduction('./static_content/introduction.md'),
-        pattern.m_filmstrip(posts)
-      ])
-    ],'prose')
+    pattern.c_block([
+      pattern.grid([
+        pattern.m_introduction('./static_content/introduction.md')
+      ],'prose'),
+      pattern.m_filmstrip(posts,3)
+    ])
   }}
 {% endblock %}

@@ -9,7 +9,6 @@ const _       = require('lodash');
 const __basename = _.trimEnd(__dirname,'src');
 const oRoot = __basename+'images/';
 const cacheRoot = __basename+'images/_cache/';
-console.log(__basename);
 
 const express = require('express');
 const app = express();

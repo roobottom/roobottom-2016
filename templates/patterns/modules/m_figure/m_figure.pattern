@@ -1,14 +1,12 @@
 {% macro m_figure(images,type) %}
-  <figure class="m_figure{% if images|length > 1 %} m_figure--gallery{% endif %}">
+  <figure class="m_figure{% if images|length > 1 %} m_figure--gallery js_gallery{% endif %}">
     {% for i in images %}
       {% if images|length == 1 or (i.width and i.height) %}
-        {% set w = '800' %}
-        {% set h = 'auto' %}
+        {% set w = '800' %}{% set h = 'auto' %}
       {% else %}
-        {% set w = '600' %}
-        {% set h = '600' %}
+        {% set w = '600' %}{% set h = '600' %}
       {% endif %}
-      <img src="{{site.imageServer}}r/{{w}}/{{h}}/{{type}}/{{i.image}}" class="m_figure__image" alt="{{i.caption}}" {% if i.width %}data-width="{{i.width}}"{% endif %} {% if i.height %}data-height="{{i.height}}"{% endif %}/>
+      <img src="{{site.imageServer}}r/{{w}}/{{h}}/{{type}}/{{i.image}}" class="m_figure__image{% if images|length > 1 %} js_gallery__item{% endif %}" alt="{{i.caption}}" data-width="{% if i.width %}{{i.width}}{% else %}600{% endif %}" data-height="{% if i.height %}{{i.height}}{% else %}600{% endif %}"/>
       {% if i.caption and loop.last %}
       <figcaption class="m_figure__caption">{{i.caption}}</figcaption>
       {% endif %}

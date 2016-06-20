@@ -31,27 +31,10 @@
       display: flex;
       flex-wrap: wrap;
       .m_figure__image {
-        margin-right: 2%;
         height: 100%;
-        &:nth-last-of-type(1) {
-          margin-right: 0;
-        }
-        //2-up
-        &:nth-last-of-type(2):first-child,
-        &:nth-last-of-type(2):first-child ~ .m_figure__image {
-          width: unit((100-2)/2,%);
-        }
-        //3-up
-        &:nth-last-of-type(3):first-child,
-        &:nth-last-of-type(3):first-child ~ .m_figure__image {
-          width: unit((100-4)/3,%);;
-        }
-        //4-up
-        &:nth-last-of-type(4):first-child,
-        &:nth-last-of-type(4):first-child ~ .m_figure__image {
-          width: unit((100-6)/4,%);;
-        }
-
+        width: 100%;
+        display: block;
+        outline: 1px solid @c_bg;
       }
     }
   });

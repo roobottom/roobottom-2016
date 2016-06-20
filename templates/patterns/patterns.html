@@ -26,14 +26,6 @@
   {% endif %}
 {% endmacro %}
 
-{% macro c_siteHeader(items,active) %}
-  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
-    {% for item in items %}
-    {{item}}
-    {% endfor %}
-  </header>
-{% endmacro %}
-
 {% macro c_siteBody(content) %}
   <main class="c_siteBody">
     {% for item in content %}
@@ -50,6 +42,14 @@
   </div>
 {% endmacro %}
 
+{% macro c_siteHeader(items,active) %}
+  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
+    {% for item in items %}
+    {{item}}
+    {% endfor %}
+  </header>
+{% endmacro %}
+
 {% macro m_cacheItem(post) %}
   <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
     <h3>{{post.attributes.title}}</h3>
@@ -58,16 +58,14 @@
 {% endmacro %}
 
 {% macro m_figure(images,type) %}
-  <figure class="m_figure{% if images|length > 1 %} m_figure--gallery{% endif %}">
+  <figure class="m_figure{% if images|length > 1 %} m_figure--gallery js_gallery{% endif %}">
     {% for i in images %}
       {% if images|length == 1 or (i.width and i.height) %}
-        {% set w = '800' %}
-        {% set h = 'auto' %}
+        {% set w = '800' %}{% set h = 'auto' %}
       {% else %}
-        {% set w = '600' %}
-        {% set h = '600' %}
+        {% set w = '600' %}{% set h = '600' %}
       {% endif %}
-      <img src="{{site.imageServer}}r/{{w}}/{{h}}/{{type}}/{{i.image}}" class="m_figure__image" alt="{{i.caption}}" {% if i.width %}data-width="{{i.width}}"{% endif %} {% if i.height %}data-height="{{i.height}}"{% endif %}/>
+      <img src="{{site.imageServer}}r/{{w}}/{{h}}/{{type}}/{{i.image}}" class="m_figure__image{% if images|length > 1 %} js_gallery__item{% endif %}" alt="{{i.caption}}" data-width="{% if i.width %}{{i.width}}{% else %}600{% endif %}" data-height="{% if i.height %}{{i.height}}{% else %}600{% endif %}"/>
       {% if i.caption and loop.last %}
       <figcaption class="m_figure__caption">{{i.caption}}</figcaption>
       {% endif %}
@@ -75,19 +73,9 @@
   </figure>
 {% endmacro %}
 
-{% macro m_gallery(images,type,modifier) %}
-    <div class="m_gallery js_gallery{% if modifier %} m_gallery--{{ modifier }}{% endif %}">
-        {% for i in images %}
-          <a href="{{site.imageServer}}r/1024/auto/{{type}}/{{ i.image }}" class="m_gallery__link js_gallery__item" data-width="{{i.width}}"data-height="{{i.height}}">
-            <img src="{{site.imageServer}}r/450/auto/{{type}}/{{ i.image }}" class="m_gallery__image" />
-          </a>
-        {% endfor %}
-    </div>
-{% endmacro %}
-
 {% macro m_filmstrip(posts,groups,type='gallery',limit=5) %}
   <div class="m_filmstrip js_gallery" {% if groups %}data-groups="{{groups}}"{% endif %}>
-    {% for post in posts | limitTo(limit) %}
+    {% for post in posts %}
       {% if post.attributes.type == type %}
         {% if post.attributes.images %}
           {% for image in post.attributes.images %}
@@ -100,6 +88,34 @@
         {% endif %}
       {% endif %}
     {% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro m_gallery(images,type,modifier,group=3,caption=false) %}
+  {% if images | length > 1 %}
+    {% set w = 650 %}
+  {% else %}
+    {% set w = 1024 %}
+  {% endif %}
+
+  {% if images | length == 4 %}
+    {% set group = 2 %}
+  {% endif %}
+
+  <div class="m_gallery js_gallery{% if modifier %} m_gallery--{{ modifier }}{% endif %}" data-groups="{{group}}">
+    {% for i in images %}
+    <a href="{{site.imageServer}}r/1024/auto/{{type}}/{{ i.image }}" class="m_gallery__link js_gallery__item" data-width="{{i.width}}"data-height="{{i.height}}">
+      <img src="{{site.imageServer}}r/{{w}}/auto/{{type}}/{{ i.image }}" class="m_gallery__image" />
+    </a>
+    {% endfor %}
+    {% if caption %}
+    <div class="m_gallery__captions">
+      <span class="m_gallery__captionsNotice">From left to right: </span>
+      {% for i in images %}
+        {% if i.caption %}<span class="m_gallery__caption">{{i.caption}}{% if not loop.last and loop.index != (loop.length - 1) %}, {% endif %}{% if loop.index == (loop.length - 1) %} &amp; {% endif %}</span>{% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
   </div>
 {% endmacro %}
 
@@ -198,9 +214,11 @@
     <div class="m_post__gallery">
       {{ m_gallery(post.attributes.images,'gallery') }}
     </div>
-    <div class="m_post__body type">
-      {{post.html_body}}
-    </div>
+    {{
+      grid([
+        post.html_body
+      ],'prose','type')
+    }}
   </article>
 {% endmacro %}
 
@@ -208,47 +226,15 @@
   <article class="m_post m_post--note">
     {% if post.attributes.images %}
       <div class="m_post__gallery">
-        {% for image in post.attributes.images %}
-          {{ m_figure([image],'notes')}}
-        {% endfor %}
+        {{ m_gallery(post.attributes.images,'notes') }}
       </div>
     {% endif %}
-    <div class="m_post__body type">
-      {{post.html_body}}
-    </div>
+    {{
+      grid([
+        post.html_body
+      ],'prose','type')
+    }}
   </article>
-{% endmacro %}
-
-{% macro m_posts (posts,heading="h2",link=true,limit=10) %}
-  {% for post in posts|limitTo(limit) %}
-    {% if post.attributes.type == 'articles' %}
-      {{ m_postarticles (post,heading,link) }}
-    {% endif %}
-    {% if post.attributes.type == 'gallery' %}
-      {{ m_postGallery (post) }}
-    {% endif %}
-    {% if post.attributes.type == 'notes' %}
-      {{ m_postNote(post) }}
-    {% endif %}
-  {% endfor %}
-{% endmacro %}
-
-{% macro m_postArticlesSummary (posts,heading="h2",link=true,limit=10) %}
-  {% for post in posts | filterByType('articles') | limitTo(limit) %}
-      {{ m_postArticles (post,heading,link,true) }}
-  {% endfor %}
-{% endmacro %}
-
-{% macro m_postNotesSummary (posts,heading="h2",link=true,limit=10) %}
-  {% for post in posts | filterByType('notes') | limitTo(limit) %}
-      {{ m_postNote (post,heading,link) }}
-  {% endfor %}
-{% endmacro %}
-
-{% macro m_postGallerySummary (posts,heading="h2",link=true,limit=10) %}
-  {% for post in posts | filterByType('gallery') | limitTo(limit) %}
-      {{ m_postGallery (post) }}
-  {% endfor %}
 {% endmacro %}
 
 {% macro m_prevNext(post) %}

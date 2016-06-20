@@ -12,7 +12,27 @@
   &__image {
     display: block;
     width: 100%;
-    outline: 6px solid @c_bg;
+    outline: 1px solid @c_bg;
+  }
+
+  &__link:only-of-type &__image {
+    width: auto;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  &__captions {
+    display: block;
+    flex-basis: 100%;
+    box-sizing: border-box;
+    font-style: italic;
+    #type > .default();
+    #type > .x-small();
+    #type > .meta();
+    #u_space > .pull-back();
+    #site > .r--alpha({
+      margin-top: unit(@spacing_vertical/2/@base,rem);
+    });
   }
 
 }

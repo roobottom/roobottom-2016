@@ -2,13 +2,13 @@
   <article class="m_post m_post--note">
     {% if post.attributes.images %}
       <div class="m_post__gallery">
-        {% for image in post.attributes.images %}
-          {{ m_figure([image],'notes')}}
-        {% endfor %}
+        {{ m_gallery(post.attributes.images,'notes') }}
       </div>
     {% endif %}
-    <div class="m_post__body type">
-      {{post.html_body}}
-    </div>
+    {{
+      grid([
+        post.html_body
+      ],'prose','type')
+    }}
   </article>
 {% endmacro %}

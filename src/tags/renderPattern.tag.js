@@ -11,7 +11,6 @@ module.exports = function () {
       _ = require('lodash');
 
   let __basename = __dirname.slice(0,-8);
-  console.log(__basename);
 
   let env = nunjucks.configure(__basename+'templates/patterns/',{
       autoescape: false,

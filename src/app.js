@@ -188,7 +188,32 @@ app.get('/gallery', function(req,res) {
         title: 'Gallery',
         active: 'gallery',
         posts: posts,
-        site: settings
+        site: settings,
+        pagination: calculatePagination(posts.length,1),
+        currentPage: 1
+      })
+    })
+    .catch(err => {
+      console.log('error: ', err);
+      res.sendStatus(404);
+    });
+});
+//galleries page-1: has same content as /gallery, so redirect there:
+app.get('/gallery/page-1', function(req,res) {
+    res.writeHead(301, {'Location':'/gallery'});
+    res.end();
+});
+//galleries pagination
+app.get('/gallery/page-:num', function(req,res) {
+    posts.getPosts('gallery')
+    .then(function(posts){
+      res.render('pages/galleries.html', {
+        title: 'Gallery, page ' + req.params.num,
+        active: 'gallery',
+        posts: posts,
+        site: settings,
+        pagination: calculatePagination(posts.length,req.params.num),
+        currentPage: req.params.num
       })
     })
     .catch(err => {
@@ -228,7 +253,7 @@ app.get('/notes', function(req,res) {
         active: 'notes',
         posts: posts,
         site: settings,
-        pagination: calculatePagination(posts.length,req.params.num),
+        pagination: calculatePagination(posts.length,1),
         currentPage: 1
       })
     })

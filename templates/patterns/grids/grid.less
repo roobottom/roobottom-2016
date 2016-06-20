@@ -1,3 +1,15 @@
+#grid() {
+  .prose() {
+    justify-content: center;
+  }
+  .prose__column() {
+    #site > .r--beta({
+      width: unit(720/@base,rem);
+      flex: initial;
+    });
+  }
+}
+
 .grid {
 
   &__column {
@@ -27,13 +39,10 @@
   }
 
   &--prose {
-    justify-content: center;
+    #grid > .prose();
   }
   &--prose &__column {
-    #site > .r--beta({
-      max-width: unit(720/@base,rem);
-      flex: initial;
-    });
+    #grid > .prose__column();
   }
 
   &--bricks {

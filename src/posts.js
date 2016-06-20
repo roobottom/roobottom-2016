@@ -159,6 +159,7 @@ function getFileContents(folder,file) {
 
 function processPostData(data,folder) {
   return new Promise((resolve,reject) => {
+    console.time('postData');
     let post = frontmatter(data.content);
     post.attributes.type = folder;
     post.attributes.id = data.id;
@@ -172,6 +173,7 @@ function processPostData(data,folder) {
       })
     };
     post.html_body = smart_tags.find_tags(post);
+    console.timeEnd('postData');
     resolve(post);
   });
 };

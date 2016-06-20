@@ -1,6 +1,6 @@
 {% macro m_filmstrip(posts,groups,type='gallery',limit=5) %}
   <div class="m_filmstrip js_gallery" {% if groups %}data-groups="{{groups}}"{% endif %}>
-    {% for post in posts | limitTo(limit) %}
+    {% for post in posts %}
       {% if post.attributes.type == type %}
         {% if post.attributes.images %}
           {% for image in post.attributes.images %}

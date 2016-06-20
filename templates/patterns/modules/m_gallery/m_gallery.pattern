@@ -1,9 +1,27 @@
-{% macro m_gallery(images,type,modifier) %}
-    <div class="m_gallery js_gallery{% if modifier %} m_gallery--{{ modifier }}{% endif %}">
-        {% for i in images %}
-          <a href="{{site.imageServer}}r/1024/auto/{{type}}/{{ i.image }}" class="m_gallery__link js_gallery__item" data-width="{{i.width}}"data-height="{{i.height}}">
-            <img src="{{site.imageServer}}r/450/auto/{{type}}/{{ i.image }}" class="m_gallery__image" />
-          </a>
-        {% endfor %}
+{% macro m_gallery(images,type,modifier,group=3,caption=false) %}
+  {% if images | length > 1 %}
+    {% set w = 650 %}
+  {% else %}
+    {% set w = 1024 %}
+  {% endif %}
+
+  {% if images | length == 4 %}
+    {% set group = 2 %}
+  {% endif %}
+
+  <div class="m_gallery js_gallery{% if modifier %} m_gallery--{{ modifier }}{% endif %}" data-groups="{{group}}">
+    {% for i in images %}
+    <a href="{{site.imageServer}}r/1024/auto/{{type}}/{{ i.image }}" class="m_gallery__link js_gallery__item" data-width="{{i.width}}"data-height="{{i.height}}">
+      <img src="{{site.imageServer}}r/{{w}}/auto/{{type}}/{{ i.image }}" class="m_gallery__image" />
+    </a>
+    {% endfor %}
+    {% if caption %}
+    <div class="m_gallery__captions">
+      <span class="m_gallery__captionsNotice">From left to right: </span>
+      {% for i in images %}
+        {% if i.caption %}<span class="m_gallery__caption">{{i.caption}}{% if not loop.last and loop.index != (loop.length - 1) %}, {% endif %}{% if loop.index == (loop.length - 1) %} &amp; {% endif %}</span>{% endif %}
+      {% endfor %}
     </div>
+    {% endif %}
+  </div>
 {% endmacro %}

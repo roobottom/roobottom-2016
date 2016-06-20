@@ -6,12 +6,14 @@
   flex-wrap: wrap;
   &__item {
     list-style: none;
-    margin: unit(@spacing_horizontal/2/@base,rem);
+    margin: 0 unit(@spacing_horizontal/4/@base,rem);
   }
   &__link {
     display: block;
-    padding: unit(@spacing_vertical/2/@base,rem) unit(@spacing_horizontal/2/@base,rem);
+    padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/4/@base,rem);
+    font-size: 80%;
     border: 1px solid @grey;
+    border-radius: 2px;
   }
   &__link--current {
     border-color: @c_link;

@@ -2,11 +2,11 @@
 {% block body %}
 {{pattern.m_pageTitle(post.attributes.title,post.attributes.date)}}
 {{
-  pattern.grid([
-    pattern.c_block([
-      pattern.m_postNote(post),
-      pattern.m_prevNext(post)
-    ])
-  ],'prose')
+  pattern.c_block([
+    pattern.m_postNote(post),
+    pattern.grid([
+        pattern.m_prevNext(post)
+    ],'prose')
+  ])
 }}
 {% endblock %}

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       if(galleries[g].dataset.groups) {
         groupSize = galleries[g].dataset.groups;
       }
-      console.log(groupSize);
+
 
       //split images into a collection.
       var collection = new Array;
@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var remainder = images.length % groupSize;
       var overspill = 0;
       if(remainder >= 1) {overspill = images.length - 1;}
+
 
       for(var i in images) {
         var currentGroup = i % groupSize;

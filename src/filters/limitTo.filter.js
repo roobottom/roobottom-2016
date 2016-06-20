@@ -1,5 +1,7 @@
-function limitTo(input, limit, offset){
+function limitTo(input, limit, offset, type){
 	'use strict';
+
+	const _ = require('lodash');
 
 	if(!offset) { var offset = 0; }
 	if(typeof limit !== 'number'){
@@ -14,7 +16,16 @@ function limitTo(input, limit, offset){
 	}
 	if(Array.isArray(input)){
 		limit = Math.min(limit, input.length);
-    var returnArray;
+		console.log(type);
+		//check type
+		if(type) {
+			var types = _.remove(input, function(n) {
+				if(n.attributes.type != type) {
+					return n;
+				}
+			});
+		}
+
 		if(limit >= 0){
 			return input.slice(offset, limit+offset);
 		} else {

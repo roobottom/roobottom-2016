@@ -159,8 +159,9 @@ function getFileContents(folder,file) {
 
 function processPostData(data,folder) {
   return new Promise((resolve,reject) => {
-    console.time('postData');
     let post = frontmatter(data.content);
+    console.log('processing data for',folder,':',post.attributes.title)
+    console.time('postData');
     post.attributes.type = folder;
     post.attributes.id = data.id;
     post.html_body = marked(post.body);

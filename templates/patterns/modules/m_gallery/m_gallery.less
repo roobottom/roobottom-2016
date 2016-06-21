@@ -7,12 +7,19 @@
   &__link {
     height: 100%;
     display: block;
+    border: none;
   }
 
   &__image {
     display: block;
     width: 100%;
     outline: 1px solid @c_bg;
+    transition: all 150ms ease-out;
+  }
+
+  &__image--is-highlighted {
+    transform: translate(0,-5px) scale(1.05);
+    box-shadow: 0 5px 5px fade(black,20%);
   }
 
   &__link:only-of-type &__image {
@@ -33,6 +40,14 @@
     #site > .r--alpha({
       margin-top: unit(@spacing_vertical/2/@base,rem);
     });
+  }
+
+  .js_caption--is-enabled {
+    cursor:help;
+    border-bottom: 1px solid @lightgrey;
+    &:hover {
+      color: @c_default;
+    }
   }
 
 }

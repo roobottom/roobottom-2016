@@ -8,7 +8,7 @@
 //layouts
 
 @layout_base:               568;
-@layout_alpha:              710;
+@layout_alpha:              720;
 @layout_beta:               852;
 @layout_max:                1260;
 
@@ -119,6 +119,34 @@ h1,h2,h3,h4 {
 a {
   color: @blue;
   text-decoration: none;
+}
+
+//pattern examples
+.pattern {
+  margin-bottom: unit(@spacing_vertical/@base,rem);
+  &:after {
+    font-size: unit(40/@base,rem);
+    color: @grey;
+    content: "\0000B7\0000a0\0000B7\0000a0\0000B7";
+    text-align: center;
+    display: block;
+    padding-top: unit(@spacing_vertical/@base,rem);
+  }
+  &__data {
+    font-size: 80%;
+    border: 1px dotted @grey;
+    background-color: white;
+    margin-bottom: unit(@spacing_vertical/@base,rem);
+  }
+  &__description {
+    padding: unit(@spacing_vertical/@base,rem) unit(@spacing_horizontal/@base,rem);
+  }
+  &__title {
+    padding: unit(@spacing_vertical/2/@base,rem) unit(@spacing_horizontal/@base,rem);
+    font-size: unit(34/@base,em);
+    line-height: 39/34;
+    border-bottom: 1px dotted @grey;
+  }
 }
 
 html {
@@ -398,7 +426,7 @@ th {
   }
   .prose__column() {
     #site > .r--beta({
-      width: unit(720/@base,rem);
+      width: unit(@layout_alpha/@base,rem);
       flex: initial;
     });
   }
@@ -697,7 +725,7 @@ th {
   }
 
   //code blocks
-  p>code {
+  p>code, li>code {
     #type > .code--base();
     #type > .code--inline();
   }
@@ -967,7 +995,8 @@ th {
     //#font > .ridley();
     display: block;
     padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/2/@base,rem);
-    
+    padding-left: 0;
+
     &--is-active {
       font-weight: bold;
     }
@@ -991,8 +1020,10 @@ th {
   //sub navigation
   &[class*=sub] {
     border-bottom: 1px solid @lightgrey;
+    margin-bottom: unit(@spacing_vertical/@base,rem);
     #site .r--max({
       border: none;
+      margin-bottom: 0;
     });
   }
   &[class*=sub] &__link {
@@ -1003,7 +1034,7 @@ th {
   &--sub-stacked &__items,
   &--sub-stacked &__item,
   &--sub-stacked &__link {
-    #site > .r--beta({
+    #site > .r--max({
       display: block;
     });
   }
@@ -1022,7 +1053,12 @@ th {
 
   #site > .r--alpha({
     text-align: center;
+    &--aligned {
+      text-align: left;
+    }
   });
+
+
 
 }
 
@@ -1234,6 +1270,15 @@ th {
       margin-left: unit((@i/(100 + @i)) * 100,%);
     });
   }
+
+  //calculates the push back for putting elements back in-line with the parent wrapper
+  .hangoff(@b: @layout_alpha) {
+    #site > .r--max({
+      @remaining: (@layout_max - @b) / 2;
+      margin-left: unit(-1 * ((@remaining/@b) * 100),%);
+      float: left;
+    });
+  }
 }
 .u_space----loop(@i) when (@i >= 0) {
   .u_space {
@@ -1252,4 +1297,8 @@ th {
 
 .u_space__pull {
   #u_space > .pull();
+}
+
+.u_space__hangoff {
+  #u_space > .hangoff();
 }

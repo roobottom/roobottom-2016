@@ -14,14 +14,6 @@
   </svg>
 {% endmacro %}
 
-{% macro c_siteBody(content) %}
-  <main class="c_siteBody">
-    {% for item in content %}
-        {{ item }}
-    {% endfor %}
-  </main>
-{% endmacro %}
-
 {% macro c_block(items,pattern) %}
   {% if pattern %}
     {% for item in items %}
@@ -32,6 +24,14 @@
       {{ item }}
     {% endfor %}
   {% endif %}
+{% endmacro %}
+
+{% macro c_siteBody(content) %}
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
+    {% endfor %}
+  </main>
 {% endmacro %}
 
 {% macro c_siteHeader(items,active) %}
@@ -177,8 +177,8 @@
 </nav>
 {% endmacro %}
 
-{% macro m_pageTitle(title,date) %}
-<h1 class="m_pageTitle">{{title}}</h1>
+{% macro m_pageTitle(title,date,modifier) %}
+<h1 class="m_pageTitle{% if modifier %} m_pageTitle--{{modifier}}{% endif %}">{{title}}</h1>
 {% if date %}
 <time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
 {% endif %}

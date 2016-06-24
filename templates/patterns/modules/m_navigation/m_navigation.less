@@ -26,7 +26,8 @@
     //#font > .ridley();
     display: block;
     padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/2/@base,rem);
-    
+    padding-left: 0;
+
     &--is-active {
       font-weight: bold;
     }
@@ -50,8 +51,10 @@
   //sub navigation
   &[class*=sub] {
     border-bottom: 1px solid @lightgrey;
+    margin-bottom: unit(@spacing_vertical/@base,rem);
     #site .r--max({
       border: none;
+      margin-bottom: 0;
     });
   }
   &[class*=sub] &__link {
@@ -62,7 +65,7 @@
   &--sub-stacked &__items,
   &--sub-stacked &__item,
   &--sub-stacked &__link {
-    #site > .r--beta({
+    #site > .r--max({
       display: block;
     });
   }

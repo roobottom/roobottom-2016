@@ -13,13 +13,15 @@ function getListOfPatternsForType(type) {
   return new Promise((resolve,reject) => {
     recursiveReadDir(patternsRoot+type, function (err, patterns) {
       if(!err) {
-        patterns = _.remove(patterns, n => n.match(/^[\/\w]*\.example$/));
+        patterns = _.remove(patterns, n => n.match(/^.*\.example$/));
+        patterns.sort().reverse();
         let cleanList = [];
         let nameArray = '';
         patterns.map(item => {
           nameArray = item.split('/');
           let name = nameArray[nameArray.length - 1];
-          cleanList.push({file: './' + item.substr(patternsRoot.length - 2), name: name.replace(/.example/g,'') })
+          let folder = nameArray[nameArray.length -2];
+          cleanList.push({file: './' + item.substr(patternsRoot.length - 2), name: name.replace(/.example/g,''), folder: folder })
         });
         resolve(cleanList);
       } else {

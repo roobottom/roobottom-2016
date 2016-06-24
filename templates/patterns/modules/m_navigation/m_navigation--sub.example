@@ -1,0 +1,8 @@
+{% import "./m_navigation.pattern" as pattern %}
+{{
+  pattern.m_navigation([
+    {name:'Jedi',url:'#'},
+    {name:'Mind',url:'#'},
+    {name:'Tricks',url:'#'}
+  ],active='tricks',modifier='sub')
+}}

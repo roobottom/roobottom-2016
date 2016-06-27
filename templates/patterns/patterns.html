@@ -14,6 +14,14 @@
   </svg>
 {% endmacro %}
 
+{% macro c_siteBody(content) %}
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
+    {% endfor %}
+  </main>
+{% endmacro %}
+
 {% macro c_block(items,pattern) %}
   {% if pattern %}
     {% for item in items %}
@@ -24,14 +32,6 @@
       {{ item }}
     {% endfor %}
   {% endif %}
-{% endmacro %}
-
-{% macro c_siteBody(content) %}
-  <main class="c_siteBody">
-    {% for item in content %}
-        {{ item }}
-    {% endfor %}
-  </main>
 {% endmacro %}
 
 {% macro c_siteHeader(items,active) %}
@@ -50,13 +50,6 @@
   </div>
 {% endmacro %}
 
-{% macro m_cacheItem(post) %}
-  <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
-    <h3>{{post.attributes.title}}</h3>
-    <p><em>{{post.attributes.type}}</em>, <time datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time></p>
-  </div>
-{% endmacro %}
-
 {% macro m_figure(images,type) %}
   <figure class="m_figure{% if images|length > 1 %} m_figure--gallery js_gallery{% endif %}">
     {% for i in images %}
@@ -71,6 +64,13 @@
       {% endif %}
     {% endfor %}
   </figure>
+{% endmacro %}
+
+{% macro m_cacheItem(post) %}
+  <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
+    <h3>{{post.attributes.title}}</h3>
+    <p><em>{{post.attributes.type}}</em>, <time datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time></p>
+  </div>
 {% endmacro %}
 
 {% macro m_gallery(images,type,modifier,group=3,caption=false) %}
@@ -105,38 +105,6 @@
   <div class="m_introduction">
     {% markdown markdownFile %}
   </div>
-{% endmacro %}
-
-{% macro m_libraryBlock(text,markdown) %}
-  <div class="m_libraryBlock type{% if markdown %} m_libraryBlock--markdown{% endif %}">
-    {% if markdown %}
-      {% markdown %}
-      {{text}}
-      {% endmarkdown %}
-    {% else %}
-      {{text}}
-    {% endif %}
-  </div>
-{% endmacro %}
-
-{% macro m_libraryDescription(text,markdown=true) %}
-  {{text|dump|e}}
-  {% if markdown == true %}
-    <div class="m_libraryDescription type">
-      {% markdown -%}{{text|e}}{%- endmarkdown %}
-    </div>
-  {% else %}
-    <div class="m_libraryDescription">
-      {{text}}
-    </div>
-  {% endif %}
-{% endmacro %}
-
-{% import "./icons/icon.pattern" as icon %}
-{% macro m_logo() %}
-  <a href="/" class="m_logo" aria-label="Website logo">
-    {{icon.icon('logo')}}
-  </a>
 {% endmacro %}
 
 {% macro m_navigation(items, active, modifier, classes) %}
@@ -174,13 +142,6 @@
     </li>
     {% endfor %}
   </ol>
-{% endmacro %}
-
-{% macro m_patternBlock(description,code) %}
-  <div class="m_patternBlock m_patternBlock--note">
-    <div class="m_patternBlock__description">{{description}}</div>
-    <div class="m_patternBlock__code">{{code}}</div>
-  </div>
 {% endmacro %}
 
 {% macro m_postArticle(post) %}

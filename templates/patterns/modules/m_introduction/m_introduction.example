@@ -1,0 +1,2 @@
+{% import "./m_introduction.pattern" as pattern %}
+{{pattern.m_introduction('_test_data/introduction.md')}}

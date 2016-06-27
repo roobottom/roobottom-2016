@@ -1,6 +1,0 @@
-{% macro m_patternBlock(description,code) %}
-  <div class="m_patternBlock m_patternBlock--note">
-    <div class="m_patternBlock__description">{{description}}</div>
-    <div class="m_patternBlock__code">{{code}}</div>
-  </div>
-{% endmacro %}

@@ -7,6 +7,7 @@ module.exports = function () {
       nunjucks_markdown = require('nunjucks-markdown'),
       marked = require('marked'),
       eg_article = require('../../templates/patterns/_test_data/article.json'),
+      eg_gallery = require('../../templates/patterns/_test_data/gallery.json'),
       settings = require('../settings.json'),
       _ = require('lodash');
 
@@ -22,6 +23,7 @@ module.exports = function () {
   .addFilter('singular', require('../filters/singular.filter.js'))
   .addFilter('fixOrphans', require('../filters/fixOrphans.filter.js'))
   .addGlobal('eg_article',eg_article)
+  .addGlobal('eg_gallery',eg_gallery)
   .addGlobal('site',settings)
 
 

@@ -1,0 +1,2 @@
+{% import "./m_figure.pattern" as pattern %}
+{{pattern.m_figure(eg_article[0].attributes.images,eg_article[0].attributes.type)}}

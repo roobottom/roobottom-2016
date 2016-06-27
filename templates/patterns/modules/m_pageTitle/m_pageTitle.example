@@ -1,0 +1,2 @@
+{% import "./m_pageTitle.pattern" as pattern %}
+{{pattern.m_pageTitle('Jedi mind tricks','20160504')}}

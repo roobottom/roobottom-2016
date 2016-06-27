@@ -14,7 +14,7 @@ function getListOfPatternsForType(type) {
     recursiveReadDir(patternsRoot+type, function (err, patterns) {
       if(!err) {
         patterns = _.remove(patterns, n => n.match(/^.*\.example$/));
-        patterns.sort().reverse();
+        patterns.sort();
         let cleanList = [];
         let nameArray = '';
         patterns.map(item => {

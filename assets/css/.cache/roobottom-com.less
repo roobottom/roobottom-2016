@@ -136,7 +136,6 @@ a {
     font-size: 80%;
     border: 1px dotted @grey;
     background-color: white;
-    margin-bottom: unit(@spacing_vertical/@base,rem);
   }
   &__description {
     padding: unit(@spacing_vertical/@base,rem) unit(@spacing_horizontal/@base,rem);
@@ -146,6 +145,28 @@ a {
     font-size: unit(34/@base,em);
     line-height: 39/34;
     border-bottom: 1px dotted @grey;
+  }
+  &__item {
+    padding: unit(@spacing_vertical/@base,rem) unit(@spacing_horizontal/@base,rem);
+    border: 1px dotted @grey;
+    border-top: none;
+  }
+}
+
+/* js folddowns */
+.js_folddown--show-code-message {
+  text-align: right;
+  color: @grey;
+  float: right;
+}
+.js_foldown--is-active {
+  cursor: pointer;
+}
+.js_foldown--is-active {
+  &:hover, &:active, &:focus {
+    .js_folddown--show-code-message {
+      color: @c_default;
+    }
   }
 }
 
@@ -761,6 +782,7 @@ th {
   table {
       border-collapse: collapse;
       font-size: 80%;
+      width: 100%;
       #type > .default();
   }
 
@@ -768,6 +790,7 @@ th {
       text-align: left;
       border-bottom: 1px solid @grey;
       padding: .5em .7em;
+      vertical-align: top;
   }
 
   th {
@@ -857,24 +880,6 @@ th {
 
 }
 
-.m_filmstrip {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-bottom: unit(@spacing_vertical/@base,rem);
-
-  &__link {
-    height: 100%;
-    display: block;
-  }
-
-  &__image {
-    display: block;
-    width: 100%;
-    outline: 6px solid @c_bg;
-  }
-}
-
 .m_gallery {
   display: flex;
   flex-wrap: wrap;
@@ -891,12 +896,13 @@ th {
     display: block;
     width: 100%;
     outline: 1px solid @c_bg;
-    transition: all 150ms ease-out;
+    transition: all 50ms;
   }
 
   &__image--is-highlighted {
-    //transform: translate(0,-5px) scale(1.05);
-    box-shadow: 0 5px 5px fade(black,20%);
+    outline: 5px solid @c_default;
+    z-index: 1000;
+    position: relative;
   }
 
   &__link:only-of-type &__image {
@@ -913,7 +919,6 @@ th {
     #type > .default();
     #type > .x-small();
     #type > .meta();
-    #u_space > .pull-back();
     #site > .r--alpha({
       margin-top: unit(@spacing_vertical/2/@base,rem);
     });
@@ -921,7 +926,6 @@ th {
 
   .js_caption--is-enabled {
     cursor:help;
-    border-bottom: 1px solid @lightgrey;
     &:hover {
       color: @c_default;
     }
@@ -1175,6 +1179,9 @@ th {
   &--article {
     .m_gallery {
       #u_space > .pull();
+      &__captions {
+        #u_space > .pull-back();
+      }
     }
   }
 }

@@ -46,7 +46,6 @@ a {
     font-size: 80%;
     border: 1px dotted @grey;
     background-color: white;
-    margin-bottom: unit(@spacing_vertical/@base,rem);
   }
   &__description {
     padding: unit(@spacing_vertical/@base,rem) unit(@spacing_horizontal/@base,rem);
@@ -56,5 +55,27 @@ a {
     font-size: unit(34/@base,em);
     line-height: 39/34;
     border-bottom: 1px dotted @grey;
+  }
+  &__item {
+    padding: unit(@spacing_vertical/@base,rem) unit(@spacing_horizontal/@base,rem);
+    border: 1px dotted @grey;
+    border-top: none;
+  }
+}
+
+/* js folddowns */
+.js_folddown--show-code-message {
+  text-align: right;
+  color: @grey;
+  float: right;
+}
+.js_foldown--is-active {
+  cursor: pointer;
+}
+.js_foldown--is-active {
+  &:hover, &:active, &:focus {
+    .js_folddown--show-code-message {
+      color: @c_default;
+    }
   }
 }

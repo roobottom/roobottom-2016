@@ -1,5 +1,5 @@
-{% macro m_pageTitle(title,date,modifier) %}
-<h1 class="m_pageTitle{% if modifier %} m_pageTitle--{{modifier}}{% endif %}">{{title}}</h1>
+{% macro m_pageTitle(title,date,modifier,classes) %}
+<h1 class="m_pageTitle{% if modifier %} m_pageTitle--{{modifier}}{% endif %}"{% if classes %} {{classes}}{% endif %}>{{title}}</h1>
 {% if date %}
 <time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
 {% endif %}

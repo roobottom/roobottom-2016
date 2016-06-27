@@ -1,0 +1,2 @@
+{% import "./m_gallery.pattern" as pattern %}
+{{pattern.m_gallery(eg_gallery[0].attributes.images,eg_gallery[0].attributes.type,caption=true)}}

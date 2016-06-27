@@ -14,12 +14,13 @@
     display: block;
     width: 100%;
     outline: 1px solid @c_bg;
-    transition: all 150ms ease-out;
+    transition: all 50ms;
   }
 
   &__image--is-highlighted {
-    //transform: translate(0,-5px) scale(1.05);
-    box-shadow: 0 5px 5px fade(black,20%);
+    outline: 5px solid @c_default;
+    z-index: 1000;
+    position: relative;
   }
 
   &__link:only-of-type &__image {
@@ -36,7 +37,6 @@
     #type > .default();
     #type > .x-small();
     #type > .meta();
-    #u_space > .pull-back();
     #site > .r--alpha({
       margin-top: unit(@spacing_vertical/2/@base,rem);
     });
@@ -44,7 +44,6 @@
 
   .js_caption--is-enabled {
     cursor:help;
-    border-bottom: 1px solid @lightgrey;
     &:hover {
       color: @c_default;
     }

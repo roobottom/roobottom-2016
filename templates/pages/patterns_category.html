@@ -5,9 +5,9 @@
     {% if pattern.type == category %}
       {% for item in pattern.list -%}
         <div class="pattern">
-          <div class="pattern__data">
-            <h2 class="pattern__title">{{item.name}}</h2>
-            <div class="pattern__description type">
+          <div class="pattern__data js_folddown">
+            <h2 class="pattern__title js_folddown--trigger">{{item.name}}</h2>
+            <div class="pattern__description type js_folddown--target">
               {% markdown './patterns/'+category+'/'+item.folder+'/'+item.name+'.md' %}
             </div>
           </div>

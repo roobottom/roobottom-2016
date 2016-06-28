@@ -1,17 +1,17 @@
-{% macro m_prevNext(post) %}
+{% macro m_prevNext(type,date,prev,next) %}
 <nav class="m_prevNext">
-  {% if post.prev %}
+  {% if prev %}
     <div class="m_prevNext__item m_prevNext__item--prev">
-      <p class="m_prevNext__label">&lArr; Previous {{post.attributes.type|singular}}</p>
-      <a class="m_prevNext__link" href="/{{post.attributes.type}}/{{post.prev.id}}">{{post.prev.title}}</a>
-      <time class="m_prevNext__date" datetime="{{post.prev.date}}" >{{ post.prev.date|fuzzyDate(post.attributes.date) }} previously</time>
+      <p class="m_prevNext__label">&lArr; Previous {{type|singular}}</p>
+      <a class="m_prevNext__link" href="/{{type}}/{{prev.id}}">{{prev.title}}</a>
+      <time class="m_prevNext__date" datetime="{{prev.date}}" >{{ prev.date|fuzzyDate(date) }} previously</time>
     </div>
   {% endif %}
-  {% if post.next %}
+  {% if next %}
     <div class="m_prevNext__item m_prevNext__item--next">
-      <p class="m_prevNext__label">Next {{post.attributes.type|singular}} &rArr;</p>
-      <a class="m_prevNext__link" href="/{{post.attributes.type}}/{{post.next.id}}">{{post.next.title}}</a>
-      <time class="m_prevNext__date" datetime="{{post.next.date}}" >{{ post.next.date|fuzzyDate(post.attributes.date) }} later</time>
+      <p class="m_prevNext__label">Next {{type|singular}} &rArr;</p>
+      <a class="m_prevNext__link" href="/{{type}}/{{next.id}}">{{next.title}}</a>
+      <time class="m_prevNext__date" datetime="{{next.date}}" >{{ next.date|fuzzyDate(date) }} later</time>
     </div>
   {% endif %}
 </nav>

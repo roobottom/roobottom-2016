@@ -22,6 +22,7 @@ module.exports = function () {
   .addFilter('stripPatterns', require('../filters/stripPatterns.filter.js'))
   .addFilter('singular', require('../filters/singular.filter.js'))
   .addFilter('fixOrphans', require('../filters/fixOrphans.filter.js'))
+  .addFilter('fuzzyDate', require('../filters/fuzzyDate.filter.js'))
   .addGlobal('eg_article',eg_article)
   .addGlobal('eg_gallery',eg_gallery)
   .addGlobal('site',settings)

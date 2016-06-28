@@ -1,0 +1,13 @@
+{% import "./m_prevNext.pattern" as pattern %}
+{{
+  pattern.m_prevNext(
+    type='articles',
+    date='2016-05-16',
+    prev={title: 'Jedi mind tricks',
+    date: '2016-05-04',
+    url: '#'},
+    next={title: 'Rebel Scum',
+    date: '2016-05-23',
+    url: '#'}
+  )
+}}

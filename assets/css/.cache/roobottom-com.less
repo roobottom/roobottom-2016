@@ -818,6 +818,25 @@ th {
   });
 }
 
+#m_cacheItem {
+  .background(@c) {
+    background-color: @c;
+    color: contrast(@c);
+  }
+}
+
+.m_cacheItem {
+  &--articles {
+    #m_cacheItem > .background(@c_articles);
+  }
+  &--gallery {
+    #m_cacheItem > .background(@c_gallery);
+  }
+  &--notes {
+    #m_cacheItem > .background(@c_notes);
+  }
+}
+
 .m_figure {
   margin-bottom: unit(@spacing_vertical/@base,rem);
   #u_space > .pull();
@@ -859,25 +878,6 @@ th {
     }
   });
 
-}
-
-#m_cacheItem {
-  .background(@c) {
-    background-color: @c;
-    color: contrast(@c);
-  }
-}
-
-.m_cacheItem {
-  &--articles {
-    #m_cacheItem > .background(@c_articles);
-  }
-  &--gallery {
-    #m_cacheItem > .background(@c_gallery);
-  }
-  &--notes {
-    #m_cacheItem > .background(@c_notes);
-  }
 }
 
 .m_gallery {

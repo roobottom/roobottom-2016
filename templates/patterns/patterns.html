@@ -50,6 +50,13 @@
   </div>
 {% endmacro %}
 
+{% macro m_cacheItem(post) %}
+  <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
+    <h3>{{post.attributes.title}}</h3>
+    <p><em>{{post.attributes.type}}</em>, <time datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time></p>
+  </div>
+{% endmacro %}
+
 {% macro m_figure(images,type) %}
   <figure class="m_figure{% if images|length > 1 %} m_figure--gallery js_gallery{% endif %}">
     {% for i in images %}
@@ -64,13 +71,6 @@
       {% endif %}
     {% endfor %}
   </figure>
-{% endmacro %}
-
-{% macro m_cacheItem(post) %}
-  <div class="m_cacheItem m_cacheItem--{{post.attributes.type}}">
-    <h3>{{post.attributes.title}}</h3>
-    <p><em>{{post.attributes.type}}</em>, <time datetime="{{post.attributes.date}}">{{post.attributes.date|date}}</time></p>
-  </div>
 {% endmacro %}
 
 {% macro m_gallery(images,type,modifier,group=3,caption=false) %}

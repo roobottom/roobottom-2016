@@ -1,0 +1,8 @@
+{% import "./m_pagination.pattern" as pattern %}
+{{
+  pattern.m_pagination('/patterns/modules/',[
+    {url:'#', title: '1'},
+    {url:'#', title: '2', current: true},
+    {url:'#', title: '3'}
+  ])
+}}

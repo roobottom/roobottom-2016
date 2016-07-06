@@ -1,4 +1,4 @@
-{% import '../grids/grid.pattern' as grids %}
+
 <div class="type">
 {% markdown "./_static_content/patterns_typography.md" %}
 </div>

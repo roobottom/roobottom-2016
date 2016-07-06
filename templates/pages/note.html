@@ -5,7 +5,7 @@
   pattern.c_block([
     pattern.m_postNote(post),
     pattern.grid([
-        pattern.m_prevNext(post)
+        pattern.m_prevNext('notes',post.attributes.date,post.prev,post.next)
     ],'prose')
   ])
 }}

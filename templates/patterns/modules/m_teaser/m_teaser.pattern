@@ -20,7 +20,8 @@
     {% endif %}
     <div class="m_teaser__description">
       <div class="m_teaser__summary type">
-        <p>{{post.html_body  | striptags | truncate(200) }} <a href="/{{post.attributes.type}}/{{post.attributes.id}}">See the rest of this {{post.attributes.type|singular}}</a></p>
+        <p>{{post.html_body  | striptags | truncate(200) }}</p>
+        <p><a href="/{{post.attributes.type}}/{{post.attributes.id}}">View {{post.attributes.type|singular}} &rarr;</a></p>
         <hr/>
       </div>
     </div>

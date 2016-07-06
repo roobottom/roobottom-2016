@@ -5,8 +5,8 @@
   pattern.c_block([
     pattern.m_postGallery(post),
     pattern.grid([
-        pattern.m_prevNext(post)
+        pattern.m_prevNext('gallery',post.attributes.date,post.prev,post.next)
     ],'prose')
-  ])  
+  ])
 }}
 {% endblock %}

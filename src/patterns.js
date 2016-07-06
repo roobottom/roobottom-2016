@@ -1,8 +1,10 @@
 'use strict';
 
 let Promise = require('bluebird'),
-    fs  = require('fs'),
+    path = require('path'),
+    fs  = require('fs-extra'),
     _ = require('lodash'),
+    frontmatter = require('front-matter'),
     recursiveReadDir = require('recursive-readdir');
 
 let patternTypes = ['containers','grids','typography','modules','utilities'];
@@ -18,11 +20,21 @@ function getListOfPatternsForType(type) {
         let cleanList = [];
         let nameArray = '';
         patterns.map(item => {
+
+          //get basic file data
+          let name = path.basename(item, '.example');
           nameArray = item.split('/');
-          let name = nameArray[nameArray.length - 1];
           let folder = nameArray[nameArray.length -2];
-          cleanList.push({file: './' + item.substr(patternsRoot.length - 2), name: name.replace(/.example/g,''), folder: folder })
+
+          //get associated `.md` file if available.
+          let mdfile = path.dirname(item) + '/' + name + '.md';
+          let hasmd = fs.statSync(mdfile);
+
+          console.log(hasmd);
+
+          cleanList.push({file: './' + item.substr(patternsRoot.length - 2), name: name, folder: folder, markdown: mdfile })
         });
+        console.log(cleanList);
         resolve(cleanList);
       } else {
         reject(err)

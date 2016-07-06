@@ -1,13 +1,3 @@
-{% macro grid(columns,modifier,classes) %}
-  <div class="grid{% if modifier %} grid--{{modifier}}{% endif %}{% if classes %} {{classes}}{% endif %}">
-  {% for column in columns %}
-    <div class="grid__column">
-      {{ column }}
-    </div>
-  {% endfor %}
-  </div>
-{% endmacro %}
-
 {% macro icon(name) %}
   <svg class="icon icon--{{name}}" aria-hidden="true">
     <use xlink:href="/icons.svg#{{name}}"/>
@@ -34,6 +24,14 @@
   </main>
 {% endmacro %}
 
+{% macro c_wrapper(modules) %}
+  <div class="c_wrapper">
+    {% for module in modules %}
+      {{ module }}
+    {% endfor %}
+  </div>
+{% endmacro %}
+
 {% macro c_siteHeader(items,active) %}
   <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
     {% for item in items %}
@@ -42,11 +40,13 @@
   </header>
 {% endmacro %}
 
-{% macro c_wrapper(modules) %}
-  <div class="c_wrapper">
-    {% for module in modules %}
-      {{ module }}
-    {% endfor %}
+{% macro grid(columns,modifier,classes) %}
+  <div class="grid{% if modifier %} grid--{{modifier}}{% endif %}{% if classes %} {{classes}}{% endif %}">
+  {% for column in columns %}
+    <div class="grid__column">
+      {{ column }}
+    </div>
+  {% endfor %}
   </div>
 {% endmacro %}
 
@@ -221,7 +221,8 @@
     {% endif %}
     <div class="m_teaser__description">
       <div class="m_teaser__summary type">
-        <p>{{post.html_body  | striptags | truncate(200) }} <a href="/{{post.attributes.type}}/{{post.attributes.id}}">See the rest of this {{post.attributes.type|singular}}</a></p>
+        <p>{{post.html_body  | striptags | truncate(200) }}</p>
+        <p><a href="/{{post.attributes.type}}/{{post.attributes.id}}">View {{post.attributes.type|singular}} &rarr;</a></p>
         <hr/>
       </div>
     </div>

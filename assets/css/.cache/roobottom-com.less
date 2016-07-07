@@ -461,97 +461,9 @@ th {
     #site > .spacing();
 }
 
-.c_wrapper {
-  margin: 0 unit(@spacing_horizontal/@base,rem);
-  max-width: unit(@layout_max/@base,rem);
-  #site .r--max({
-    margin: 0 auto;
-  });
-}
-
 .c_siteHeader {
   padding: unit(@spacing_vertical/2/@base,rem) 0;
   border-bottom: 1px solid @lightgrey;
-}
-
-#grid() {
-  .prose() {
-    justify-content: center;
-  }
-  .prose__column() {
-    #site > .r--beta({
-      width: unit(@layout_alpha/@base,rem);
-      flex: initial;
-    });
-  }
-}
-
-.grid {
-
-  &__column {
-    flex: 1;
-    margin-bottom: unit(@spacing_vertical/@base,rem);
-
-    &:nth-of-type(2n) {
-      #site > .r--beta({
-        margin-left: unit(@spacing_horizontal/@base,rem);
-      });
-    }
-  }
-
-  #site > .r--beta({
-    display: flex;
-  });
-
-  //modifers
-  &--2-1 > &__column:nth-of-type(2n-1) {
-    flex: 2;
-  }
-  &--1-2 > &__column:nth-of-type(2n) {
-    flex: 2;
-  }
-  &--1-3 > &__column:nth-of-type(2n) {
-    flex: 3;
-  }
-
-  &--prose {
-    #grid > .prose();
-  }
-  &--prose > &__column {
-    #grid > .prose__column();
-  }
-
-  &--bricks {
-    justify-content: space-between;
-    .grid__column {
-      margin-bottom: 5%;
-    }
-
-    #site .r--beta({
-      flex-wrap: wrap;
-      .grid__column {
-        flex: 0 1 47.5%;
-        margin-left: 0;
-      }
-    });
-
-    #site .r--max({
-      .grid__column {
-        flex: 0 1 30%;
-
-        &:nth-of-type(10n-9),
-        &:nth-of-type(10n-3) {
-          flex: 0 1 65%;
-        }
-        &:nth-of-type(10n-4),
-        &:nth-of-type(10n-2) {
-          margin-left: 0;
-        }
-      }
-    });
-
-  }
-
 }
 
 #m_cacheItem {
@@ -573,47 +485,12 @@ th {
   }
 }
 
-.m_figure {
-  margin-bottom: unit(@spacing_vertical/@base,rem);
-  #u_space > .pull();
-
-  &__image {
-    display: block;
-    max-width: 100%;
-    margin-bottom: unit(@spacing_vertical/2/@base,rem);
-    #site > .r--alpha({
-      margin-bottom: 0;
-    });
-  }
-
-  &__caption {
-    display: block;
-    flex-basis: 100%;
-    box-sizing: border-box;
-    font-style: italic;
-    #type > .default();
-    #type > .x-small();
-    #type > .meta();
-    #u_space > .pull-back();
-    #site > .r--alpha({
-      margin-top: unit(@spacing_vertical/2/@base,rem);
-    });
-  }
-
-  //gallery mode
-  #site > .r--alpha({
-    &--gallery {
-      display: flex;
-      flex-wrap: wrap;
-      .m_figure__image {
-        height: 100%;
-        width: 100%;
-        display: block;
-        outline: 1px solid @c_bg;
-      }
-    }
+.c_wrapper {
+  margin: 0 unit(@spacing_horizontal/@base,rem);
+  max-width: unit(@layout_max/@base,rem);
+  #site .r--max({
+    margin: 0 auto;
   });
-
 }
 
 .m_gallery {
@@ -756,6 +633,49 @@ th {
 
 }
 
+.m_figure {
+  margin-bottom: unit(@spacing_vertical/@base,rem);
+  #u_space > .pull();
+
+  &__image {
+    display: block;
+    max-width: 100%;
+    margin-bottom: unit(@spacing_vertical/2/@base,rem);
+    #site > .r--alpha({
+      margin-bottom: 0;
+    });
+  }
+
+  &__caption {
+    display: block;
+    flex-basis: 100%;
+    box-sizing: border-box;
+    font-style: italic;
+    #type > .default();
+    #type > .x-small();
+    #type > .meta();
+    #u_space > .pull-back();
+    #site > .r--alpha({
+      margin-top: unit(@spacing_vertical/2/@base,rem);
+    });
+  }
+
+  //gallery mode
+  #site > .r--alpha({
+    &--gallery {
+      display: flex;
+      flex-wrap: wrap;
+      .m_figure__image {
+        height: 100%;
+        width: 100%;
+        display: block;
+        outline: 1px solid @c_bg;
+      }
+    }
+  });
+
+}
+
 .m_pageTitle {
   #type > .h1();
   &__date {
@@ -777,30 +697,6 @@ th {
 
 }
 
-.m_pagination {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  &__item {
-    list-style: none;
-    margin: 0 unit(@spacing_horizontal/4/@base,rem);
-  }
-  &__link {
-    display: block;
-    padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/4/@base,rem);
-    font-size: 80%;
-    border: 1px solid @grey;
-    border-radius: 2px;
-  }
-  &__link--current {
-    border-color: @c_link;
-    background-color: @c_link;
-    color: contrast(@c_link);
-  }
-}
-
 .m_posts {
   //todo
 }
@@ -819,6 +715,86 @@ th {
        #type > .p--introduction();
      }
   }
+}
+
+#grid() {
+  .prose() {
+    justify-content: center;
+  }
+  .prose__column() {
+    #site > .r--beta({
+      width: unit(@layout_alpha/@base,rem);
+      flex: initial;
+    });
+  }
+}
+
+.grid {
+
+  &__column {
+    flex: 1;
+    margin-bottom: unit(@spacing_vertical/@base,rem);
+
+    &:nth-of-type(2n) {
+      #site > .r--beta({
+        margin-left: unit(@spacing_horizontal/@base,rem);
+      });
+    }
+  }
+
+  #site > .r--beta({
+    display: flex;
+  });
+
+  //modifers
+  &--2-1 > &__column:nth-of-type(2n-1) {
+    flex: 2;
+  }
+  &--1-2 > &__column:nth-of-type(2n) {
+    flex: 2;
+  }
+  &--1-3 > &__column:nth-of-type(2n) {
+    flex: 3;
+  }
+
+  &--prose {
+    #grid > .prose();
+  }
+  &--prose > &__column {
+    #grid > .prose__column();
+  }
+
+  &--bricks {
+    justify-content: space-between;
+    .grid__column {
+      margin-bottom: 5%;
+    }
+
+    #site .r--beta({
+      flex-wrap: wrap;
+      .grid__column {
+        flex: 0 1 47.5%;
+        margin-left: 0;
+      }
+    });
+
+    #site .r--max({
+      .grid__column {
+        flex: 0 1 30%;
+
+        &:nth-of-type(10n-9),
+        &:nth-of-type(10n-3) {
+          flex: 0 1 65%;
+        }
+        &:nth-of-type(10n-4),
+        &:nth-of-type(10n-2) {
+          margin-left: 0;
+        }
+      }
+    });
+
+  }
+
 }
 
 .m_prevNext {
@@ -1215,4 +1191,28 @@ th {
 
 .u_space__hangoff {
   #u_space > .hangoff();
+}
+
+.m_pagination {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  &__item {
+    list-style: none;
+    margin: 0 unit(@spacing_horizontal/4/@base,rem);
+  }
+  &__link {
+    display: block;
+    padding: unit(@spacing_vertical/4/@base,rem) unit(@spacing_horizontal/4/@base,rem);
+    font-size: 80%;
+    border: 1px solid @grey;
+    border-radius: 2px;
+  }
+  &__link--current {
+    border-color: @c_link;
+    background-color: @c_link;
+    color: contrast(@c_link);
+  }
 }

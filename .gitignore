@@ -2,3 +2,4 @@ node_modules
 posts/.cache
 .publish
 images/_cache
+src/settings.json

@@ -17,6 +17,7 @@ app.use(express.static(cacheRoot));
 const whitelist = [
   '^.*\/\/roo\.dev\/?.*$',
   '^.*\/\/roobottom\.com\/?.*$',
+  '^.*\/\/new.roobottom\.com\/?.*$',
   '^.*\/\/localhost\/?.*$'
 ];
 const whitelist_regex = new RegExp(whitelist.join("|"), "g");

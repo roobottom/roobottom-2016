@@ -1,11 +1,12 @@
-This is my pattern library, a collection of all elements used thoughout the site. I really love pattern libraries, and spend lots of my time at work thinking about them. So when it came to rebuilding this site it made sense to take a "patterns first" approach.
+This is my pattern library, a collection of all elements used thoughout the site. I really love pattern libraries, and spend lots of my time thinking about them. So when it came to rebuilding this site it made sense to take a "patterns first" approach.
 
 I also wanted to share a little of the philosophy behind this library, how it's built and how patterns are the single source of truth for **all** markup on this site.
 
 ## Why?
 
-* Flexible
-* Specific for use (i.e., grids are designed around the content, rather than the other way around).
+Modern websites 
+
+Better designers than me have [written much](http://atomicdesign.bradfrost.com/) on the subject of designing systems for websites. 
 
 ## How?
 

@@ -1,1 +1,1 @@
-Grids do all the heavy lifting layout work. A grid pattern accepts n patterns that are wrapped as columns, an optional classes string, and an optional modifier that describes the layout of the grid. On smaller screen, all grid columns are stacked, one on top of another.
+Grids do all the heavy lifting layout work. A grid pattern accepts _n_ patterns that are wrapped as columns. On smaller screen, all grid columns are stacked, one on top of another.

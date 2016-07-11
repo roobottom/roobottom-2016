@@ -1,0 +1,17 @@
+{% import "./grid.pattern" as pattern %}
+
+{{
+  pattern.grid(
+    ['<div class="eg">brick</div>',
+    '<div class="eg">brick</div>',
+    '<div class="eg">brick</div>',
+    '<div class="eg">brick</div>',
+    '<div class="eg">brick</div>',
+    '<div class="eg">brick</div>',
+    '<div class="eg">brick</div>',
+    '<div class="eg">brick</div>',
+    '<div class="eg">brick</div>',
+    '<div class="eg">brick</div>'],
+    modifier='bricks'
+  )
+}}

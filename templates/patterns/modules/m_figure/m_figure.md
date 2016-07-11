@@ -1,3 +1,6 @@
+---
+title: Figure
+---
 `m_figure` renders a one or more images in a single row. Also available as a smartTag. [View the source code for this pattern](https://github.com/roobottom/roobottom-express/tree/master/templates/patterns/modules/m_figure)
 
 ### Nunjucks macro call

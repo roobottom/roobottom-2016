@@ -5,13 +5,21 @@
     {% if pattern.type == category %}
       {% for item in pattern.list -%}
         <div class="pattern">
+          {% if item.info %}
           <div class="pattern__data js_folddown">
-            <h2 class="pattern__title js_folddown--trigger">{{item.name}}</h2>
+            <h2 class="pattern__title js_folddown--trigger">
+              {% if item.info.attributes.title %}
+                {{item.info.attributes.title}}
+              {% else %}
+                {{item.name}}
+              {% endif %}
+            </h2>
             <div class="pattern__description type js_folddown--target">
-              {% markdown './patterns/'+category+'/'+item.folder+'/'+item.name+'.md' %}
+              {{item.info.html_body}}
             </div>
           </div>
-          <div class="pattern__item">
+          {% endif %}
+          <div class="pattern__item{% if item.info %} pattern__item--with-info{% endif %}">
             {% pattern name=item.file %}
           </div>
         </div>
@@ -23,6 +31,7 @@
 {% block content %}
   <div class="type">
     {% markdown "./patterns/_static_content/introduction_" + category + ".md" %}
+    <hr/>
   </div>
   {{ptn()}}
 {% endblock %}

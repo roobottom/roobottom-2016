@@ -4,6 +4,22 @@
   </svg>
 {% endmacro %}
 
+{% macro c_siteBody(content) %}
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
+    {% endfor %}
+  </main>
+{% endmacro %}
+
+{% macro c_wrapper(modules) %}
+  <div class="c_wrapper">
+    {% for module in modules %}
+      {{ module }}
+    {% endfor %}
+  </div>
+{% endmacro %}
+
 {% macro c_block(items,pattern) %}
   {% if pattern %}
     {% for item in items %}
@@ -16,30 +32,6 @@
   {% endif %}
 {% endmacro %}
 
-{% macro c_siteBody(content) %}
-  <main class="c_siteBody">
-    {% for item in content %}
-        {{ item }}
-    {% endfor %}
-  </main>
-{% endmacro %}
-
-{% macro c_siteHeader(items,active) %}
-  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
-    {% for item in items %}
-    {{item}}
-    {% endfor %}
-  </header>
-{% endmacro %}
-
-{% macro c_wrapper(modules) %}
-  <div class="c_wrapper">
-    {% for module in modules %}
-      {{ module }}
-    {% endfor %}
-  </div>
-{% endmacro %}
-
 {% macro grid(columns,modifier,classes) %}
   <div class="grid{% if modifier %} grid--{{modifier}}{% endif %}{% if classes %} {{classes}}{% endif %}">
   {% for column in columns %}
@@ -48,6 +40,14 @@
     </div>
   {% endfor %}
   </div>
+{% endmacro %}
+
+{% macro c_siteHeader(items,active) %}
+  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
+    {% for item in items %}
+    {{item}}
+    {% endfor %}
+  </header>
 {% endmacro %}
 
 {% macro m_cacheItem(post) %}

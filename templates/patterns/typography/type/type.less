@@ -131,15 +131,21 @@
 
   .hr() {
     border: none;
-    clear: both;
+    margin: 0;
+    display: block;
+    #u_space > .push();
     &:before {
       font-size: unit(40/@base,rem);
       color: @grey;
       content: "\0000B7\0000a0\0000B7\0000a0\0000B7";
       text-align: center;
       display: block;
-      #u_space > .push();
     }
+
+    &+h2 {
+      margin-top: 0;
+    }
+
   }
 
   .pre() {

@@ -28,13 +28,16 @@ function getListOfPatternsForType(type) {
 
           //get associated `.md` file if available.
           let mdfile = path.dirname(item) + '/' + name + '.md';
-          let hasmd = fs.statSync(mdfile);
+          if(fs.statSync(mdfile)) {
+            let contents = fs.readFileSync(mdfile,'utf8');
+            cleanList.push({file: './' + item.substr(patternsRoot.length - 2), name: name, folder: folder, info: frontmatter(contents) });
+          }
+          else {
+            cleanList.push({file: './' + item.substr(patternsRoot.length - 2), name: name, folder: folder});
+          };
 
-          console.log(hasmd);
 
-          cleanList.push({file: './' + item.substr(patternsRoot.length - 2), name: name, folder: folder, markdown: mdfile })
         });
-        console.log(cleanList);
         resolve(cleanList);
       } else {
         reject(err)

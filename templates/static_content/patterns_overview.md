@@ -18,11 +18,11 @@ Unlike some of the larger systems I've designed, I wanted these patterns to be a
 
 This pattern library contains definitions for patterns and less mixins, in 5 categories:
 
-* **Grids** define layout. They can contain any other component type. They use the namespace `grid`
-* **Containers** serve both as top level building blocks, such as headers, and to contain repeating modules. They use the namespace `c`
-* **Typography** is a special set of definitions just for typesetting. These are not patterns, per se, rather a collection of less mixins and . They use the namespace `type`
-* **Modules** are self-contained elements that cannot be broken down into smaller patterns. They are usually composed together within grids and containers. They use the namespace `m`
-* **Utilities** are a collection of less mixins and classes that can be used by any grid, container or module. They use the namespace `u`.
+* **Grids** define layout. They can contain any other component type.
+* **Containers** serve both as top level building blocks, such as headers, and to contain repeating modules.
+* **Typography** is a special set of styles just for typesetting.
+* **Modules** are self-contained elements that cannot be broken down into smaller patterns. They are usually composed together within grids and containers.
+* **Utilities** are a collection of less mixins and classes that can be used by any grid, container or module.
 
 ### Patterns
 

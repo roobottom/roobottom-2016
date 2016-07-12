@@ -457,6 +457,10 @@ th {
   border-bottom: 1px solid @lightgrey;
 }
 
+.c_siteBody {
+    #site > .spacing();
+}
+
 .c_wrapper {
   margin: 0 unit(@spacing_horizontal/@base,rem);
   max-width: unit(@layout_max/@base,rem);
@@ -543,10 +547,6 @@ th {
 
   }
 
-}
-
-.c_siteBody {
-    #site > .spacing();
 }
 
 #m_cacheItem {
@@ -890,6 +890,56 @@ th {
 
 }
 
+#u_space() {
+  .push(@bottom: 1, @top: 0) {
+    margin-bottom: unit((@spacing_vertical*@bottom)/@base,rem);
+    margin-top: unit((@spacing_vertical*@top)/@base,rem);
+  }
+
+  .pull(@i: 9) {
+    #site > .r--max({
+      margin-left: unit(-1 * @i,%);
+    });
+  }
+  //indents items inside a .pull class back inline with the parent wrapper:
+  .pull-back(@i: 9) {
+    #site > .r--max({
+      margin-left: unit((@i/(100 + @i)) * 100,%);
+    });
+  }
+
+  //calculates the push back for putting elements back in-line with the parent wrapper
+  .hangoff(@b: @layout_alpha) {
+    #site > .r--max({
+      @remaining: (@layout_max - @b) / 2;
+      margin-left: unit(-1 * ((@remaining/@b) * 100),%);
+      float: left;
+    });
+  }
+}
+.u_space----loop(@i) when (@i >= 0) {
+  .u_space {
+    &__push-@{i} {
+      #u_space > .push(@i);
+    }
+  }
+  .u_space----loop(@i - 1);
+}
+.u_space----loop(5);
+
+//default push
+.u_space__push {
+  #u_space > .push();
+}
+
+.u_space__pull {
+  #u_space > .pull();
+}
+
+.u_space__hangoff {
+  #u_space > .hangoff();
+}
+
 #type() {
 
   .default() {
@@ -1166,54 +1216,4 @@ th {
   }
 
 
-}
-
-#u_space() {
-  .push(@bottom: 1, @top: 0) {
-    margin-bottom: unit((@spacing_vertical*@bottom)/@base,rem);
-    margin-top: unit((@spacing_vertical*@top)/@base,rem);
-  }
-
-  .pull(@i: 9) {
-    #site > .r--max({
-      margin-left: unit(-1 * @i,%);
-    });
-  }
-  //indents items inside a .pull class back inline with the parent wrapper:
-  .pull-back(@i: 9) {
-    #site > .r--max({
-      margin-left: unit((@i/(100 + @i)) * 100,%);
-    });
-  }
-
-  //calculates the push back for putting elements back in-line with the parent wrapper
-  .hangoff(@b: @layout_alpha) {
-    #site > .r--max({
-      @remaining: (@layout_max - @b) / 2;
-      margin-left: unit(-1 * ((@remaining/@b) * 100),%);
-      float: left;
-    });
-  }
-}
-.u_space----loop(@i) when (@i >= 0) {
-  .u_space {
-    &__push-@{i} {
-      #u_space > .push(@i);
-    }
-  }
-  .u_space----loop(@i - 1);
-}
-.u_space----loop(5);
-
-//default push
-.u_space__push {
-  #u_space > .push();
-}
-
-.u_space__pull {
-  #u_space > .pull();
-}
-
-.u_space__hangoff {
-  #u_space > .hangoff();
 }

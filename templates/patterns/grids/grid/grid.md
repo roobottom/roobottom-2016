@@ -7,7 +7,7 @@ The main grid used throughout the site is the `prose` grid. Designed to offer a 
 
 ```
 pattern.grid(
-  ['<div>grid contents</div>'],
+  ['<div class="eg">Prose</div>'],
   modifier='prose'
 )
 ```

@@ -24,6 +24,14 @@
   </header>
 {% endmacro %}
 
+{% macro c_siteBody(content) %}
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
+    {% endfor %}
+  </main>
+{% endmacro %}
+
 {% macro c_wrapper(modules) %}
   <div class="c_wrapper">
     {% for module in modules %}
@@ -40,14 +48,6 @@
     </div>
   {% endfor %}
   </div>
-{% endmacro %}
-
-{% macro c_siteBody(content) %}
-  <main class="c_siteBody">
-    {% for item in content %}
-        {{ item }}
-    {% endfor %}
-  </main>
 {% endmacro %}
 
 {% macro m_cacheItem(post) %}

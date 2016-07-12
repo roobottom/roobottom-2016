@@ -1,0 +1,5 @@
+{% import "./c_wrapper.pattern" as pattern %}
+
+{{
+  pattern.c_wrapper(['<div class="eg">Wrapped Patterns</div>'])
+}}

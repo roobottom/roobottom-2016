@@ -1,0 +1,9 @@
+{% import "./c_block.pattern" as pattern %}
+
+{{
+  pattern.c_block([
+  '<div class="eg">Example Pattern</div>',
+  '<div class="eg">Example Pattern</div>',
+  '<div class="eg">Example Pattern</div>'
+  ])
+}}

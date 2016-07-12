@@ -135,16 +135,17 @@ a {
   &__data {
     font-size: 80%;
     border: 1px dotted @grey;
-    background-color: white;
   }
   &__description {
     padding: unit(@spacing_vertical/@base,rem) unit(@spacing_horizontal/@base,rem);
+    background-color: white;
   }
   &__title {
     padding: unit(@spacing_vertical/2/@base,rem) unit(@spacing_horizontal/@base,rem);
     font-size: unit(34/@base,em);
     line-height: 39/34;
     border-bottom: 1px dotted @grey;
+    background-color: #F1F1F1;
   }
   &__item--with-info {
     padding: unit(@spacing_vertical/@base,rem) unit(@spacing_horizontal/@base,rem);
@@ -890,56 +891,6 @@ th {
 
 }
 
-#u_space() {
-  .push(@bottom: 1, @top: 0) {
-    margin-bottom: unit((@spacing_vertical*@bottom)/@base,rem);
-    margin-top: unit((@spacing_vertical*@top)/@base,rem);
-  }
-
-  .pull(@i: 9) {
-    #site > .r--max({
-      margin-left: unit(-1 * @i,%);
-    });
-  }
-  //indents items inside a .pull class back inline with the parent wrapper:
-  .pull-back(@i: 9) {
-    #site > .r--max({
-      margin-left: unit((@i/(100 + @i)) * 100,%);
-    });
-  }
-
-  //calculates the push back for putting elements back in-line with the parent wrapper
-  .hangoff(@b: @layout_alpha) {
-    #site > .r--max({
-      @remaining: (@layout_max - @b) / 2;
-      margin-left: unit(-1 * ((@remaining/@b) * 100),%);
-      float: left;
-    });
-  }
-}
-.u_space----loop(@i) when (@i >= 0) {
-  .u_space {
-    &__push-@{i} {
-      #u_space > .push(@i);
-    }
-  }
-  .u_space----loop(@i - 1);
-}
-.u_space----loop(5);
-
-//default push
-.u_space__push {
-  #u_space > .push();
-}
-
-.u_space__pull {
-  #u_space > .pull();
-}
-
-.u_space__hangoff {
-  #u_space > .hangoff();
-}
-
 #type() {
 
   .default() {
@@ -1216,4 +1167,54 @@ th {
   }
 
 
+}
+
+#u_space() {
+  .push(@bottom: 1, @top: 0) {
+    margin-bottom: unit((@spacing_vertical*@bottom)/@base,rem);
+    margin-top: unit((@spacing_vertical*@top)/@base,rem);
+  }
+
+  .pull(@i: 9) {
+    #site > .r--max({
+      margin-left: unit(-1 * @i,%);
+    });
+  }
+  //indents items inside a .pull class back inline with the parent wrapper:
+  .pull-back(@i: 9) {
+    #site > .r--max({
+      margin-left: unit((@i/(100 + @i)) * 100,%);
+    });
+  }
+
+  //calculates the push back for putting elements back in-line with the parent wrapper
+  .hangoff(@b: @layout_alpha) {
+    #site > .r--max({
+      @remaining: (@layout_max - @b) / 2;
+      margin-left: unit(-1 * ((@remaining/@b) * 100),%);
+      float: left;
+    });
+  }
+}
+.u_space----loop(@i) when (@i >= 0) {
+  .u_space {
+    &__push-@{i} {
+      #u_space > .push(@i);
+    }
+  }
+  .u_space----loop(@i - 1);
+}
+.u_space----loop(5);
+
+//default push
+.u_space__push {
+  #u_space > .push();
+}
+
+.u_space__pull {
+  #u_space > .pull();
+}
+
+.u_space__hangoff {
+  #u_space > .hangoff();
 }

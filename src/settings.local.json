@@ -1,0 +1,5 @@
+{
+    "title":"Local Test Server",
+    "imageServer":"http://localhost:3003/",
+    "postsPerPage":10
+}

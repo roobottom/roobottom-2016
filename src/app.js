@@ -5,14 +5,26 @@ var express = require('express'),
     nunjucksDate = require('nunjucks-date'),
     _ = require('lodash'),
     app = express(),
+    nconf = require('nconf'),
 
     posts = require('./posts.js'),
     patterns = require('./patterns.js'),
     tags = require('./tags.js'),
-    settings = require('./settings.json'),
     nunjucks_renderPattern = require('./tags/renderPattern.tag.js'),
     nunjucks_markdown = require('nunjucks-markdown'),
     marked = require('marked');
+
+    //settings
+    nconf.env();
+    if(nconf.get('settings')) {
+      var settings = require(nconf.get('settings'));
+      console.log('using settings file:',nconf.get('settings'));
+    }
+    else {
+      var settings = require('./settings.json');
+      console.log('using default settings');
+    }
+
 
 var __basename = _.trimEnd(__dirname,'src');
 

@@ -8,8 +8,20 @@ module.exports = function () {
       marked = require('marked'),
       eg_article = require('../../templates/patterns/_test_data/article.json'),
       eg_gallery = require('../../templates/patterns/_test_data/gallery.json'),
-      settings = require('../settings.json'),
+      nconf = require('nconf'),
       _ = require('lodash');
+
+  //settings
+  nconf.env();
+  let settings;
+  if(nconf.get('settings')) {
+    settings = require('.'+nconf.get('settings'));
+    console.log('using settings file:',nconf.get('settings'));
+  }
+  else {
+    settings = require('./settings.json');
+    console.log('using default settings');
+  }
 
   let __basename = __dirname.slice(0,-8);
 

@@ -42,20 +42,9 @@ gulp.task('go', function () {
     script: 'src/app.js'
   , ext: 'js html md less pattern example'
   , ignore: ["templates/patterns/patterns.html","posts/posts.json","_site/"]
-  , env: { 'NODE_ENV': 'development' }
+  , env: { 'settings': './settings.local.json' }
   , watch: ["src", "templates"]
   , tasks: ['patterns','less']
-  })
-})
-
-//start nodemon, this will only rebuild the js, rather than the slow concat less and patterns
-gulp.task('go:js', function () {
-  nodemon({
-    script: 'src/app.js'
-  , ext: 'js html md less pattern example'
-  , ignore: ["templates/patterns/patterns.html","posts/posts.json","_site/"]
-  , env: { 'NODE_ENV': 'development' }
-  , watch: ["src", "templates"]
   })
 })
 

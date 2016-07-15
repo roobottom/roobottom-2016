@@ -22,6 +22,7 @@
     "marked": "^0.3.5",
     "merge": "^1.2.0",
     "mkdirp": "^0.5.1",
+    "nconf": "^0.8.4",
     "nunjucks": "^2.3.0",
     "nunjucks-date": "^1.2.0",
     "nunjucks-markdown": "^2.0.0",

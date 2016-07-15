@@ -1,6 +1,17 @@
 var _ = require('lodash'),
     nunjucks = require('nunjucks'),
-    settings = require('./settings.json');
+    nconf = require('nconf');
+
+//settings
+nconf.env();
+if(nconf.get('settings')) {
+  var settings = require(nconf.get('settings'));
+  console.log('using settings file:',nconf.get('settings'));
+}
+else {
+  var settings = require('./settings.json');
+  console.log('using default settings');
+}
 
 var __basename = _.trimEnd(__dirname,'src');
 var env = nunjucks.configure( __basename + 'templates/', {

@@ -19,7 +19,7 @@ module.exports = function () {
     console.log('using settings file:',nconf.get('settings'));
   }
   else {
-    settings = require('./settings.json');
+    settings = require('../settings.json');
     console.log('using default settings');
   }
 

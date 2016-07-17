@@ -4,14 +4,6 @@
   </svg>
 {% endmacro %}
 
-{% macro c_siteBody(content) %}
-  <main class="c_siteBody">
-    {% for item in content %}
-        {{ item }}
-    {% endfor %}
-  </main>
-{% endmacro %}
-
 {% macro c_block(items,pattern) %}
   {% if pattern %}
     {% for item in items %}
@@ -22,6 +14,14 @@
       {{ item }}
     {% endfor %}
   {% endif %}
+{% endmacro %}
+
+{% macro c_siteBody(content) %}
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
+    {% endfor %}
+  </main>
 {% endmacro %}
 
 {% macro c_siteHeader(items,active) %}
@@ -101,12 +101,6 @@
   </div>
 {% endmacro %}
 
-{% macro m_introduction(markdownFile) %}
-  <div class="m_introduction">
-    {% markdown markdownFile %}
-  </div>
-{% endmacro %}
-
 {% macro m_navigation(items, active, modifier, classes) %}
 <nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}{%if classes %} {{classes}}{% endif %}">
     <ul class="m_navigation__items">
@@ -127,11 +121,10 @@
 </nav>
 {% endmacro %}
 
-{% macro m_pageTitle(title,date,modifier,classes) %}
-<h1 class="m_pageTitle{% if modifier %} m_pageTitle--{{modifier}}{% endif %}"{% if classes %} {{classes}}{% endif %}>{{title}}</h1>
-{% if date %}
-<time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
-{% endif %}
+{% macro m_introduction(markdownFile) %}
+  <div class="m_introduction">
+    {% markdown markdownFile %}
+  </div>
 {% endmacro %}
 
 {% macro m_pagination(baseUrl,pagination) %}
@@ -144,23 +137,11 @@
   </ol>
 {% endmacro %}
 
-{% macro m_prevNext(type,date,prev,next) %}
-<nav class="m_prevNext">
-  {% if prev %}
-    <div class="m_prevNext__item m_prevNext__item--prev">
-      <p class="m_prevNext__label">&lArr; Previous {{type|singular}}</p>
-      <a class="m_prevNext__link" href="/{{type}}/{{prev.id}}">{{prev.title}}</a>
-      <time class="m_prevNext__date" datetime="{{prev.date}}" >{{ prev.date|fuzzyDate(date) }} previously</time>
-    </div>
-  {% endif %}
-  {% if next %}
-    <div class="m_prevNext__item m_prevNext__item--next">
-      <p class="m_prevNext__label">Next {{type|singular}} &rArr;</p>
-      <a class="m_prevNext__link" href="/{{type}}/{{next.id}}">{{next.title}}</a>
-      <time class="m_prevNext__date" datetime="{{next.date}}" >{{ next.date|fuzzyDate(date) }} later</time>
-    </div>
-  {% endif %}
-</nav>
+{% macro m_pageTitle(title,date,modifier,classes) %}
+<h1 class="m_pageTitle{% if modifier %} m_pageTitle--{{modifier}}{% endif %}"{% if classes %} {{classes}}{% endif %}>{{title}}</h1>
+{% if date %}
+<time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
+{% endif %}
 {% endmacro %}
 
 {% macro m_postArticle(post) %}
@@ -197,6 +178,25 @@
       ],'prose','type')
     }}
   </article>
+{% endmacro %}
+
+{% macro m_prevNext(type,date,prev,next) %}
+<nav class="m_prevNext">
+  {% if prev %}
+    <div class="m_prevNext__item m_prevNext__item--prev">
+      <p class="m_prevNext__label">&lArr; Previous {{type|singular}}</p>
+      <a class="m_prevNext__link" href="/{{type}}/{{prev.id}}">{{prev.title}}</a>
+      <time class="m_prevNext__date" datetime="{{prev.date}}" >{{ prev.date|fuzzyDate(date) }} previously</time>
+    </div>
+  {% endif %}
+  {% if next %}
+    <div class="m_prevNext__item m_prevNext__item--next">
+      <p class="m_prevNext__label">Next {{type|singular}} &rArr;</p>
+      <a class="m_prevNext__link" href="/{{type}}/{{next.id}}">{{next.title}}</a>
+      <time class="m_prevNext__date" datetime="{{next.date}}" >{{ next.date|fuzzyDate(date) }} later</time>
+    </div>
+  {% endif %}
+</nav>
 {% endmacro %}
 
 {% macro m_teaser(posts,hLevel='2',classes) %}

@@ -4,6 +4,14 @@
   </svg>
 {% endmacro %}
 
+{% macro c_siteBody(content) %}
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
+    {% endfor %}
+  </main>
+{% endmacro %}
+
 {% macro c_block(items,pattern) %}
   {% if pattern %}
     {% for item in items %}
@@ -14,14 +22,6 @@
       {{ item }}
     {% endfor %}
   {% endif %}
-{% endmacro %}
-
-{% macro c_siteBody(content) %}
-  <main class="c_siteBody">
-    {% for item in content %}
-        {{ item }}
-    {% endfor %}
-  </main>
 {% endmacro %}
 
 {% macro c_siteHeader(items,active) %}

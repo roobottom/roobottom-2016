@@ -1,3 +1,6 @@
+---
+title: Introduction
+---
 `m_introduction` renders an introduction block of text. [View the source code for this pattern](https://github.com/roobottom/roobottom-express/tree/master/templates/patterns/modules/m_introduction)
 
 ### Nunjucks macro call

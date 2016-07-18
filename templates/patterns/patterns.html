@@ -101,6 +101,12 @@
   </div>
 {% endmacro %}
 
+{% macro m_introduction(markdownFile) %}
+  <div class="m_introduction">
+    {% markdown markdownFile %}
+  </div>
+{% endmacro %}
+
 {% macro m_navigation(items, active, modifier, classes) %}
 <nav class="m_navigation{%if modifier %} m_navigation--{{modifier}}{% endif %}{%if classes %} {{classes}}{% endif %}">
     <ul class="m_navigation__items">
@@ -121,10 +127,11 @@
 </nav>
 {% endmacro %}
 
-{% macro m_introduction(markdownFile) %}
-  <div class="m_introduction">
-    {% markdown markdownFile %}
-  </div>
+{% macro m_pageTitle(title,date,modifier,classes) %}
+<h1 class="m_pageTitle{% if modifier %} m_pageTitle--{{modifier}}{% endif %}"{% if classes %} {{classes}}{% endif %}>{{title}}</h1>
+{% if date %}
+<time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
+{% endif %}
 {% endmacro %}
 
 {% macro m_pagination(baseUrl,pagination) %}
@@ -135,13 +142,6 @@
     </li>
     {% endfor %}
   </ol>
-{% endmacro %}
-
-{% macro m_pageTitle(title,date,modifier,classes) %}
-<h1 class="m_pageTitle{% if modifier %} m_pageTitle--{{modifier}}{% endif %}"{% if classes %} {{classes}}{% endif %}>{{title}}</h1>
-{% if date %}
-<time datetime="{{date}}" class="m_pageTitle__date">{{date | date}}</time>
-{% endif %}
 {% endmacro %}
 
 {% macro m_postArticle(post) %}

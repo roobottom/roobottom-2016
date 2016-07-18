@@ -1,3 +1,6 @@
+---
+title: Previous and Next
+---
 `m_prevNext` renders an previous / next navigation block. [View the source code for this pattern](https://github.com/roobottom/roobottom-express/tree/master/templates/patterns/modules/m_prevNext)
 
 ### Nunjucks macro call

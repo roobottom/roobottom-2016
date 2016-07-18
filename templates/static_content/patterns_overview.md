@@ -4,11 +4,11 @@ This is my pattern library, a collection of all elements used throughout the sit
 
 ## Why?
 
-This website is not designed as number of pages, but rather as a system of components that can be composed together to form pages. 
+This website is not designed as number of pages, but rather as a system of components that can be composed together to form pages.
 
-Many pattern libraries I've designed in the past served simply as reference documents. They needed to be kept up-to-date if live code changed, and component code had to be manually copied-and-pasted into production. 
+Many pattern libraries I've designed in the past served simply as reference documents. They needed to be kept up-to-date if live code changed, and component code had to be manually copied-and-pasted into production.
 
-This pattern library defines its components in such a way that they can then be called, programmatically, multiple times on any page. 
+This pattern library defines its components in such a way that they can then be called, programmatically, multiple times on any page.
 
 Unlike some of the larger systems I've designed, I wanted these patterns to be as specific as possible. Usually, the smallest building blocks would be things like buttons, icons, search boxes, etc. I have no reason to define small blocks that can be used cross component, so I've kept things simple by making my building blocks, `modules`, self-contained and specific for purpose.
 
@@ -51,6 +51,8 @@ At its very basic, a page might consist of a grid, page-title and post pattern. 
 {% endraw %}
 
 Exactly what each pattern does, its markup, and required data is detailed in the rest of these pages.
+
+Each pattern can also have one or more `.example` files. An `.md` file of the same name can also be used to add a description and code examples. Together with some sample data, these files are used to build this library.
 
 ### Styles
 

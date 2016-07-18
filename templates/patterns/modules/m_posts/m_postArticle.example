@@ -1,0 +1,4 @@
+{% import "./m_postArticle.pattern" as pattern %}
+{{
+  pattern.m_postArticle(eg_article[0])
+}}

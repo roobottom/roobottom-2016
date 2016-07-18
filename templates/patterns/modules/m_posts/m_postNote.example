@@ -1,0 +1,4 @@
+{% import "../../patterns.html" as pattern %}
+{{
+  pattern.m_postNote(eg_note[0])
+}}

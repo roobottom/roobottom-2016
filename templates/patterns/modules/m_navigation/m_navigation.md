@@ -1,3 +1,6 @@
+---
+title: Navigation
+---
 `m_navigation` renders a navigation block. [View the source code for this pattern](https://github.com/roobottom/roobottom-express/tree/master/templates/patterns/modules/m_navigation)
 
 ### Nunjucks macro call

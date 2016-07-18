@@ -1,0 +1,4 @@
+{% import "../../patterns.html" as pattern %}
+{{
+  pattern.m_postGallery(eg_gallery[0])
+}}

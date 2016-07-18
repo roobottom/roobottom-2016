@@ -1,3 +1,6 @@
+---
+title: Page title
+---
 `m_pageTitle` renders a main page title `h1`. Only one should be used on any page. [View the source code for this pattern](https://github.com/roobottom/roobottom-express/tree/master/templates/patterns/modules/m_pageTitle)
 
 ### Nunjucks macro call

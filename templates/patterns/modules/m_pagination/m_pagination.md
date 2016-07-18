@@ -1,3 +1,6 @@
+---
+title: Pagination
+---
 `m_pagination` renders a set of pagination links. [View the source code for this pattern](https://github.com/roobottom/roobottom-express/tree/master/templates/patterns/modules/m_pagination)
 
 ### Nunjucks macro call

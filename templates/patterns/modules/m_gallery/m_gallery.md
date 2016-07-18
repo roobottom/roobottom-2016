@@ -1,3 +1,6 @@
+---
+title: Gallery
+---
 `m_gallery` renders a one or more images as a gallery. Javascript is used to add a 'brick-wall' effect and to enhance the captions. [View the source code for this pattern](https://github.com/roobottom/roobottom-express/tree/master/templates/patterns/modules/m_gallery)
 
 ### Nunjucks macro call

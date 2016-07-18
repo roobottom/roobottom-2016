@@ -8,6 +8,7 @@ module.exports = function () {
       marked = require('marked'),
       eg_article = require('../../templates/patterns/_test_data/article.json'),
       eg_gallery = require('../../templates/patterns/_test_data/gallery.json'),
+      eg_note = require('../../templates/patterns/_test_data/note.json'),
       nconf = require('nconf'),
       _ = require('lodash');
 
@@ -37,6 +38,7 @@ module.exports = function () {
   .addFilter('fuzzyDate', require('../filters/fuzzyDate.filter.js'))
   .addGlobal('eg_article',eg_article)
   .addGlobal('eg_gallery',eg_gallery)
+  .addGlobal('eg_note',eg_note)
   .addGlobal('site',settings)
 
 

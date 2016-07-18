@@ -1,5 +1,5 @@
 {% import "./c_siteHeader.pattern" as pattern %}
 
 {{
-  pattern.c_siteHeader(['<div class="eg">Site Header</div>'])
+  pattern.c_siteHeader(['<div class="eg"><p>Site Header</p></div>'])
 }}

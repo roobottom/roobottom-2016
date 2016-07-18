@@ -2,8 +2,8 @@
 
 {{
   pattern.c_block([
-  '<div class="eg">Example Pattern</div>',
-  '<div class="eg">Example Pattern</div>',
-  '<div class="eg">Example Pattern</div>'
+  '<div class="eg"><p>Example Pattern</p></div>',
+  '<div class="eg"><p>Example Pattern</p></div>',
+  '<div class="eg"><p>Example Pattern</p></div>'
   ])
 }}

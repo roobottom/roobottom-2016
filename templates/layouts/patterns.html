@@ -12,7 +12,7 @@
 <div class="grid grid--prose">
   <div class="grid__column">
     {{pattern.m_pageTitle(title|capitalize,modifier='aligned')}}
-    {{pattern.m_navigation(items=navigationItems|jsonParse,modifier='sub-stacked',classes='u_space__hangoff',active=subActive)}}
+    {{pattern.m_navigation(items=navigationItems|jsonParse,modifier='sub-stacked',classes='u_space--hangoff',active=subActive)}}
     {% block content %}
     {% endblock %}
   </div>

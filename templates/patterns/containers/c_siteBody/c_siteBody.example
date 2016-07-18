@@ -1,5 +1,5 @@
 {% import "./c_siteBody.pattern" as pattern %}
 
 {{
-  pattern.c_siteBody(['<div class="eg">Site Body</div>'])
+  pattern.c_siteBody(['<div class="eg"><p>Site Body</p></div>'])
 }}

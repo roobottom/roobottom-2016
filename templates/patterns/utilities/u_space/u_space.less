@@ -20,8 +20,10 @@
   .hangoff(@b: @layout_alpha) {
     #site > .r--max({
       @remaining: (@layout_max - @b) / 2;
-      margin-left: unit(-1 * ((@remaining/@b) * 100),%);
+      @s: unit((@remaining/@b) * 100,%);
+      margin-left: -1 * @s;
       float: left;
+      max-width: @s;
     });
   }
 }
@@ -36,14 +38,19 @@
 .u_space----loop(5);
 
 //default push
-.u_space__push {
+.u_space--push {
   #u_space > .push();
 }
 
-.u_space__pull {
+//default pull
+.u_space--pull {
   #u_space > .pull();
 }
+.u_space--pull-back {
+  #u_space > .pull-back();
+}
 
-.u_space__hangoff {
+//default hangoff
+.u_space--hangoff {
   #u_space > .hangoff();
 }

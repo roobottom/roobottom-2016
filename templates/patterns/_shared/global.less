@@ -57,6 +57,9 @@ a {
     border-bottom: 1px dotted @grey;
     background-color: #F1F1F1;
   }
+  &__item {
+    .clearfix();
+  }
   &__item--with-info {
     padding: unit(@spacing_vertical/@base,rem) unit(@spacing_horizontal/@base,rem);
     border: 1px dotted @grey;
@@ -65,11 +68,25 @@ a {
 }
 
 //example styles
+
+.eg_contain {
+  display: flex;
+  justify-content: center;
+}
+
 .eg {
-  border: 1px dotted @red;
-  background-color: fade(@red,10%);
-  color: @red;
-  padding: 20px;
+  background-color: fade(@blue,10%);
+  >.eg {
+    background-color: fade(@blue,15%);
+  }
+  //color: @blue;
+  text-shadow: 0 1px 0 white;
+  box-sizing: border-box;
+  padding: 10px;
+  .clearfix();
+  p:not(:last-of-type) {
+    margin-bottom: 10px;
+  }
 }
 
 /* js folddowns */

@@ -470,10 +470,6 @@ th {
   }
 }
 
-.c_siteBody {
-    #site > .spacing();
-}
-
 .c_siteHeader {
   padding: unit(@spacing_vertical/2/@base,rem) 0;
   border-bottom: 1px solid @lightgrey;
@@ -485,6 +481,10 @@ th {
   #site .r--max({
     margin: 0 auto;
   });
+}
+
+.c_siteBody {
+    #site > .spacing();
 }
 
 #grid() {
@@ -626,6 +626,59 @@ th {
       }
     }
   });
+
+}
+
+.m_gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: unit(@spacing_vertical/@base,rem);
+
+  &__link {
+    height: 100%;
+    display: block;
+    border: none;
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    outline: 1px solid @c_bg;
+    transition: all 50ms;
+  }
+
+  &__image--is-highlighted {
+    outline: 5px solid @c_default;
+    z-index: 1000;
+    position: relative;
+  }
+
+  &__link:only-of-type &__image {
+    width: auto;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  &__captions {
+    display: block;
+    flex-basis: 100%;
+    box-sizing: border-box;
+    font-style: italic;
+    #type > .default();
+    #type > .x-small();
+    #type > .meta();
+    #site > .r--alpha({
+      margin-top: unit(@spacing_vertical/2/@base,rem);
+    });
+  }
+
+  .js_caption--is-enabled {
+    cursor:help;
+    &:hover {
+      color: @c_default;
+    }
+  }
 
 }
 
@@ -1130,59 +1183,6 @@ th {
       border-bottom: 2px solid darken(@grey,10%);
   }
 
-
-}
-
-.m_gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-bottom: unit(@spacing_vertical/@base,rem);
-
-  &__link {
-    height: 100%;
-    display: block;
-    border: none;
-  }
-
-  &__image {
-    display: block;
-    width: 100%;
-    outline: 1px solid @c_bg;
-    transition: all 50ms;
-  }
-
-  &__image--is-highlighted {
-    outline: 5px solid @c_default;
-    z-index: 1000;
-    position: relative;
-  }
-
-  &__link:only-of-type &__image {
-    width: auto;
-    margin: 0 auto;
-    max-width: 100%;
-  }
-
-  &__captions {
-    display: block;
-    flex-basis: 100%;
-    box-sizing: border-box;
-    font-style: italic;
-    #type > .default();
-    #type > .x-small();
-    #type > .meta();
-    #site > .r--alpha({
-      margin-top: unit(@spacing_vertical/2/@base,rem);
-    });
-  }
-
-  .js_caption--is-enabled {
-    cursor:help;
-    &:hover {
-      color: @c_default;
-    }
-  }
 
 }
 

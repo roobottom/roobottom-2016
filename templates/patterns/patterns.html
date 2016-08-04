@@ -4,6 +4,14 @@
   </svg>
 {% endmacro %}
 
+{% macro c_siteHeader(items,active) %}
+  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
+    {% for item in items %}
+    {{item}}
+    {% endfor %}
+  </header>
+{% endmacro %}
+
 {% macro c_block(items,pattern) %}
   {% if pattern %}
     {% for item in items %}
@@ -16,28 +24,20 @@
   {% endif %}
 {% endmacro %}
 
-{% macro c_siteBody(content) %}
-  <main class="c_siteBody">
-    {% for item in content %}
-        {{ item }}
-    {% endfor %}
-  </main>
-{% endmacro %}
-
-{% macro c_siteHeader(items,active) %}
-  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
-    {% for item in items %}
-    {{item}}
-    {% endfor %}
-  </header>
-{% endmacro %}
-
 {% macro c_wrapper(modules) %}
   <div class="c_wrapper">
     {% for module in modules %}
       {{ module }}
     {% endfor %}
   </div>
+{% endmacro %}
+
+{% macro c_siteBody(content) %}
+  <main class="c_siteBody">
+    {% for item in content %}
+        {{ item }}
+    {% endfor %}
+  </main>
 {% endmacro %}
 
 {% macro grid(columns,modifier,classes) %}
@@ -71,6 +71,34 @@
       {% endif %}
     {% endfor %}
   </figure>
+{% endmacro %}
+
+{% macro m_gallery(images,type,modifier,group=3,caption=false) %}
+  {% if images | length > 1 %}
+    {% set w = 650 %}
+  {% else %}
+    {% set w = 1024 %}
+  {% endif %}
+
+  {% if images | length == 4 %}
+    {% set group = 2 %}
+  {% endif %}
+
+  <div class="m_gallery js_gallery{% if modifier %} m_gallery--{{ modifier }}{% endif %}" data-groups="{{group}}">
+    {% for i in images %}
+    <a href="{{site.imageServer}}r/1024/auto/{{type}}/{{ i.image }}" class="m_gallery__link js_gallery__item" data-width="{{i.width}}"data-height="{{i.height}}">
+      <img src="{{site.imageServer}}r/{{w}}/auto/{{type}}/{{ i.image }}" class="m_gallery__image" data-captiontarget="{{i.image}}" />
+    </a>
+    {% endfor %}
+    {% if caption %}
+    <div class="m_gallery__captions">
+      <span class="m_gallery__captionsNotice">From left to right: </span>
+      {% for i in images %}
+        {% if i.caption %}<span class="m_gallery__caption js_caption" data-captionfor="{{i.image}}">“{{i.caption}}”</span>{% if not loop.last and loop.index != (loop.length - 1) %}, {% endif %}{% if loop.index == (loop.length - 1) %} &amp; {% endif %}{% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
 {% endmacro %}
 
 {% macro m_introduction(markdownFile) %}
@@ -194,38 +222,17 @@
     <div class="m_teaser__description">
       <div class="m_teaser__summary type">
         <p>{{post.html_body  | striptags | truncate(200) }}</p>
-        <p><a href="/{{post.attributes.type}}/{{post.attributes.id}}">View {{post.attributes.type|singular}} &rarr;</a></p>
+        {% if post.attributes.images|length > 0 %}
+          {% if post.attributes.images|length * 55 > 1000 %}
+            {% set postSizeString = (post.attributes.images|length * 55)/1000 + "mb" %}
+          {% else %}
+            {% set postSizeString = post.attributes.images|length * 55 + "kb" %}
+          {% endif %}
+        {% endif %}
+        <p><a href="/{{post.attributes.type}}/{{post.attributes.id}}">View {{post.attributes.type|singular}} {% if post.attributes.images|length > 0 %}[~{{postSizeString}}] {% endif %}&rarr;</a></p>
         <hr/>
       </div>
     </div>
   </article>
   {% endfor %}
-{% endmacro %}
-
-{% macro m_gallery(images,type,modifier,group=3,caption=false) %}
-  {% if images | length > 1 %}
-    {% set w = 650 %}
-  {% else %}
-    {% set w = 1024 %}
-  {% endif %}
-
-  {% if images | length == 4 %}
-    {% set group = 2 %}
-  {% endif %}
-
-  <div class="m_gallery js_gallery{% if modifier %} m_gallery--{{ modifier }}{% endif %}" data-groups="{{group}}">
-    {% for i in images %}
-    <a href="{{site.imageServer}}r/1024/auto/{{type}}/{{ i.image }}" class="m_gallery__link js_gallery__item" data-width="{{i.width}}"data-height="{{i.height}}">
-      <img src="{{site.imageServer}}r/{{w}}/auto/{{type}}/{{ i.image }}" class="m_gallery__image" data-captiontarget="{{i.image}}" />
-    </a>
-    {% endfor %}
-    {% if caption %}
-    <div class="m_gallery__captions">
-      <span class="m_gallery__captionsNotice">From left to right: </span>
-      {% for i in images %}
-        {% if i.caption %}<span class="m_gallery__caption js_caption" data-captionfor="{{i.image}}">“{{i.caption}}”</span>{% if not loop.last and loop.index != (loop.length - 1) %}, {% endif %}{% if loop.index == (loop.length - 1) %} &amp; {% endif %}{% endif %}
-      {% endfor %}
-    </div>
-    {% endif %}
-  </div>
 {% endmacro %}

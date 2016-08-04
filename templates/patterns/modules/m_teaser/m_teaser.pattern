@@ -21,7 +21,14 @@
     <div class="m_teaser__description">
       <div class="m_teaser__summary type">
         <p>{{post.html_body  | striptags | truncate(200) }}</p>
-        <p><a href="/{{post.attributes.type}}/{{post.attributes.id}}">View {{post.attributes.type|singular}} &rarr;</a></p>
+        {% if post.attributes.images|length > 0 %}
+          {% if post.attributes.images|length * 55 > 1000 %}
+            {% set postSizeString = (post.attributes.images|length * 55)/1000 + "mb" %}
+          {% else %}
+            {% set postSizeString = post.attributes.images|length * 55 + "kb" %}
+          {% endif %}
+        {% endif %}
+        <p><a href="/{{post.attributes.type}}/{{post.attributes.id}}">View {{post.attributes.type|singular}} {% if post.attributes.images|length > 0 %}[~{{postSizeString}}] {% endif %}&rarr;</a></p>
         <hr/>
       </div>
     </div>

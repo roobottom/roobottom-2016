@@ -65,7 +65,7 @@ marked.setOptions({
 nunjucks_markdown.register(env, marked);
 
 //static files
-app.use(express.static('assets'));
+app.use(express.static('./assets'));
 
 function calculatePagination(totalItems,currentPage) {
   let pages = Math.ceil(totalItems/settings.postsPerPage);

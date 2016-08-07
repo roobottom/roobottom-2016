@@ -8,7 +8,9 @@ var fs  = require('fs'),
     marked = require('marked'),
     mkdirp = require('mkdirp'),
     smart_tags = require('./smart_tags.js'),
-    sizeOf  = require('image-size');
+    sizeOf  = require('image-size'),
+    gm = require('gm'),
+    c = 0;
 
     marked.setOptions({
       gfm: true,
@@ -160,22 +162,37 @@ function getFileContents(folder,file) {
 function processPostData(data,folder) {
   return new Promise((resolve,reject) => {
     let post = frontmatter(data.content);
-    console.log('processing data for',folder,':',post.attributes.title)
-    console.time('postData');
+    console.log(c++,'processing data for',folder,post.attributes.title)
     post.attributes.type = folder;
     post.attributes.id = data.id;
     post.html_body = marked(post.body);
+    post.html_body = smart_tags.find_tags(post);
+
+    //write image sizes into post
     if(post.attributes.images) {
       let images = post.attributes.images;
       images.map(image => {
+        //use graphics magic image size get & .autoOrient() here.
         let size = sizeOf(imagesRoot+folder+'/'+image.image);
         image.width = size.width;
         image.height = size.height;
-      })
-    };
-    post.html_body = smart_tags.find_tags(post);
-    console.timeEnd('postData');
+        // gm(imagesRoot+folder+'/'+image.image).autoOrient().size(function(err,val) {
+        //   if(!err) {
+        //     console.log(val);
+        //     resolve(post);
+        //   }
+        //   else {
+        //     console.log(err);
+        //   }
+        // });
+      });
+    }
     resolve(post);
+    // else {
+    //   resolve(post);
+    // };
+
+
   });
 };
 

@@ -83,9 +83,11 @@ function calculateResize(file,w,h) {
 
 
 function resize(orriginal,target,size,cb) {
+
   if(size.cropW && size.cropH) {
     gm(orriginal)
     .resize(size.w,size.h)
+    .autoOrient()
     .crop(size.cropW,size.cropH)
     .noProfile()
     .write(target,function(err) {
@@ -96,6 +98,7 @@ function resize(orriginal,target,size,cb) {
   else {
     gm(orriginal)
     .resize(size.w,size.h)
+    .autoOrient()
     .noProfile()
     .write(target,function(err) {
       if (!err) {cb(null);}

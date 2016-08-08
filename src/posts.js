@@ -9,7 +9,6 @@ var fs  = require('fs'),
     mkdirp = require('mkdirp'),
     smart_tags = require('./smart_tags.js'),
     sizeOf  = require('image-size'),
-    gm = require('gm'),
     c = 0;
 
     marked.setOptions({
@@ -176,23 +175,9 @@ function processPostData(data,folder) {
         let size = sizeOf(imagesRoot+folder+'/'+image.image);
         image.width = size.width;
         image.height = size.height;
-        // gm(imagesRoot+folder+'/'+image.image).autoOrient().size(function(err,val) {
-        //   if(!err) {
-        //     console.log(val);
-        //     resolve(post);
-        //   }
-        //   else {
-        //     console.log(err);
-        //   }
-        // });
       });
     }
     resolve(post);
-    // else {
-    //   resolve(post);
-    // };
-
-
   });
 };
 

@@ -1,4 +1,4 @@
 node_modules
-posts/.cache
+posts/_cache
 .publish
 images/_cache

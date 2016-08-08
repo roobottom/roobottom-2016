@@ -4,14 +4,6 @@
   </svg>
 {% endmacro %}
 
-{% macro c_siteHeader(items,active) %}
-  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
-    {% for item in items %}
-    {{item}}
-    {% endfor %}
-  </header>
-{% endmacro %}
-
 {% macro c_block(items,pattern) %}
   {% if pattern %}
     {% for item in items %}
@@ -24,20 +16,28 @@
   {% endif %}
 {% endmacro %}
 
-{% macro c_wrapper(modules) %}
-  <div class="c_wrapper">
-    {% for module in modules %}
-      {{ module }}
-    {% endfor %}
-  </div>
-{% endmacro %}
-
 {% macro c_siteBody(content) %}
   <main class="c_siteBody">
     {% for item in content %}
         {{ item }}
     {% endfor %}
   </main>
+{% endmacro %}
+
+{% macro c_siteHeader(items,active) %}
+  <header class="c_siteHeader {% if active %}c_siteHeader--{{active}}{% endif %}">
+    {% for item in items %}
+    {{item}}
+    {% endfor %}
+  </header>
+{% endmacro %}
+
+{% macro c_wrapper(modules) %}
+  <div class="c_wrapper">
+    {% for module in modules %}
+      {{ module }}
+    {% endfor %}
+  </div>
 {% endmacro %}
 
 {% macro grid(columns,modifier,classes) %}
@@ -134,52 +134,6 @@
 {% endif %}
 {% endmacro %}
 
-{% macro m_pagination(baseUrl,pagination) %}
-  <ol class="m_pagination">
-    {% for page in pagination %}
-    <li class="m_pagination__item">
-      <a href="{{baseUrl}}{{page.url}}" class="m_pagination__link{% if page.current==true %} m_pagination__link--current{% endif %}">{{page.title}}</a>
-    </li>
-    {% endfor %}
-  </ol>
-{% endmacro %}
-
-{% macro m_postArticle(post) %}
-  <article class="m_post m_post--article">
-    <div class="m_post__body type">
-        {{post.html_body | safe }}
-    </div>
-  </article>
-{% endmacro %}
-
-{% macro m_postGallery(post) %}
-  <article class="m_post m_post--gallery">
-    <div class="m_post__gallery">
-      {{ m_gallery(post.attributes.images,'gallery') }}
-    </div>
-    {{
-      grid([
-        post.html_body
-      ],'prose','type')
-    }}
-  </article>
-{% endmacro %}
-
-{% macro m_postNote(post) %}
-  <article class="m_post m_post--note">
-    {% if post.attributes.images %}
-      <div class="m_post__gallery">
-        {{ m_gallery(post.attributes.images,'notes') }}
-      </div>
-    {% endif %}
-    {{
-      grid([
-        post.html_body
-      ],'prose','type')
-    }}
-  </article>
-{% endmacro %}
-
 {% macro m_prevNext(type,date,prev,next) %}
 <nav class="m_prevNext">
   {% if prev %}
@@ -235,4 +189,50 @@
     </div>
   </article>
   {% endfor %}
+{% endmacro %}
+
+{% macro m_pagination(baseUrl,pagination) %}
+  <ol class="m_pagination">
+    {% for page in pagination %}
+    <li class="m_pagination__item">
+      <a href="{{baseUrl}}{{page.url}}" class="m_pagination__link{% if page.current==true %} m_pagination__link--current{% endif %}">{{page.title}}</a>
+    </li>
+    {% endfor %}
+  </ol>
+{% endmacro %}
+
+{% macro m_postArticle(post) %}
+  <article class="m_post m_post--article">
+    <div class="m_post__body type">
+        {{post.html_body | safe }}
+    </div>
+  </article>
+{% endmacro %}
+
+{% macro m_postGallery(post) %}
+  <article class="m_post m_post--gallery">
+    <div class="m_post__gallery">
+      {{ m_gallery(post.attributes.images,'gallery') }}
+    </div>
+    {{
+      grid([
+        post.html_body
+      ],'prose','type')
+    }}
+  </article>
+{% endmacro %}
+
+{% macro m_postNote(post) %}
+  <article class="m_post m_post--note">
+    {% if post.attributes.images %}
+      <div class="m_post__gallery">
+        {{ m_gallery(post.attributes.images,'notes') }}
+      </div>
+    {% endif %}
+    {{
+      grid([
+        post.html_body
+      ],'prose','type')
+    }}
+  </article>
 {% endmacro %}

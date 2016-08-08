@@ -9,15 +9,17 @@ When I decided that I wanted to redevelop my personal website I had 4 goals in m
 * **Patterns first**: All markup should be contained within a pattern that can be called either by pages or other patterns. Patterns should the single source of truth for all markup and styling.
 * **Ship it**: Make it live as soon as possible, and develop in the open.
 
-This meant that the current technology, I was using for this site was probably going to be restrictive. Thanks in no small part to the boundless patience of the rather brilliant [Danielle Huntrods](https://twitter.com/dhuntrods) in the face of my constant barrage of questions, I decided to use a combination of [Nunjucks](https://mozilla.github.io/nunjucks) templates and a custom application built on [Express](http://expressjs.com) and [nodejs](https://nodejs.org). 
+This meant that the current technology ([Jekyll](http://jekyllrb.com)) I was using for this site wasn’t up to the task. Thanks in no small part to the boundless patience of the rather brilliant [Danielle Huntrods](https://twitter.com/dhuntrods) in the face of my constant barrage of questions, I decided to build my own back-end using [Node](http://nodejs.com).
 
-You can dig through my [source code](https://github.com/roobottom/roobottom-express) if you’re interested.
+I’m not going to dig into any of the details here, but you can read through my [source code](https://github.com/roobottom/roobottom-express) if you’re interested.
 
-## Building modules with Nunjucks
+## Building modules
+
+
 
 Nunjucks is a tempting language for JavaScript with several features that make it ideal for creating reusable patterns. Most useful is the [`macro`](https://mozilla.github.io/nunjucks/templating.html#macro) tag: this allows you to create reusable chunks of code in their own files and import them elsewhere.
 
-As each pattern was to be distinct, it made sense to store their `.pattern` files in their own folder. _For example:_
+
 
 ```
 /patterns

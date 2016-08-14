@@ -12,7 +12,8 @@ var express = require('express'),
     tags = require('./tags.js'),
     nunjucks_renderPattern = require('./tags/renderPattern.tag.js'),
     nunjucks_markdown = require('nunjucks-markdown'),
-    marked = require('marked');
+    marked = require('marked'),
+    bodyParser = require('body-parser');
 
     //settings
     nconf.env();
@@ -322,10 +323,13 @@ app.get('/notes/:id', function(req,res) {
 //------------------------------------------//
 
 app.get('/webhook/:id', function(req,res) {
-  res.send(req);
+  let ret;
+  for(let i in req) {
+      ret += "<p>" + req[i] + "</p>";
+  }
+  res.send(ret);
   res.end();
 });
-
 
 //------------------------------------------//
 // portfolio

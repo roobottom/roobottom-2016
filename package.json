@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.3.3",
+    "body-parser": "^1.15.2",
     "express": "^4.13.4",
     "flickrapi": "^0.4.2",
     "front-matter": "^2.0.5",

@@ -323,11 +323,7 @@ app.get('/notes/:id', function(req,res) {
 //------------------------------------------//
 
 app.get('/webhook/:id', function(req,res) {
-  let ret;
-  for(let i in req) {
-      ret += "<p>" + req[i] + "</p>";
-  }
-  res.send(ret);
+  res.send('hi');
   res.end();
 });
 
